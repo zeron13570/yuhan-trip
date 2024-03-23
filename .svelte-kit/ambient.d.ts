@@ -45,6 +45,7 @@ declare module '$env/static/private' {
 	export const EFC_16584: string;
 	export const FPS_BROWSER_APP_PROFILE_STRING: string;
 	export const FPS_BROWSER_USER_PROFILE_STRING: string;
+	export const GIT_ASKPASS: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
 	export const HOMEPATH: string;
@@ -54,6 +55,7 @@ declare module '$env/static/private' {
 	export const LOCALAPPDATA: string;
 	export const LOGONSERVER: string;
 	export const NODE: string;
+	export const NODE_ENV: string;
 	export const npm_command: string;
 	export const npm_config_cache: string;
 	export const npm_config_engine_strict: string;
@@ -71,15 +73,8 @@ declare module '$env/static/private' {
 	export const npm_lifecycle_event: string;
 	export const npm_lifecycle_script: string;
 	export const npm_node_execpath: string;
-	export const npm_package_dev: string;
-	export const npm_package_dev_optional: string;
-	export const npm_package_engines_node: string;
-	export const npm_package_integrity: string;
 	export const npm_package_json: string;
 	export const npm_package_name: string;
-	export const npm_package_optional: string;
-	export const npm_package_peer: string;
-	export const npm_package_resolved: string;
 	export const npm_package_version: string;
 	export const NUMBER_OF_PROCESSORS: string;
 	export const NVM_HOME: string;
@@ -110,6 +105,10 @@ declare module '$env/static/private' {
 	export const USERDOMAIN_ROAMINGPROFILE: string;
 	export const USERNAME: string;
 	export const USERPROFILE: string;
+	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
+	export const VSCODE_GIT_ASKPASS_MAIN: string;
+	export const VSCODE_GIT_ASKPASS_NODE: string;
+	export const VSCODE_GIT_IPC_HANDLE: string;
 	export const VSCODE_INJECTION: string;
 	export const windir: string;
 }
@@ -162,6 +161,7 @@ declare module '$env/dynamic/private' {
 		EFC_16584: string;
 		FPS_BROWSER_APP_PROFILE_STRING: string;
 		FPS_BROWSER_USER_PROFILE_STRING: string;
+		GIT_ASKPASS: string;
 		HOME: string;
 		HOMEDRIVE: string;
 		HOMEPATH: string;
@@ -171,6 +171,7 @@ declare module '$env/dynamic/private' {
 		LOCALAPPDATA: string;
 		LOGONSERVER: string;
 		NODE: string;
+		NODE_ENV: string;
 		npm_command: string;
 		npm_config_cache: string;
 		npm_config_engine_strict: string;
@@ -188,15 +189,8 @@ declare module '$env/dynamic/private' {
 		npm_lifecycle_event: string;
 		npm_lifecycle_script: string;
 		npm_node_execpath: string;
-		npm_package_dev: string;
-		npm_package_dev_optional: string;
-		npm_package_engines_node: string;
-		npm_package_integrity: string;
 		npm_package_json: string;
 		npm_package_name: string;
-		npm_package_optional: string;
-		npm_package_peer: string;
-		npm_package_resolved: string;
 		npm_package_version: string;
 		NUMBER_OF_PROCESSORS: string;
 		NVM_HOME: string;
@@ -227,6 +221,10 @@ declare module '$env/dynamic/private' {
 		USERDOMAIN_ROAMINGPROFILE: string;
 		USERNAME: string;
 		USERPROFILE: string;
+		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
+		VSCODE_GIT_ASKPASS_MAIN: string;
+		VSCODE_GIT_ASKPASS_NODE: string;
+		VSCODE_GIT_IPC_HANDLE: string;
 		VSCODE_INJECTION: string;
 		windir: string;
 		[key: `PUBLIC_${string}`]: undefined;
