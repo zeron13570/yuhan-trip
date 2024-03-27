@@ -22,7 +22,7 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><img src="" alt="여행지 사진"></li>
+            <li><img src="../img/Seoul.jpg" alt="여행지 사진"></li>
             <li><img src="" alt="여행지 사진"></li>
             <li><img src="" alt="여행지 사진"></li>
             <li><img src="" alt="여행지 사진"></li>
