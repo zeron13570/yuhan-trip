@@ -1,3 +1,7 @@
+<head>
+    <link rel="stylesheet" href="../css/import.css">
+</head>
+
 <header>
     <nav>
         <ul>
