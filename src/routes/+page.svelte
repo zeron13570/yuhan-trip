@@ -1,11 +1,10 @@
-<head>
-    <link rel="stylesheet" href="../css/import.css">
-</head>
-
+<script>
+    import "../css/import.css"
+</script>
 <header>
     <nav>
         <ul>
-            <li><h1><img src="" alt="YUHANtrip"></h1></li>
+            <li><h1><img src="../img/Logo.png" alt="logo"></h1></li>
             <li>호텔</li>
             <li>투어&티켓</li>
             <li>기차표</li>
