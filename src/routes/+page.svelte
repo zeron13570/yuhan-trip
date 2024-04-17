@@ -1,11 +1,23 @@
 <script>
     import "../css/import.css"
-    let Logo = 'src/img/Logo.png';
+    import Logo from "../img/Logo.png"
+    import Seoul from "../img/Seoul.jpg"
+    import Busan from "../img/Busan.jpg"
+    import Daegu from "../img/Busan.jpg"
+    import Gangneung from "../img/Gangneung.jpg"
+    import Gyeongju from "../img/Gyeongju.jpg"
+    import Incheon from "../img/Incheon.jpg"
+    import Jeju from "../img/Jeju.jpg"
+    import Jeonju from "../img/Jeonju.jpg"
+    import Suwon from "../img/Suwon.jpg"
+    import Ulsan from "../img/Ulsan.jpg"
+    import Gunsan from "../img/Gunsan.jpg"
+    import Pohang from "../img/Suwon.jpg"
 </script>
 <header>
     <nav>
         <ul>
-            <li><h1><img {Logo} alt="Logo"></h1></li>
+            <li><h1><img src={Logo} alt="Logo"></h1></li>
             <li>호텔</li>
             <li>투어&티켓</li>
             <li>기차표</li>
@@ -26,22 +38,22 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><img src="../img/Seoul.jpg" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
+            <li><img src={Seoul} alt="Seoul"></li>
+            <li><img src={Busan} alt="Busan"></li>
+            <li><img src={Jeju} alt="Jeju"></li>
+            <li><img src={Jeonju} alt="Jeonju"></li>
         </ul>
         <ul>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
+            <li><img src={Incheon} alt="Incheon"></li>
+            <li><img src={Gyeongju} alt="Gyeongju"></li>
+            <li><img src={Daegu} alt="Daegu"></li>
+            <li><img src={Suwon} alt="Suwon"></li>
         </ul>
         <ul>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
-            <li><img src="" alt="여행지 사진"></li>
+            <li><img src={Ulsan} alt="Ulsan"></li>
+            <li><img src={Pohang} alt="Pohang"></li>
+            <li><img src={Gunsan} alt="Gunsan"></li>
+            <li><img src={Daegu} alt="Daegu"></li>
         </ul>
     </div>
     <div class="TravelLog">
