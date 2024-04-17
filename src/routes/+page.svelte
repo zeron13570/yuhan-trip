@@ -38,22 +38,22 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><img src={Seoul} alt="Seoul"></li>
-            <li><img src={Busan} alt="Busan"></li>
-            <li><img src={Jeju} alt="Jeju"></li>
-            <li><img src={Jeonju} alt="Jeonju"></li>
+            <li><a href=""><img src={Seoul} alt="Seoul"></a></li>
+            <li><a href=""><img src={Busan} alt="Busan"></a></li>
+            <li><a href=""><img src={Jeju} alt="Jeju"></a></li>
+            <li><a href=""><img src={Jeonju} alt="Jeonju"></a></li>
         </ul>
         <ul>
-            <li><img src={Incheon} alt="Incheon"></li>
-            <li><img src={Gyeongju} alt="Gyeongju"></li>
-            <li><img src={Daegu} alt="Daegu"></li>
-            <li><img src={Suwon} alt="Suwon"></li>
+            <li><a href=""><img src={Incheon} alt="Incheon"></a></li>
+            <li><a href=""><img src={Gyeongju} alt="Gyeongju"></a></li>
+            <li><a href=""><img src={Daegu} alt="Daegu"></a></li>
+            <li><a href=""><img src={Suwon} alt="Suwon"></a></li>
         </ul>
         <ul>
-            <li><img src={Ulsan} alt="Ulsan"></li>
-            <li><img src={Pohang} alt="Pohang"></li>
-            <li><img src={Gunsan} alt="Gunsan"></li>
-            <li><img src={Daegu} alt="Daegu"></li>
+            <li><a href=""><img src={Ulsan} alt="Ulsan"></a></li>
+            <li><a href=""><img src={Pohang} alt="Pohang"></a></li>
+            <li><a href=""><img src={Gunsan} alt="Gunsan"></a></li>
+            <li><a href=""><img src={Gangneung} alt="Gangneung"></a></li>
         </ul>
     </div>
     <div class="TravelLog">
