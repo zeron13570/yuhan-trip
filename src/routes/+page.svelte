@@ -1,10 +1,11 @@
 <script>
     import "../css/import.css"
+    let Logo = 'src/img/Logo.png';
 </script>
 <header>
     <nav>
         <ul>
-            <li><h1><img src="../img/Logo.png" alt="logo"></h1></li>
+            <li><h1><img {Logo} alt="Logo"></h1></li>
             <li>호텔</li>
             <li>투어&티켓</li>
             <li>기차표</li>
