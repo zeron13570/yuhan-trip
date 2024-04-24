@@ -1,0 +1,31 @@
+header{
+    padding-top: 20px;
+    margin: 20px 30px 50px 30px;
+}
+header nav ul::after{
+    content: '';
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
+header nav ul li{
+    float: left;
+    margin-right: 30px;
+    text-align: center;
+    line-height: 75px;
+}
+header nav ul li:nth-last-child(2){
+    float: right;
+}
+header nav ul li:last-child{
+    float: right;
+}
+header nav ul li h1 img{
+    width: 120px;
+    height: 75px;
+}
+header nav ul li a{
+    color: #606060;
+    font-size: 18px;
+    font-weight: 700;
+}

@@ -1,29 +1,17 @@
 <script>
     import "../css/import.css"
     import Logo from "../img/Logo.png"
-    import Seoul from "../img/Seoul.jpg"
-    import Busan from "../img/Busan.jpg"
-    import Daegu from "../img/Busan.jpg"
-    import Gangneung from "../img/Gangneung.jpg"
-    import Gyeongju from "../img/Gyeongju.jpg"
-    import Incheon from "../img/Incheon.jpg"
-    import Jeju from "../img/Jeju.jpg"
-    import Jeonju from "../img/Jeonju.jpg"
-    import Suwon from "../img/Suwon.jpg"
-    import Ulsan from "../img/Ulsan.jpg"
-    import Gunsan from "../img/Gunsan.jpg"
-    import Pohang from "../img/Suwon.jpg"
 </script>
 <header>
     <nav>
         <ul>
-            <li><h1><img src={Logo} alt="Logo"></h1></li>
-            <li>호텔</li>
-            <li>투어&티켓</li>
-            <li>기차표</li>
-            <li>고객센터</li>
-            <li>로그인</li>
-            <li>회원가입</li>
+            <li><h1><a href=""><img src={Logo} alt="Logo"></a></h1></li>
+            <li><a href="">호텔</a></li>
+            <li><a href="">투어&티켓</a></li>
+            <li><a href="">기차표</a></li>
+            <li><a href="">고객센터</a></li>
+            <li><a href="">회원가입</a></li>
+            <li><a href="">로그인</a></li>
         </ul>
     </nav>
     <div><img src="" alt="상단 배경화면 (독도 예정)"></div>
@@ -38,22 +26,22 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><a href=""><img src={Seoul} alt="Seoul"></a></li>
-            <li><a href=""><img src={Busan} alt="Busan"></a></li>
-            <li><a href=""><img src={Jeju} alt="Jeju"></a></li>
-            <li><a href=""><img src={Jeonju} alt="Jeonju"></a></li>
+            <li><a href="">서울</a></li>
+            <li><a href="">부산</a></li>
+            <li><a href="">제주</a></li>
+            <li><a href="">강릉</a></li>
         </ul>
         <ul>
-            <li><a href=""><img src={Incheon} alt="Incheon"></a></li>
-            <li><a href=""><img src={Gyeongju} alt="Gyeongju"></a></li>
-            <li><a href=""><img src={Daegu} alt="Daegu"></a></li>
-            <li><a href=""><img src={Suwon} alt="Suwon"></a></li>
+            <li><a href="">군산</a></li>
+            <li><a href="">경주</a></li>
+            <li><a href="">인천</a></li>
+            <li><a href="">수원</a></li>
         </ul>
         <ul>
-            <li><a href=""><img src={Ulsan} alt="Ulsan"></a></li>
-            <li><a href=""><img src={Pohang} alt="Pohang"></a></li>
-            <li><a href=""><img src={Gunsan} alt="Gunsan"></a></li>
-            <li><a href=""><img src={Gangneung} alt="Gangneung"></a></li>
+            <li><a href="">포항</a></li>
+            <li><a href="">울산</a></li>
+            <li><a href="">대구</a></li>
+            <li><a href="">전주</a></li>
         </ul>
     </div>
     <div class="TravelLog">

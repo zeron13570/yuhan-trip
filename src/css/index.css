@@ -1,49 +1,47 @@
 /* ! section */
+section div.PopularTravel ul li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    /* background-position: center; */
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
 section div.PopularTravel ul:nth-child(1) li:nth-child(1) a{
     background-image: url(../img/Seoul.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(1) li:nth-child(2) a{
     background-image: url(../img/Busan.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(1) li:nth-child(3) a{
     background-image: url(../img/Jeju.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(1) li:nth-child(4) a{
     background-image: url(../img/Gangneung.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(2) li:nth-child(1) a{
     background-image: url(../img/Gunsan.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(2) li:nth-child(2) a{
     background-image: url(../img/Gyeongju.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(2) li:nth-child(3) a{
     background-image: url(../img/Incheon.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(2) li:nth-child(4) a{
     background-image: url(../img/Suwon.jpg); 
-    background-size: cover;
 }
 section div.PopularTravel :nth-child(3) li:nth-child(1) a{
     background-image: url(../img/Pohang.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(3) li:nth-child(2) a{
     background-image: url(../img/Ulsan.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(3) li:nth-child(3) a{
     background-image: url(../img/Daegu.jpg);
-    background-size: cover;
 }
 section div.PopularTravel ul:nth-child(3) li:nth-child(4) a{
     background-image: url(../img/Jeonju.jpg);
-    background-size: cover;
 }
