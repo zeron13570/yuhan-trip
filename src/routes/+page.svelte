@@ -8,16 +8,16 @@
             <li><h1><a href=""><img src={Logo} alt="Logo"></a></h1></li>
             <li><a href="">호텔</a></li>
             <li><a href="">투어&티켓</a></li>
-            <li><a href="">기차표</a></li>
-            <li><a href="">고객센터</a></li>
+            <li><a href="">기차표</a></li>            
             <li><a href="">회원가입</a></li>
             <li><a href="">로그인</a></li>
+            <li><a href="">고객센터</a></li>
         </ul>
     </nav>
-    <div><img src="" alt="상단 배경화면 (독도 예정)"></div>
+    <div></div>
     <span>
         <input type="text" placeholder="여행지, 명소 등 검색">
-        <input type="button" value="검색">
+        <a href=""><button></button></a>
     </span>
     <!-- 버튼에 돋보기 아이콘 백그라운드로 추가 예정 -->
 </header>
