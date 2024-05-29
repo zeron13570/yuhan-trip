@@ -1,6 +1,7 @@
 <script>
     import "../css/import.css"
     import Logo from "../img/Logo.png"
+    import LogoW from "../img/LogoWhite.png"
 </script>
 <header>
     <nav>
@@ -9,7 +10,6 @@
             <li><a href="">호텔</a></li>
             <li><a href="">투어&티켓</a></li>
             <li><a href="">기차표</a></li>            
-            <li><a href="">회원가입</a></li>
             <li><a href="">로그인</a></li>
             <li><a href="">고객센터</a></li>
         </ul>
@@ -26,22 +26,22 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><a href="">서울</a></li>
-            <li><a href="">부산</a></li>
-            <li><a href="">제주</a></li>
-            <li><a href="">강릉</a></li>
+            <li><a href=""><span>서울</span></a></li>
+            <li><a href=""><span>부산</span></a></li>
+            <li><a href=""><span>제주</span></a></li>
+            <li><a href=""><span>강릉</span></a></li>
         </ul>
         <ul>
-            <li><a href="">군산</a></li>
-            <li><a href="">경주</a></li>
-            <li><a href="">인천</a></li>
-            <li><a href="">수원</a></li>
+            <li><a href=""><span>군산</span></a></li>
+            <li><a href=""><span>경주</span></a></li>
+            <li><a href=""><span>인천</span></a></li>
+            <li><a href=""><span>수원</span></a></li>
         </ul>
         <ul>
-            <li><a href="">포항</a></li>
-            <li><a href="">울산</a></li>
-            <li><a href="">대구</a></li>
-            <li><a href="">전주</a></li>
+            <li><a href=""><span>포항</span></a></li>
+            <li><a href=""><span>울산</span></a></li>
+            <li><a href=""><span>대구</span></a></li>
+            <li><a href=""><span>전주</span></a></li>
         </ul>
     </div>
     <div class="TravelLog">
@@ -163,32 +163,29 @@
 
 <!-- footer 시작 -->
 <footer>
-    <div>
+    <div class="footer">
         <div>
             <h3>프로젝트 소개</h3>
-            <p></p>
+            <p>유한대 졸업 작품</p>
         </div>
         <div>
             <h3>찾아오는 길</h3>
             <!-- 아이콘 백그라운드 이미지로 뿌림 -->
             <address> 
                 <p>14780) 경기도 부천시 경인로 590 (괴안동 185-34)</p>
-                <a href="tel:+820226100768"></a>
-                (+82) 02 - 2610 - 0768
+                <a href="tel:+820226100768">(+82) 02 - 2610 - 0768</a>    
             </address>
         </div>
         <div>
-            <h2><img src="" alt="YUHANtrip"></h2>
+            <h2><a href=""><img src={LogoW} alt="Logo"></a></h2>
             <ul>
-                <li><img src="" alt="Sns"></li>
-                <li><img src="" alt="Sns"></li>
-                <li><img src="" alt="Sns"></li>
-                <li><img src="" alt="Sns"></li>
-                <li><img src="" alt="Sns"></li>
+                <li><a href="https://www.instagram.com/">instagram</a></li>
+                <li><a href="https://www.youtube.com/?app=desktop&hl=ko&gl=KR">youtube</a></li>
+                <li><a href="https://www.facebook.com/?locale=ko_KR">facebook</a></li>
+                <li><a href="https://www.google.co.kr/?hl=ko">google</a></li>
+                <li><a href="https://x.com/?lang=ko">x</a></li>
             </ul>
         </div>
-        <div>
-            <p>All contents Copyright ⓒ Yuhan University.</p>
-        </div>
+        <p>All contents Copyright ⓒ Yuhan University.</p>
     </div>
 </footer>

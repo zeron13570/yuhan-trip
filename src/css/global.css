@@ -1,4 +1,4 @@
-header{font-family: 'NIXGONM-Vb';}
+html{font-family: 'NIXGONM-Vb';}
 header nav ul{
     margin-top: 30px;
 }
@@ -14,16 +14,13 @@ header nav ul li{
     text-align: center;
     line-height: 50px;
 }
-header nav ul li:nth-last-child(3){
-    float: right;
-}
 header nav ul li:nth-last-child(2){
     float: right;
 }
 header nav ul li:last-child{
     float: right;
 }
-header nav ul li h1 img{
+header nav ul li h1 a img{
     width: 120px;
     height: 60px;
 }
@@ -87,3 +84,64 @@ header span a button{
     margin-left: -10px;
     box-sizing: border-box;
 }
+
+/* ! footer */
+footer{
+    background-color: #3bd3b5;
+    padding-top: 40px;
+    margin-top: 70px;
+}
+footer div.footer::after{
+    content: '';
+    visibility: hidden;
+    display: block;
+    clear: both;
+}
+footer div.footer{
+    width: 70%;
+    margin: 0 auto;
+}
+footer h2 a img{
+    width: 120px;
+    height: 60px;
+}
+footer div.footer div{
+    float: left;
+    margin-right: 5%;
+}
+footer div.footer div:nth-child(1){
+    width: 25%;
+}
+footer div.footer div:nth-child(2){
+    width: 40%;
+}
+footer div.footer div:nth-child(3){
+    width: 25%;
+    margin: 0;
+}
+footer div.footer h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+footer div.footer div address{
+    font-size: 16px;
+}
+footer div.footer div address p {
+    margin-bottom: 10px;
+}
+footer div.footer div p{
+    font-size: 16px;
+}
+footer div.footer div:nth-child(3) ul li{
+    float: left;
+}
+footer div.footer div:nth-child(3) ul li a{
+    background-position: center;
+    background-repeat: no-repeat;
+}
+footer div.footer div:nth-child(3) ul li:nth-child(1) a{background-image: url(../img/instagram.png);}
+footer div.footer div:nth-child(3) ul li:nth-child(2) a{background-image: url(../img/youtube.png);}
+footer div.footer div:nth-child(3) ul li:nth-child(3) a{background-image: url(../img/facebook.png);}
+footer div.footer div:nth-child(3) ul li:nth-child(4) a{background-image: url(../img/google.png);}
+footer div.footer div:nth-child(3) ul li:nth-child(5) a{background-image: url(../img/x.png);}
