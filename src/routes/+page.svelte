@@ -22,7 +22,7 @@
     <!-- 버튼에 돋보기 아이콘 백그라운드로 추가 예정 -->
 </header>
  <!-- section 시작 -->
- <section>
+ <section class="index">
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
@@ -92,7 +92,7 @@
                 </a>
             </li>
         </ul>
-        <a href="">트래블로그 더 보기</a>
+        <a href="" class="indexBtn">트래블로그 더 보기</a>
     </div>
     <div class="TripMoment uList">
         <!-- 슬라이드 없이 게시물 자체만 뿌릴 것 -->
@@ -127,7 +127,7 @@
                 </a>
             </li>
         </ul>
-        <a href="">트립 모먼트 더 보기</a>
+        <a href="" class="indexBtn">트립 모먼트 더 보기</a>
     </div>
 </section>
 
