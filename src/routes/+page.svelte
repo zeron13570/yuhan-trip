@@ -1,7 +1,7 @@
 <script>
     import "../css/import.css"
     import Logo from "../img/Logo.png"
-    import LogoW from "../img/LogoWhite.png"
+    import LogoW from "../img/LogoBlack.png"
 </script>
 <header>
     <nav>
@@ -44,7 +44,7 @@
             <li><a href=""><span>전주</span></a></li>
         </ul>
     </div>
-    <div class="TravelLog">
+    <div class="TravelLog uList">
         <h2>트래블로그</h2>
         <ul>
             <li>
@@ -94,7 +94,7 @@
         </ul>
         <a href="">트래블로그 더 보기</a>
     </div>
-    <div class="TripMoment">
+    <div class="TripMoment uList">
         <!-- 슬라이드 없이 게시물 자체만 뿌릴 것 -->
         <h2>트립 모먼트</h2> <input type="button"  value="포스팅하러 가기">
         <ul>
@@ -129,36 +129,6 @@
         </ul>
         <a href="">트립 모먼트 더 보기</a>
     </div>
-    <!-- More div 전부 삭제 -->
-    <div class="More">
-        <a href="">베스트 추천 여행지 
-            <span><img src="" alt="밑으로 내리는 화살표"></span>
-            <!-- ol리스트는 딱히 필요하지 않아보임 (삭제 시 위 span 태그도 제거할 것) -->
-            <ol>
-                <li>속초 여행</li>
-                <li>전라남도 여행</li>
-                <li>등</li>
-                <li>등</li>
-                <li>등</li>
-                <li>이건 없어도 상관 없을 듯</li>
-            </ol>
-        </a>
-        <a href="">인기 여행지 속 추천 관광지
-            <span><img src="" alt="밑으로 내리는 화살표"></span>
-        </a>
-        <a href="">인기 관광지
-            <span><img src="" alt="밑으로 내리는 화살표"></span>
-        </a>
-        <a href="">인기 트래블로그
-            <span><img src="" alt="밑으로 내리는 화살표"></span>
-        </a>
-        <a href="">인기 순위 차트
-            <span><img src="" alt="밑으로 내리는 화살표"></span>
-        </a>
-        <a href="">인기 여행지 트래블로그
-            <span><img src="" alt="밑으로 내리는 화살표"></span>
-        </a>
-    </div>
 </section>
 
 <!-- footer 시작 -->
@@ -179,11 +149,11 @@
         <div>
             <h2><a href=""><img src={LogoW} alt="Logo"></a></h2>
             <ul>
-                <li><a href="https://www.instagram.com/">instagram</a></li>
-                <li><a href="https://www.youtube.com/?app=desktop&hl=ko&gl=KR">youtube</a></li>
-                <li><a href="https://www.facebook.com/?locale=ko_KR">facebook</a></li>
-                <li><a href="https://www.google.co.kr/?hl=ko">google</a></li>
-                <li><a href="https://x.com/?lang=ko">x</a></li>
+                <li><a href="https://www.instagram.com/"></a></li>
+                <li><a href="https://www.youtube.com/?app=desktop&hl=ko&gl=KR"></a></li>
+                <li><a href="https://www.facebook.com/?locale=ko_KR"></a></li>
+                <li><a href="https://www.google.co.kr/?hl=ko"></a></li>
+                <li><a href="https://x.com/?lang=ko"></a></li>
             </ul>
         </div>
         <p>All contents Copyright ⓒ Yuhan University.</p>

@@ -87,9 +87,10 @@ header span a button{
 
 /* ! footer */
 footer{
-    background-color: #3bd3b5;
+    background-color: #e0e0e0;
     padding-top: 40px;
     margin-top: 70px;
+    padding-bottom: 50px;
 }
 footer div.footer::after{
     content: '';
@@ -108,6 +109,7 @@ footer h2 a img{
 footer div.footer div{
     float: left;
     margin-right: 5%;
+    margin-bottom: 30px;
 }
 footer div.footer div:nth-child(1){
     width: 25%;
@@ -118,6 +120,7 @@ footer div.footer div:nth-child(2){
 footer div.footer div:nth-child(3){
     width: 25%;
     margin: 0;
+    margin-bottom: 30px;
 }
 footer div.footer h3{
     font-size: 20px;
@@ -133,15 +136,29 @@ footer div.footer div address p {
 footer div.footer div p{
     font-size: 16px;
 }
+footer div.footer div:nth-child(3) h2{
+    margin-bottom: 30px;
+    text-align: center;
+}
+footer div.footer div:nth-child(3) ul{
+    display: block;
+    margin: 0 auto;
+}
 footer div.footer div:nth-child(3) ul li{
-    float: left;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
 }
 footer div.footer div:nth-child(3) ul li a{
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    width: 50px;
+    height: 50px;
 }
 footer div.footer div:nth-child(3) ul li:nth-child(1) a{background-image: url(../img/instagram.png);}
 footer div.footer div:nth-child(3) ul li:nth-child(2) a{background-image: url(../img/youtube.png);}
 footer div.footer div:nth-child(3) ul li:nth-child(3) a{background-image: url(../img/facebook.png);}
 footer div.footer div:nth-child(3) ul li:nth-child(4) a{background-image: url(../img/google.png);}
-footer div.footer div:nth-child(3) ul li:nth-child(5) a{background-image: url(../img/x.png);}
+footer div.footer div:nth-child(3) ul li:nth-child(5) a{background-image: url(../img/twitter.png);}

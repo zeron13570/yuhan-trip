@@ -3,6 +3,13 @@ section{width: 70%; margin: 0 auto;}
 section div{
     margin-top: 70px;
 }
+section h2{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+/* ! div.PopularTravel */
 /* Popular Travel img */
 section div.PopularTravel > ul li:nth-child(1) a{background-image: url(../img/Seoul.jpg);}
 section div.PopularTravel > ul li:nth-child(2) a{background-image: url(../img/Busan.jpg);}
@@ -17,12 +24,6 @@ section div.PopularTravel ul:last-child li:nth-child(2) a{background-image: url(
 section div.PopularTravel ul:last-child li:nth-child(3) a{background-image: url(../img/Daegu.jpg);}
 section div.PopularTravel ul:last-child li:nth-child(4) a{background-image: url(../img/Jeonju.jpg);}
 
-section h2{
-    text-align: center;
-    font-size: 30px;
-    font-weight: 700;
-    margin-bottom: 50px;
-}
 section div.PopularTravel ul::after {
     content: "";
     visibility: hidden;
@@ -57,4 +58,17 @@ section div.PopularTravel ul li a span{
     margin-top: 80%;
     text-align: center;
     color: white;
+}
+
+/* ! div.uList */
+section div.uList ul{
+    margin-bottom: 30px;
+}
+section div.uList ul li{
+    display: inline-block;
+    width: 20%;
+    margin-right: 5%;
+}
+section div.uList ul li a > img{
+    width: 100%;
 }
