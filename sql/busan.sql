@@ -5,7 +5,7 @@
 --  DDL for Table BUSAN
 --------------------------------------------------------
 
-  CREATE TABLE "SYSTEM"."BUSAN"
+  CREATE TABLE "SYSTEM"."BUSAN" 
    (	"NAME" VARCHAR2(300 BYTE), 
 	"HOTEL" VARCHAR2(300 BYTE), 
 	"TICKET" VARCHAR2(300 BYTE)
