@@ -1,8 +1,7 @@
 /* ! section.index */
-section.index{width: 70%; margin: 0 auto;}
+section.index{width: 70%; margin: 0 auto; text-align: center;}
 section.index div{
     margin-top: 70px;
-    text-align: center;
 }
 section.index h2{
     font-size: 30px;
@@ -65,8 +64,7 @@ section.index div.uList ul{
 }
 section.index div.uList ul li{
     display: inline-block;
-    width: 20%;
-    margin-right: 5%;
+    padding-right: 20px;
 }
 section.index div.uList ul li a > img{
     width: 100%;
@@ -80,4 +78,13 @@ section.index a.indexBtn{
     width: 200px;
     color: white;
     line-height: 40px;
+    text-align: center;
+}
+
+/* ! div.TripMomet */
+section.index div.TripMoment ul li{
+    margin: 0;
+}
+section.index div.TripMoment ul li:last-child{
+    padding: 0;
 }

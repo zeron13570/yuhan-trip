@@ -96,7 +96,7 @@
     </div>
     <div class="TripMoment uList">
         <!-- 슬라이드 없이 게시물 자체만 뿌릴 것 -->
-        <h2>트립 모먼트</h2> <input type="button"  value="포스팅하러 가기">
+        <h2>트립 모먼트</h2>
         <ul>
             <li>
                 <a href="">
