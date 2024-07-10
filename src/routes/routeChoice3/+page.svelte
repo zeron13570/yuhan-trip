@@ -19,10 +19,16 @@
             </ul>
         </nav>
     </header>
-    <div class="routeMain">
-        <h1 class="ask">취향에 맞는 여행 루트를 추천해드려요!</h1>
-        <img src={Map} alt="map" class="mapImg">
-        <a class="recommendation"href="../routeChoice1"><button class="recommendation">바로 추천받기</button></a>
+    <div class="choice">
+        <h1 class="ask">누구와 떠나시나요?</h1>
+        <div class="routeContainer">
+            <a href="../routeChoice4"><button class="recommendation select">혼자</button></a>
+            <a href="../routeChoice4"><button class="recommendation select">연인과</button></a>
+            <a href="../routeChoice4"><button class="recommendation select">친구와</button></a>
+            <a href="../routeChoice4"><button class="recommendation select">부모님과</button></a>
+            <a href="../routeChoice4"><button class="recommendation select">아이와</button></a>
+            <a href="../routeChoice4"><button class="recommendation select">기타</button></a>
+        </div>
     </div>
 
     <footer>

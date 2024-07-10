@@ -138,16 +138,17 @@ button.recommendation:hover {
     box-shadow: 0 2px 4px rgba(59, 211, 181, 0.6);
 }
 
+/* ! h1.ask */
+h1.ask{
+    font-size: 24px;
+    font-weight: 900;
+    margin: 20px 0 50px;
+}
 /* ! div.choice */
 div.choice{
-    margin-top: 10px;
-    width: 1000px;
+    max-width: 1000px;
     text-align: center;
-    margin: 0 auto;
-}
-
-div.choice h1{
-    margin-bottom: 100px;
+    margin: 100px auto 300px;
 }
 
 div.choice div.routeContainer{

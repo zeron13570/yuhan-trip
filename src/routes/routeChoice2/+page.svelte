@@ -19,11 +19,24 @@
             </ul>
         </nav>
     </header>
-    <div class="routeMain">
-        <h1 class="ask">취향에 맞는 여행 루트를 추천해드려요!</h1>
-        <img src={Map} alt="map" class="mapImg">
-        <a class="recommendation"href="../routeChoice1"><button class="recommendation">바로 추천받기</button></a>
+    <div class="choice">
+        <h1 class="ask">여행 기간은?</h1>
+        <div class="routeContainer">
+            <button class="recommendation select" onclick="selectDuration('당일치기')">당일치기</button>
+            <button class="recommendation select" onclick="selectDuration('1박 2일')">1박 2일</button>
+            <button class="recommendation select" onclick="selectDuration('2박 3일')">2박 3일</button>
+            <button class="recommendation select" onclick="selectDuration('3박 4일')">3박 4일</button>
+            <button class="recommendation select" onclick="selectDuration('4박 5일')">4박 5일</button>
+            <button class="recommendation select" onclick="selectDuration('5박 6일')">5박 6일</button>
+        </div>
     </div>
+
+    <script>
+        function selectDuration(duration) {
+            localStorage.setItem('selectedDuration', duration);
+            window.location.href = '../routeChoice3';
+        }
+    </script>
 
     <footer>
         <div class="footer">
