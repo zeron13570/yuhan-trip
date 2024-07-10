@@ -7,9 +7,11 @@
     <nav>
         <ul>
             <li><h1><a href=""><img src={Logo} alt="Logo"></a></h1></li>
-            <li><a href="/routeChoice1">호텔</a></li>
+            <li><a href="">호텔</a></li>
             <li><a href="">투어&티켓</a></li>
             <li><a href="">기차표</a></li>            
+            <li><a href="">경로찾기</a></li>            
+            <li><a href="/routeMain">경로추천</a></li>            
             <li><a href="">로그인</a></li>
             <li><a href="">고객센터</a></li>
         </ul>
