@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최종 페이지</title>
+    <link rel="stylesheet" href="css/style4.css">
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* 지도를 감싸는 div의 스타일 */
+        #map {
+            height: 400px;
+            margin-top: 20px; /* 지도와 다른 요소 사이의 간격 조정 */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><h1><a href=""><img class="logo" src="img/Logo.png" alt="Logo"></a></h1></li>
+                <li><a href="">호텔</a></li>
+                <li><a href="">투어&티켓</a></li>
+                <li><a href="">기차표</a></li>            
+                <li><a href="">로그인</a></li>
+                <li><a href="">고객센터</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="result">
+        <h2><div id="selected-info"></div>
+        <div id="recommendation">추천 일정입니다!</div></h2>
+        <!-- 지도를 표시할 div -->
+        <div id="map"></div>
+        <a href="index.html"><button>다시 해보기</button></a>
+    </div>
+
+    <!-- Leaflet.js JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedLocation = localStorage.getItem('selectedLocation');
+            const selectedDuration = localStorage.getItem('selectedDuration');
+
+            const selectedInfoElement = document.getElementById('selected-info');
+            const recommendationElement = document.getElementById('recommendation');
+
+            if (selectedLocation && selectedDuration) {
+                selectedInfoElement.textContent = `${selectedLocation}, ${selectedDuration}`;
+            } else {
+                selectedInfoElement.textContent = '선택된 정보가 없습니다.';
+            }
+
+            // Leaflet.js를 사용하여 지도 생성 및 설정
+            var map = L.map('map').setView([37.5665, 126.978], 13); // 서울을 중심으로 초기화
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // OpenStreetMap 타일 레이어 추가
+                attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // 선택된 위치를 지도에 마커로 표시
+            if (selectedLocation) {
+                var coordinates = JSON.parse(selectedLocation); // 저장된 좌표를 JSON으로 파싱
+                if (coordinates.lat && coordinates.lng) {
+                    var marker = L.marker([coordinates.lat, coordinates.lng]).addTo(map); // 좌표에 마커 추가
+                    marker.bindPopup("선택된 위치").openPopup(); // 마커에 팝업 추가
+                    map.setView([coordinates.lat, coordinates.lng], 13); // 선택된 위치로 지도의 중심을 이동
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

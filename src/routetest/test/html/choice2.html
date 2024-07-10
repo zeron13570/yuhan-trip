@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 기간 선택</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><h1><a href=""><img class="logo" src="img/Logo.png" alt="Logo"></a></h1></li>
+                <li><a href="">호텔</a></li>
+                <li><a href="">투어&티켓</a></li>
+                <li><a href="">기차표</a></li>            
+                <li><a href="">로그인</a></li>
+                <li><a href="">고객센터</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main">
+        <h1>여행 기간은?</h1>
+        <div class="grid-container">
+            <button onclick="selectDuration('당일치기')">당일치기</button>
+            <button onclick="selectDuration('1박 2일')">1박 2일</button>
+            <button onclick="selectDuration('2박 3일')">2박 3일</button>
+            <button onclick="selectDuration('3박 4일')">3박 4일</button>
+            <button onclick="selectDuration('4박 5일')">4박 5일</button>
+            <button onclick="selectDuration('5박 6일')">5박 6일</button>
+        </div>
+    </div>
+
+    <script>
+        function selectDuration(duration) {
+            localStorage.setItem('selectedDuration', duration);
+            window.location.href = 'choice3.html';
+        }
+    </script>
+</body>
+</html>

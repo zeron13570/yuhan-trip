@@ -1,0 +1,78 @@
+header nav ul {
+    margin-top: 30px;
+}
+header nav ul::after {
+    content: '';
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
+header nav ul li {
+    list-style-type: none;
+    float: left;
+    margin-right: 30px;
+    text-align: center;
+    line-height: 50px;
+}
+header nav ul li:nth-last-child(2) {
+    float: right;
+}
+header nav ul li:last-child {
+    float: right;
+}
+header nav ul li h1 a img {
+    top: 0%;
+    width: 120px;
+    height: 60px;
+}
+header nav ul li a {
+    color: #606060;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+.main {
+    margin-top: 10px;
+    width: 1000px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h1 {
+    margin-bottom: 100px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개의 칸 */
+    gap: 20px; /* 버튼 사이의 간격 */
+    justify-items: center; /* 버튼을 수평 중앙에 정렬 */
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    color: #000;
+    font-size: 16px;
+    background: #fff;
+    border: #3bd3b5;
+    border-style: solid;
+    border-radius: 20px;
+    transition: 0.3s;
+    cursor: pointer; /* 포인터 추가 */
+    margin: 5px;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    background: rgba(59, 211, 181, 0.9);
+    box-shadow: 0 2px 4px rgba(59, 211, 181, 0.6);
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,75 @@
+header nav ul{
+    margin-top: 30px;
+}
+header nav ul::after{
+    content: '';
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
+header nav ul li{
+    list-style-type: none;
+    float: left;
+    margin-right: 30px;
+    text-align: center;
+    line-height: 50px;
+}
+header nav ul li:nth-last-child(2){
+    float: right;
+}
+header nav ul li:last-child{
+    float: right;
+}
+header nav ul li h1 a img{
+    top: 0%;
+    width: 120px;
+    height: 60px;
+}
+header nav ul li a{
+    color: #606060;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+.main{
+    margin-top: 10px;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+map{
+    padding: 50px;
+    position: static;
+    
+}
+button{
+    width: 300px;
+    height: 50px;
+    color: #fff;
+    background: #3bd3b5;
+    font-size: 16px;
+    border:none;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(59,211,181,0.3);
+    transition:0.3s;
+    margin-top: 20px;
+
+}
+button:focus{
+    outline:0;
+}
+button:hover{
+    background: rgba(59,211,181,0.9);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(59,211,181,0.6);
+}
+a{
+    text-decoration: none;
+}
