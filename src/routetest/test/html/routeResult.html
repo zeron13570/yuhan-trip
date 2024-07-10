@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>최종 페이지</title>
-    <link rel="stylesheet" href="css/style4.css">
+    <link rel="stylesheet" href="css/style.css">
     <!-- Leaflet.js CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
@@ -28,12 +28,12 @@
             </ul>
         </nav>
     </header>
-    <div class="result">
+    <div class="choiceResult">
         <h2><div id="selected-info"></div>
         <div id="recommendation">추천 일정입니다!</div></h2>
         <!-- 지도를 표시할 div -->
         <div id="map"></div>
-        <a href="index.html"><button>다시 해보기</button></a>
+        <a href="routeMain.html"><button class="recommendation retry">다시 해보기</button></a>
     </div>
 
     <!-- Leaflet.js JavaScript -->
@@ -51,9 +51,44 @@
             } else {
                 selectedInfoElement.textContent = '선택된 정보가 없습니다.';
             }
-
+            if (selectedLocation == "서울"){
+                var coordinate = [37.5665, 126.978];
+            }
+            else if (selectedLocation == "제주"){
+                var coordinate = [33.3846216, 126.5534925];
+            }
+            else if (selectedLocation == "부산"){
+                var coordinate = [35.2100142, 129.0688702];
+            }
+            else if (selectedLocation == "전주"){
+                var coordinate = [35.8280463, 127.1160156];
+            }
+            else if (selectedLocation == "포항"){
+                var coordinate = [36.0929227, 129.3052666];
+            }
+            else if (selectedLocation == "울산"){
+                var coordinate = [35.5537228, 129.2380554];
+            }
+            else if (selectedLocation == "수원"){
+                var coordinate = [37.2803896, 127.0077847];
+            }
+            else if (selectedLocation == "대구"){
+                var coordinate = [35.8294374, 128.5655119];
+            }
+            else if (selectedLocation == "군산"){
+                var coordinate = [35.9676772, 126.7366293];
+            }
+            else if (selectedLocation == "인천"){
+                var coordinate = [37.4477691, 126.7000885];
+            }
+            else if (selectedLocation == "경주"){
+                var coordinate = [35.8266161, 129.235988];
+            }
+            else if (selectedLocation == "강릉"){
+                var coordinate = [37.7091295, 128.8324462];
+            }
             // Leaflet.js를 사용하여 지도 생성 및 설정
-            var map = L.map('map').setView([37.5665, 126.978], 13); // 서울을 중심으로 초기화
+            var map = L.map('map').setView(coordinate, 10); // 서울을 중심으로 초기화
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // OpenStreetMap 타일 레이어 추가
                 attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
