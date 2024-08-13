@@ -26,8 +26,8 @@ header nav ul li h1 {
 }
 
 header nav ul li h1 a img {
-    width: 120px;
-    height: 60px;
+    max-width: 120px;
+    height: auto;
 }
 
 header nav ul li:nth-last-child(2) {
@@ -97,6 +97,13 @@ header span a button{
     display:inline;
     margin-left: -10px;
     box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+    }
+    /* 기타 필요한 스타일 변경 */
 }
 
 /* ! footer */
