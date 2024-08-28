@@ -61,7 +61,7 @@ header span{
     height: 50px;
     position: relative;
     display: flex;
-    margin: 0 auto;
+    margin: 0 auto 50px;
 }
 header span input{
     width:85%;
@@ -110,7 +110,7 @@ header span a button{
 footer{
     background-color: #e0e0e0;
     padding-top: 40px;
-    margin-top: 70px;
+    margin-top: 100px;
     padding-bottom: 50px;
 }
 footer div.footer::after{

@@ -5,7 +5,7 @@
     import Map from "../../img/map.png"
 </script>
 <body>
-    <header>
+    <!-- <header>
         <nav>
             <ul>
                 <li><h1><a href="../"><img src={Logo} alt="Logo"></a></h1></li>
@@ -18,7 +18,7 @@
                 <li><a href="">고객센터</a></li>
             </ul>
         </nav>
-    </header>
+    </header> -->
     <div class="choice">
         <h1 class="ask">누구와 떠나시나요?</h1>
         <div class="routeContainer">
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <footer>
+    <!-- <footer>
         <div class="footer">
             <div>
                 <h3>프로젝트 소개</h3>
@@ -39,7 +39,6 @@
             </div>
             <div>
                 <h3>찾아오는 길</h3>
-                <!-- 아이콘 백그라운드 이미지로 뿌림 -->
                 <address> 
                     <p>14780) 경기도 부천시 경인로 590 (괴안동 185-34)</p>
                     <a href="tel:+820226100768">(+82) 02 - 2610 - 0768</a>    
@@ -57,5 +56,5 @@
             </div>
             <p>All contents Copyright ⓒ Yuhan University.</p>
         </div>
-    </footer>
+    </footer> -->
 </body>
