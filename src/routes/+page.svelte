@@ -1,5 +1,11 @@
 
-
+<header>
+    <div></div>
+    <span>
+        <input type="text" placeholder="여행지, 명소 등 검색">
+        <a href=""><button></button></a>
+    </span>
+</header>
  <!-- section 시작 -->
  <section class="index">
     <div class="PopularTravel">
@@ -71,7 +77,7 @@
                 </a>
             </li>
         </ul>
-        <a href="" class="indexBtn">트래블로그 더 보기</a>
+        <a href="/travelLog" class="indexBtn">트래블로그 더 보기</a>
     </div>
     <div class="TripMoment uList">
         <!-- 슬라이드 없이 게시물 자체만 뿌릴 것 -->
@@ -106,7 +112,7 @@
                 </a>
             </li>
         </ul>
-        <a href="" class="indexBtn">트립 모먼트 더 보기</a>
+        <a href="/tripMoment" class="indexBtn">트립 모먼트 더 보기</a>
     </div>
 </section>
 

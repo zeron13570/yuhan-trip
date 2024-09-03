@@ -16,11 +16,7 @@
             <li><a href="">고객센터</a></li>
         </ul>
     </nav>
-    <div></div>
-    <span>
-        <input type="text" placeholder="여행지, 명소 등 검색">
-        <a href=""><button></button></a>
-    </span>
+
     <!-- 버튼에 돋보기 아이콘 백그라운드로 추가 예정 -->
 </header>
 
