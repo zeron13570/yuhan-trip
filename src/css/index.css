@@ -116,6 +116,7 @@ div.routeMain .mapImg {
 
 #map{
     height: 500px;
+    margin-top: 20px;
 }
 
 /* ! button.recommendation */

@@ -1,95 +1,101 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>최종 페이지</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Leaflet.js CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        /* 지도를 감싸는 div의 스타일 */
-        #map {
-            height: 400px;
-            margin-top: 20px; /* 지도와 다른 요소 사이의 간격 조정 */
+<script>
+    import { onMount } from 'svelte';
+    import 'leaflet/dist/leaflet.css';
+    import L from 'leaflet';
+
+    onMount(() => {
+        const selectedLocation = localStorage.getItem('selectedLocation');
+        const selectedDuration = localStorage.getItem('selectedDuration');
+
+        const selectedInfoElement = document.getElementById('selected-info');
+        const recommendationElement = document.getElementById('recommendation');
+
+        let coordinate = [37.5665, 126.978]; // Default coordinate (서울)
+
+        if (selectedLocation && selectedDuration) {
+            selectedInfoElement.textContent = `${selectedLocation}, ${selectedDuration}`;
+            switch (selectedLocation) {
+                case "서울":
+                    coordinate = [37.5665, 126.978];
+                    break;
+                case "제주":
+                    coordinate = [33.3846216, 126.5534925];
+                    break;
+                case "부산":
+                    coordinate = [35.2100142, 129.0688702];
+                    break;
+                case "전주":
+                    coordinate = [35.8280463, 127.1160156];
+                    break;
+                case "포항":
+                    coordinate = [36.0929227, 129.3052666];
+                    break;
+                case "울산":
+                    coordinate = [35.5537228, 129.2380554];
+                    break;
+                case "수원":
+                    coordinate = [37.2803896, 127.0077847];
+                    break;
+                case "대구":
+                    coordinate = [35.8294374, 128.5655119];
+                    break;
+                case "군산":
+                    coordinate = [35.9676772, 126.7366293];
+                    break;
+                case "인천":
+                    coordinate = [37.4477691, 126.7000885];
+                    break;
+                case "경주":
+                    coordinate = [35.8266161, 129.235988];
+                    break;
+                case "강릉":
+                    coordinate = [37.7091295, 128.8324462];
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            selectedInfoElement.textContent = '선택된 정보가 없습니다.';
         }
-    </style>
-</head>
-<body>
-    <div class="choiceResult">
-        <h2><div id="selected-info"></div>
-        <div id="recommendation">추천 일정입니다!</div></h2>
-        <!-- 지도를 표시할 div -->
-        <div id="map"></div>
-        <a href="/routeMain"><button class="recommendation retry">다시 해보기</button></a>
-    </div>
 
-    <!-- Leaflet.js JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectedLocation = localStorage.getItem('selectedLocation');
-            const selectedDuration = localStorage.getItem('selectedDuration');
+        // Leaflet 지도 초기화
+        const map = L.map('map').setView(coordinate, 10);
 
-            const selectedInfoElement = document.getElementById('selected-info');
-            const recommendationElement = document.getElementById('recommendation');
+        // 지도 타일 레이어 추가
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-            if (selectedLocation && selectedDuration) {
-                selectedInfoElement.textContent = `${selectedLocation}, ${selectedDuration}`;
-            } else {
-                selectedInfoElement.textContent = '선택된 정보가 없습니다.';
-            }
-            if (selectedLocation == "서울"){
-                var coordinate = [37.5665, 126.978];
-            }
-            else if (selectedLocation == "제주"){
-                var coordinate = [33.3846216, 126.5534925];
-            }
-            else if (selectedLocation == "부산"){
-                var coordinate = [35.2100142, 129.0688702];
-            }
-            else if (selectedLocation == "전주"){
-                var coordinate = [35.8280463, 127.1160156];
-            }
-            else if (selectedLocation == "포항"){
-                var coordinate = [36.0929227, 129.3052666];
-            }
-            else if (selectedLocation == "울산"){
-                var coordinate = [35.5537228, 129.2380554];
-            }
-            else if (selectedLocation == "수원"){
-                var coordinate = [37.2803896, 127.0077847];
-            }
-            else if (selectedLocation == "대구"){
-                var coordinate = [35.8294374, 128.5655119];
-            }
-            else if (selectedLocation == "군산"){
-                var coordinate = [35.9676772, 126.7366293];
-            }
-            else if (selectedLocation == "인천"){
-                var coordinate = [37.4477691, 126.7000885];
-            }
-            else if (selectedLocation == "경주"){
-                var coordinate = [35.8266161, 129.235988];
-            }
-            else if (selectedLocation == "강릉"){
-                var coordinate = [37.7091295, 128.8324462];
-            }
-            // Leaflet.js를 사용하여 지도 생성 및 설정
-            var map = L.map('map').setView(coordinate, 10); // 서울을 중심으로 초기화
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // OpenStreetMap 타일 레이어 추가
-                attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            // 선택된 위치를 지도에 마커로 표시
-            if (selectedLocation) {
-                var coordinates = JSON.parse(selectedLocation); // 저장된 좌표를 JSON으로 파싱
+        // 선택된 위치를 지도에 마커로 표시
+        if (selectedLocation) {
+            try {
+                const coordinates = JSON.parse(selectedLocation);
                 if (coordinates.lat && coordinates.lng) {
-                    var marker = L.marker([coordinates.lat, coordinates.lng]).addTo(map); // 좌표에 마커 추가
-                    marker.bindPopup("선택된 위치").openPopup(); // 마커에 팝업 추가
-                    map.setView([coordinates.lat, coordinates.lng], 13); // 선택된 위치로 지도의 중심을 이동
+                    const marker = L.marker([coordinates.lat, coordinates.lng]).addTo(map);
+                    marker.bindPopup("선택된 위치").openPopup();
+                    map.setView([coordinates.lat, coordinates.lng], 13);
                 }
+            } catch (e) {
+                console.error('Error parsing coordinates:', e);
             }
-        });
-    </script>
-    
-</body>
+        }
+    });
+</script>
+
+<style>
+    /* 지도 스타일 설정 */
+    #map {
+        height: 400px; /* 원하는 높이로 조정 */
+        width: 100%; /* 전체 너비로 조정 */
+    }
+</style>
+
+<div class="choiceResult">
+    <h1 class="ask">
+        <div id="selected-info"></div>
+        <div id="recommendation">추천 일정입니다!</div>
+    </h1>
+    <!-- 지도를 표시할 div -->
+    <div id="map"></div>
+    <a href="/routeMain"><button class="recommendation retry">다시 해보기</button></a>
+</div>
