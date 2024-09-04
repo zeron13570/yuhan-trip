@@ -5,7 +5,8 @@
 </script>
 <body>
     <div class="tripMoment trip">
-        <h1 class="ask">트립모먼트</h1>
-
+        <h1>트립모먼트</h1> <a href="/momentPosting">포스팅</a>
+        <h1>인기 모먼트</h1> 
+        <h1>최신 모먼트</h1>
     </div>
 </body>

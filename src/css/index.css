@@ -59,15 +59,16 @@ section.index div.PopularTravel ul li a span{
 }
 
 /* ! div.uList */
-section.index div.uList ul{
+div.uList ul{
     margin-bottom: 30px;
 }
-section.index div.uList ul li{
+div.uList ul li{
     display: inline-block;
     padding-right: 20px;
 }
-section.index div.uList ul li a > img{
+div.uList ul li a > img{
     width: 100%;
+    margin-bottom: 10px;
 }
 
 /* ! a.indexBtn */
@@ -195,11 +196,41 @@ div.choiceResult button.retry{
 }
 
 /* div.trip */
-div.trip{
-    width: 100%;
+div.trip {
+    width: 70%;
+    margin: 0 auto;
 }
-div.trip h1{
+
+div.trip h1 {
+    width: 50%;
     text-align: center;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 30px;
+    margin: 0 auto 30px;
+}
+div.trip h1:first-child::after {
+    content: '';
+    visibility: hidden;
+    display: block;
+    clear: both;
+}
+div.trip h1:first-child{
+    margin: 20px auto 50px;
+    font-size: 45px;
+    font-weight: 900;
+}
+
+div.trip a.posting {
+    float: right;
+    width: 100px;
+    background-color: #3bd3b5;
+    color: white;
+    border-radius: 5px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 15px;
+}
+
+div.trip div.uList{
+    text-align: center;
 }

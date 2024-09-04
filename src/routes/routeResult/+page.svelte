@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import 'leaflet/dist/leaflet.css';
-    import L from 'leaflet';
+    import L, { marker } from 'leaflet';
 
     onMount(() => {
         const selectedLocation = localStorage.getItem('selectedLocation');
@@ -58,44 +58,25 @@
             selectedInfoElement.textContent = '선택된 정보가 없습니다.';
         }
 
-        // Leaflet 지도 초기화
         const map = L.map('map').setView(coordinate, 10);
 
-        // 지도 타일 레이어 추가
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // 선택된 위치를 지도에 마커로 표시
         if (selectedLocation) {
-            try {
-                const coordinates = JSON.parse(selectedLocation);
-                if (coordinates.lat && coordinates.lng) {
-                    const marker = L.marker([coordinates.lat, coordinates.lng]).addTo(map);
-                    marker.bindPopup("선택된 위치").openPopup();
-                    map.setView([coordinates.lat, coordinates.lng], 13);
-                }
-            } catch (e) {
-                console.error('Error parsing coordinates:', e);
-            }
+            const marker = L.marker(coordinate).addTo(map);
+            marker.bindPopup(selectedLocation).openPopup();
+            map.setView(coordinate, 13);                
         }
     });
 </script>
-
-<style>
-    /* 지도 스타일 설정 */
-    #map {
-        height: 400px; /* 원하는 높이로 조정 */
-        width: 100%; /* 전체 너비로 조정 */
-    }
-</style>
 
 <div class="choiceResult">
     <h1 class="ask">
         <div id="selected-info"></div>
         <div id="recommendation">추천 일정입니다!</div>
     </h1>
-    <!-- 지도를 표시할 div -->
     <div id="map"></div>
     <a href="/routeMain"><button class="recommendation retry">다시 해보기</button></a>
 </div>

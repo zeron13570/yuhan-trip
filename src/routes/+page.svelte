@@ -34,21 +34,21 @@
         <ul>
             <li>
                 <a href="">
-                    <img src='' alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src='' alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
@@ -57,21 +57,21 @@
         <ul>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
@@ -85,28 +85,28 @@
         <ul>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    <img src="" alt="여행지 사진">
+                    <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
                     <span>작성자</span><span><img src="" alt="좋아요"></span>
                 </a>
