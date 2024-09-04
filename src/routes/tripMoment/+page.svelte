@@ -4,11 +4,8 @@
     import LogoW from "../../img/LogoBlack.png"
 </script>
 <body>
-    <div class="choice">
-        <h1 class="ask">선호하는 여행 스타일은?</h1>
-        <div class="routeContainer routeStyle">
-            <a href="../routeResult"><button class="recommendation select">빽빽한 일정</button></a>
-            <a href="../routeResult"><button class="recommendation select">여유로운 일정</button></a>
-        </div>
+    <div class="tripMoment trip">
+        <h1 class="ask">트립모먼트</h1>
+
     </div>
 </body>
