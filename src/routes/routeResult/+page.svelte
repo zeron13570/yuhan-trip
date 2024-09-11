@@ -70,6 +70,7 @@
             map.setView(coordinate, 13);                
         }
     });
+
 </script>
 
 <div class="choiceResult">
@@ -79,4 +80,15 @@
     </h1>
     <div id="map"></div>
     <a href="/routeMain"><button class="recommendation retry">다시 해보기</button></a>
+
+    <div class="resultList">
+        <div>
+            <ol>
+                <li>가게 이름 (주소)</li>
+                <li>가게 이름 (주소)</li>
+                <li>가게 이름 (주소)</li>
+                <li>가게 이름 (주소)</li>
+            </ol>
+        </div>
+    </div>
 </div>
