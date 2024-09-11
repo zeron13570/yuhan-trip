@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import 'leaflet/dist/leaflet.css';
-    import L, { marker } from 'leaflet';
+    import L from 'leaflet';
 
     onMount(() => {
         const selectedLocation = localStorage.getItem('selectedLocation');
@@ -70,7 +70,6 @@
             map.setView(coordinate, 13);                
         }
     });
-
 </script>
 
 <div class="choiceResult">
@@ -79,16 +78,19 @@
         <div id="recommendation">추천 일정입니다!</div>
     </h1>
     <div id="map"></div>
-    <a href="/routeMain"><button class="recommendation retry">다시 해보기</button></a>
-
+    <a href="" class="day">
+        <button class="day">Day1</button>
+        <button class="day">Day2</button>
+        <button class="day">Day3</button>
+    </a>
     <div class="resultList">
-        <div>
-            <ol>
-                <li>가게 이름 (주소)</li>
-                <li>가게 이름 (주소)</li>
-                <li>가게 이름 (주소)</li>
-                <li>가게 이름 (주소)</li>
-            </ol>
-        </div>
+        <ol id="store-list">
+            <li><a href="">가게 이름 <span>(주소)</span></a></li>
+            <li><a href="">가게 이름 <span>(주소)</span></a></li>
+            <li><a href="">가게 이름 <span>(주소)</span></a></li>
+            <li><a href="">가게 이름 <span>(주소)</span></a></li>
+        </ol>            
     </div>
+
+    <a href="/routeMain"><button class="recommendation retry">다시 해보기</button></a>
 </div>

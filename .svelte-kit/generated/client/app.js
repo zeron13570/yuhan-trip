@@ -12,22 +12,24 @@ export const nodes = [
 	() => import('./nodes/8'),
 	() => import('./nodes/9'),
 	() => import('./nodes/10'),
-	() => import('./nodes/11')
+	() => import('./nodes/11'),
+	() => import('./nodes/12')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
 		"/": [2],
-		"/momentPosting": [3],
-		"/routeChoice1": [4],
-		"/routeChoice2": [5],
-		"/routeChoice3": [6],
-		"/routeChoice4": [7],
-		"/routeMain": [8],
-		"/routeResult": [9],
-		"/travelLog": [10],
-		"/tripMoment": [11]
+		"/locationDetail": [3],
+		"/momentPosting": [4],
+		"/routeChoice1": [5],
+		"/routeChoice2": [6],
+		"/routeChoice3": [7],
+		"/routeChoice4": [8],
+		"/routeMain": [9],
+		"/routeResult": [10],
+		"/travelLog": [11],
+		"/tripMoment": [12]
 	};
 
 export const hooks = {

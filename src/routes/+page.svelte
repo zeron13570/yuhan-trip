@@ -11,7 +11,7 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><a href=""><span>서울</span></a></li>
+            <li><a href="../locationDetail"><span>서울</span></a></li>
             <li><a href=""><span>부산</span></a></li>
             <li><a href=""><span>제주</span></a></li>
             <li><a href=""><span>강릉</span></a></li>
