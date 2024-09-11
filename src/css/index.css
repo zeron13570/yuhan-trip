@@ -39,9 +39,14 @@ section.index div.PopularTravel ul li{
     margin-right: 4%;
     margin-bottom: 30px;
 
-}section.index div.PopularTravel ul li:last-child{
+}
+section.index div.PopularTravel ul li:last-child{
     margin-right: 0;
 }
+section.index div.PopularTravel ul li:hover{
+    transform: scale(1.1);
+}
+
 section.index div.PopularTravel ul li a{
     display: inline-block;
     width: 100%;
@@ -371,6 +376,9 @@ div.locationDetail div.LogMoment ul li{
     border-radius: 10px;
     border: 1px solid lightgray;
     margin-right: 30px;
+}
+div.locationDetail div.LogMoment ul li:not(:first-child):hover{
+    transform: scale(1.1);
 }
 div.locationDetail div.LogMoment ul li.LogMoment{
     width: 150px;
