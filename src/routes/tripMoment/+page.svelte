@@ -5,8 +5,29 @@
 </script>
 <body>
     <div class="tripMoment trip">
-        <h1>트립모먼트</h1> <a href="/momentPosting" class="posting">포스팅</a>
-        <h1>인기 모먼트</h1> 
+        <h1>트립모먼트</h1>
+        <div class="header">
+            <div class="dropBtn">
+                <button class="dropbtn">지역 <span class="arrow">&#9662;</span></button>
+                <div class="dropdown-content">
+                    <a href="#">서울</a>
+                    <a href="#">부산</a>
+                    <a href="#">제주</a>
+                    <a href="#">강릉</a>
+                    <a href="#">군산</a>
+                    <a href="#">경주</a>
+                    <a href="#">인천</a>
+                    <a href="#">수원</a>
+                    <a href="#">포항</a>
+                    <a href="#">울산</a>
+                    <a href="#">대구</a>
+                    <a href="#">전주</a>
+                </div>
+            </div>
+            <h1>인기 모먼트</h1> 
+            <a href="/momentPosting" class="posting">포스팅</a>
+        </div>
+        
         <div class="uList">
             <ul class=""> 
                 <li>

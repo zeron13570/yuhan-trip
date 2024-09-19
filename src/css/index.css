@@ -8,6 +8,7 @@ section.index h2{
     font-weight: 700;
     margin-bottom: 50px;
 }
+
 /* ! div.PopularTravel */
 /* Popular Travel img */
 section.index div.PopularTravel > ul li:nth-child(1) a{background-image: url(../img/Seoul.jpg);}
@@ -261,7 +262,7 @@ div.choiceResult div.resultList ol#store-list li a span{
     display: block;
 }
 
-/* div.trip */
+/* ! div.trip */
 div.trip {
     width: 70%;
     margin: 0 auto;
@@ -301,7 +302,53 @@ div.trip div.uList{
     text-align: center;
 }
 
-/* div.locatoionDetail */
+/* ! .dropbtn */
+.dropbtn {
+    width: 100px;
+    font-size: 16px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 30px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* 그림자 */
+    z-index: 1;
+}
+
+.dropBtn:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.arrow {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+/* ! div.locatoionDetail */
 div.locationDetail nav.selectList{
     width: 70%; 
     margin: 100px auto;
