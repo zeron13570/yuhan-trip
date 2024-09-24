@@ -455,3 +455,71 @@ div.locationDetail div.LogMoment ul li img{
     margin-bottom: 20px;
     border-radius: 10px;
 }
+
+/* ! div.posting */
+div.posting{
+    width: 70%;
+    margin: 0 auto;
+}
+
+div.posting h1{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* ! div.postingOption */
+div.postingOption > span{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+div.posting div.imgSelect {
+    height: 400px;
+    display: flex;
+    padding: 10px;
+    border: #ccc dashed 2px;
+    margin-bottom: 20px;
+}
+
+div.posting form.inputImg {
+    margin-right: 20px;
+}
+
+div.posting form.inputImg input{
+    display: none;
+}
+
+div.posting form.inputImg label{
+    width: 100px;
+    cursor: pointer;
+    background-color: #3bd3b5;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: block;
+    line-height: 30px;
+    text-align: center;
+}
+
+div.posting div.addImage {
+    width: calc(150px * 5 + 40px);
+    height: 150px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+div.posting a.posting{
+    display: block;
+    width: 100px;
+    background-color: #3bd3b5;
+    color: white;
+    border-radius: 5px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+    margin: 0 auto;
+}

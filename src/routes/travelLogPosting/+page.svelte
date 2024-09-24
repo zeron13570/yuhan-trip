@@ -1,6 +1,6 @@
 <body>
-    <div class="tripMomentP posting">
-        <h1>트립 모먼트 포스팅하기</h1>
+    <div class="travelLogP posting">
+        <h1>트래블로그 포스팅하기</h1>
 
         <div class="postingOption">  
             <span>사진 업로드</span>
@@ -28,6 +28,12 @@
                         <a href="#">전주</a>
                     </div>
                 </div>
+            </div>
+            <div>
+                <p>제목</p>
+                <input type="text" placeholder="멋진 제목을 입력해 보아요~!">
+                <p>여행 스토리</p>
+                <input type="text" placeholder="여행에서 있었던 일을 공유해 주세요!">
             </div>
             <a class="posting">포스팅</a>
         </div>
