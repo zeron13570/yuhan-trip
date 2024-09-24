@@ -33,22 +33,22 @@
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
             </ul>
@@ -59,22 +59,22 @@
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
             </ul>
@@ -82,22 +82,22 @@
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <span>작성자</span><span><img src="" alt="좋아요"></span>
+                        <p>작성자</p>
+                        <span>지역명</span><span><img src="" alt="좋아요"></span>
                     </a>
                 </li>
             </ul>
