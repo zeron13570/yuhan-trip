@@ -257,9 +257,9 @@ div.choiceResult div.resultList ol#store-list li::before {
         font-weight: bold;
         text-align: center;
 }
-div.choiceResult div.resultList ol#store-list li:nth-child(2n+1){
+/* div.choiceResult div.resultList ol#store-list li:nth-child(2n+1)::before{
     background-color: red;
-}
+} */
 
 div.choiceResult div.resultList ol#store-list li a span{
     display: block;
