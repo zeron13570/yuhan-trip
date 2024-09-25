@@ -524,3 +524,82 @@ div.posting a.posting{
     margin: 0 auto;
     cursor: pointer;
 }
+
+/* ! div.editor */
+div.editor{
+    min-height: 200px;
+    border: 1px solid #ccc;
+    text-align: center;
+    outline: none;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+/* ! div.write */
+div.write p{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+div.write input{
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+}
+
+div.write textarea{
+    font-size: 16px;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+/* ! customerService */
+section.customerService{
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+section.customerService h1{ 
+    font-size: 27px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+section.customerService ul li{
+    font-size: 20px;
+    line-height: 50px;
+    border: dashed 2px #ccc;
+    margin-bottom: 10px;
+}
+
+.question {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+input[type="radio"] {
+    display: none; 
+}
+
+.answer {
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.3s ease, margin 0.3s ease; 
+}
+
+input[type="radio"]:checked + .question{
+    display: block;
+    background-color: lightgray;
+}
+
+input[type="radio"]:checked + .question + .answer {
+    max-height: 100px;
+}

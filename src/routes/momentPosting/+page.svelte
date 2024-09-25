@@ -1,6 +1,6 @@
 <body>
     <div class="travelLogP posting">
-        <h1>트래블로그 포스팅하기</h1>
+        <h1>트립모먼트 포스팅하기</h1>
 
         <div class="postingOption">  
             <span>사진 업로드</span>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#" class="posting">포스팅</a>
+            <a href="#" class="posting"  onclick="submitPost()">포스팅</a>
         </div>
     </div>
 
@@ -70,6 +70,13 @@
             const button = document.getElementById('selected-region');
             button.textContent = region; // 선택한 지역 이름으로 버튼 텍스트 업데이트
             button.appendChild(document.createElement('span')).innerHTML = ' <span class="arrow">&#9662;</span>'; // 화살표 추가
+        }
+
+        function submitPost() {
+            const content = document.querySelector('.editor').innerHTML;
+            console.log(content); // 포스트 내용을 콘솔에 출력
+            alert('포스팅 완료!'); // 단순한 피드백
+            // 여기서 포스트 내용을 서버로 전송하는 로직을 추가할 수 있습니다.
         }
     </script>   
 </body>
