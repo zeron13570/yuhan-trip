@@ -1,19 +1,23 @@
 <script>
     import { onMount } from 'svelte';
     import 'leaflet/dist/leaflet.css';
-    import L from 'leaflet';
+    let L;
 
-    onMount(() => {
+    let selectedInfo = '';
+    let coordinate = [37.5665, 126.978]; // Default coordinate (서울)
+
+
+    onMount(async () => {
+
+        const {default: leaflet } = await import('leaflet');
+        L = leaflet;
+
+        const choiceList1 = JSON.parse(localStorage.getItem('choiceList1')) || [];
         const selectedLocation = localStorage.getItem('selectedLocation');
         const selectedDuration = localStorage.getItem('selectedDuration');
 
-        const selectedInfoElement = document.getElementById('selected-info');
-        const recommendationElement = document.getElementById('recommendation');
-
-        let coordinate = [37.5665, 126.978]; // Default coordinate (서울)
-
         if (selectedLocation && selectedDuration) {
-            selectedInfoElement.textContent = `${selectedLocation}, ${selectedDuration}`;
+            selectedInfo = `${selectedLocation}, ${selectedDuration}`;
             switch (selectedLocation) {
                 case "서울":
                     coordinate = [37.5665, 126.978];
@@ -55,7 +59,7 @@
                     break;
             }
         } else {
-            selectedInfoElement.textContent = '선택된 정보가 없습니다.';
+            selectedInfo = '선택된 정보가 없습니다.';
         }
 
         const map = L.map('map').setView(coordinate, 10);
@@ -74,11 +78,11 @@
 
 <div class="choiceResult">
     <h1 class="ask">
-        <div id="selected-info"></div>
+        <div> {selectedInfo}</div>
         <div id="recommendation">추천 일정입니다!</div>
     </h1>
-    <div id="map"></div>
-    <a href="" class="day">
+    <div id="map" style="height: 400px;"></div>
+    <a href="#" class="day">
         <button class="day">Day1</button>
         <button class="day">Day2</button>
         <button class="day">Day3</button>

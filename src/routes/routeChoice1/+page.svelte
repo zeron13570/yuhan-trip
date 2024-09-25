@@ -18,9 +18,66 @@
     </div>
 
     <script>
+
+        let choiceList1 = JSON.parse(localStorage.getItem('choiceList1')) || [];
+        localStorage.setItem('choiceList1', JSON.stringify(choiceList1));
+
+        console.log(choiceList1); // 초기화된 배열을 콘솔에 출력
+
         function selectLocation(location) {
+            let locationNumber;
+
+            switch(location) {
+                case "서울":
+                    locationNumber = 1;
+                    break;
+                case "부산":
+                    locationNumber = 2;
+                    break;
+                case "제주":
+                    locationNumber = 3;
+                    break;
+                case "전주":
+                    locationNumber = 4;
+                    break;
+                case "포항":
+                    locationNumber = 5;
+                    break;
+                case "울산":
+                    locationNumber = 6;
+                    break;
+                case "수원":
+                    locationNumber = 7;
+                    break;
+                case "대구":
+                    locationNumber = 8;
+                    break;
+                case "군산":
+                    locationNumber = 9;
+                    break;
+                case "인천":
+                    locationNumber = 10;
+                    break;
+                case "경주":
+                    locationNumber = 11;
+                    break;
+                case "강릉":
+                    locationNumber = 12;
+                    break;
+            }
+
+            // 여행 기간 선택이 이미 있는 경우, 그 값을 덮어쓰기
+            if (choiceList1.length > 0) {
+                choiceList1[0] = locationNumber; // 배열의 두 번째 값 덮어쓰기
+            } else {
+                choiceList1.push(locationNumber); // 아직 값이 없으면 추가
+            }
+
+            localStorage.setItem('choiceList1', JSON.stringify(choiceList1));
+            
             localStorage.setItem('selectedLocation', location);
             window.location.href = '../routeChoice2';
         }
     </script>
+
 </body>
