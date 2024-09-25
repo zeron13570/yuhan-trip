@@ -1,9 +1,3 @@
-<script>
-    import "../../css/import.css"
-    import Logo from "../../img/Logo.png"
-    import LogoW from "../../img/LogoBlack.png"
-    import Map from "../../img/map.png"
-</script>
 <body>
     <div class="choice">
         <h1 class="ask">어디로 떠나시나요?</h1>

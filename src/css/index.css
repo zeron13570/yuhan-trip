@@ -522,4 +522,5 @@ div.posting a.posting{
     text-align: center;
     font-size: 16px;
     margin: 0 auto;
+    cursor: pointer;
 }

@@ -2,6 +2,7 @@
     import "../css/import.css"
     import Logo from "../img/Logo.png"
     import LogoW from "../img/LogoBlack.png"
+    import Map from "../img/map.png"
 </script>
 <header>
     <nav>
@@ -42,11 +43,11 @@
         <div>
             <h2><a href=""><img src={LogoW} alt="Logo"></a></h2>
             <ul>
-                <li><a href="https://www.instagram.com/"></a></li>
-                <li><a href="https://www.youtube.com/?app=desktop&hl=ko&gl=KR"></a></li>
-                <li><a href="https://www.facebook.com/?locale=ko_KR"></a></li>
+                <li><a href="https://www.instagram.com/yuhan_univ/"></a></li>
+                <li><a href="https://www.youtube.com/channel/UCA5VD_0BbiKgx6MFVCQnQZA/featured"></a></li>
+                <li><a href="https://www.facebook.com/yuhancollege/?locale=ko_KR"></a></li>
                 <li><a href="https://www.google.co.kr/?hl=ko"></a></li>
-                <li><a href="https://x.com/?lang=ko"></a></li>
+                <li><a href="https://x.com/i/flow/login?redirect_after_login=%2Fyuhancollege"></a></li>
             </ul>
         </div>
         <p>All contents Copyright ⓒ Yuhan University.</p>
