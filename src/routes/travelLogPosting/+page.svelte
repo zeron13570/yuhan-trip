@@ -1,5 +1,5 @@
 <body>
-    <div class="traveLogP posting">
+    <div class="travelLogP posting">
         <h1>트래블로그 포스팅하기</h1>
         <div class="dropBtn">
             <button class="dropbtn" id="selected-region">지역 <span class="arrow">&#9662;</span></button> 
@@ -18,8 +18,9 @@
                 <a href="#" onclick="selectRegion('전주')">전주</a>
             </div>
         </div>
-
-        <div class="editor" contenteditable="true" placeholder="여기에 글을 입력하세요..."></div>
+        <p>제목</p>
+        <input type="text" placeholder="멋진 제목을 지어보아요">
+        <div class="editor" contenteditable="true" placeholder="여행에서 있던 일을 공유해주세요~!"></div>
         <input type="file" accept="image/*" multiple id="file-input" class="upload-btn" onchange="loadFile(this)">    
         <a href="#" class="posting" onclick="submitPost()">포스팅</a>
     </div>

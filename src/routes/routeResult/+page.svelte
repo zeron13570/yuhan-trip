@@ -81,7 +81,7 @@
         <div> {selectedInfo}</div>
         <div id="recommendation">추천 일정입니다!</div>
     </h1>
-    <div id="map" style="height: 400px;"></div>
+    <div id="map"></div>
     <a href="#" class="day">
         <button class="day">Day1</button>
         <button class="day">Day2</button>
