@@ -166,7 +166,7 @@
 
         const polyline = new window.kakao.maps.Polyline({
           path: path,
-          strokeWeight: 2,
+          strokeWeight: 5,
           strokeColor: '#FF0000',
           strokeOpacity: 0.8,
           strokeStyle: 'solid',
