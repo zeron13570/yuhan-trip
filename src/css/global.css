@@ -113,6 +113,7 @@ footer{
     margin-top: 100px;
     padding-bottom: 50px;
 }
+
 footer div.footer::after{
     content: '';
     visibility: hidden;
@@ -123,10 +124,12 @@ footer div.footer{
     width: 70%;
     margin: 0 auto;
 }
+
 footer h2 a img{
     width: 120px;
     height: 60px;
 }
+
 footer div.footer div{
     float: left;
     margin-right: 5%;
@@ -143,20 +146,29 @@ footer div.footer div:nth-child(3){
     margin: 0;
     margin-bottom: 30px;
 }
+
 footer div.footer h3{
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
 }
+
 footer div.footer div address{
     font-size: 16px;
 }
+
+footer div.footer div:nth-child(1) p{
+    line-height: 25px;
+}
+
 footer div.footer div address p {
     margin-bottom: 10px;
 }
+
 footer div.footer div p{
     font-size: 16px;
 }
+
 footer div.footer div:nth-child(3) h2{
     margin-bottom: 30px;
     text-align: center;
