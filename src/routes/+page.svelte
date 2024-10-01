@@ -15,21 +15,21 @@
         <h2>인기 여행지</h2>
         <ul>
             <li><a href="../locationDetail"><span>서울</span></a></li>
-            <li><a href=""><span>부산</span></a></li>
-            <li><a href=""><span>제주</span></a></li>
-            <li><a href=""><span>강릉</span></a></li>
+            <li><a href="../locationDetail"><span>부산</span></a></li>
+            <li><a href="../locationDetail"><span>제주</span></a></li>
+            <li><a href="../locationDetail"><span>강릉</span></a></li>
         </ul>
         <ul>
-            <li><a href=""><span>군산</span></a></li>
-            <li><a href=""><span>경주</span></a></li>
-            <li><a href=""><span>인천</span></a></li>
-            <li><a href=""><span>수원</span></a></li>
+            <li><a href="../locationDetail"><span>군산</span></a></li>
+            <li><a href="../locationDetail"><span>경주</span></a></li>
+            <li><a href="../locationDetail"><span>인천</span></a></li>
+            <li><a href="../locationDetail"><span>수원</span></a></li>
         </ul>
         <ul>
-            <li><a href=""><span>포항</span></a></li>
-            <li><a href=""><span>울산</span></a></li>
-            <li><a href=""><span>대구</span></a></li>
-            <li><a href=""><span>전주</span></a></li>
+            <li><a href="../locationDetail"><span>포항</span></a></li>
+            <li><a href="../locationDetail"><span>울산</span></a></li>
+            <li><a href="../locationDetail"><span>대구</span></a></li>
+            <li><a href="../locationDetail"><span>전주</span></a></li>
         </ul>
     </div>
     <div class="TravelLog uList">

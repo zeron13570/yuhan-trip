@@ -3,31 +3,45 @@
     import 'leaflet/dist/leaflet.css';
     let L;
 
+    //storeData.js 파일에서 storeData 가져오기
+    import { storeData } from '../storeData.js';
+
     let selectedInfo = '';
     let coordinate = [37.5665, 126.978]; // Default coordinate (서울)
     let recommendations = []; // 추천 가게 목록
     let dayCount = 0; // Day 버튼 개수
+    let selectedDay = 0; // 선택된 Day (기본값으로 Day 1)
+    let map; // Leaflet 지도 객체
+    let markers = []; // 현재 지도에 표시된 마커들
 
-    const storeData = {
-        '1111': [ // 서울 - 당일치기 - 혼자 - 빽빽여행
-            { name: "가게 A", address: "서울특별시 A" },
-            { name: "가게 B", address: "서울특별시 B" },
-            { name: "가게 C", address: "서울특별시 C" },
-            { name: "가게 D", address: "서울특별시 D" },
-            { name: "가게 E", address: "서울특별시 E" },
-            { name: "가게 F", address: "서울특별시 F" }
-        ],
-        '1112': [ // 서울 - 당일치기 - 혼자 - 여유로운여행
-            { name: "가게 A", address: "서울특별시 A" },
-            { name: "가게 B", address: "서울특별시 B" },
-            { name: "가게 C", address: "서울특별시 C" },
-            { name: "가게 D", address: "서울특별시 D" }
-        ]
-        
-    };
+    // 지도 초기화 및 마커 업데이트 함수
+    function updateMarkers() {
+        if (!map) return;
+
+        // 기존 마커 제거
+        markers.forEach(marker => marker.remove());
+        markers = [];
+
+        // 마커의 경계를 정의하기 위한 LatLngBounds 객체 생성
+        const bounds = L.latLngBounds([]);
+
+        // 새로운 마커 추가
+        (recommendations[selectedDay] || []).forEach((store, index) => {
+            const marker = L.marker([store.lat, store.lng]).addTo(map);
+            marker.bindPopup(`<b>${store.name}</b><br>${store.address}`).openPopup();
+            markers.push(marker); // 마커 리스트에 저장
+
+            // 마커의 좌표를 bounds에 추가
+            bounds.extend([store.lat, store.lng]);
+        });
+
+        // 마커가 존재할 경우에만 fitBounds 호출
+        if (markers.length > 0) {
+            map.fitBounds(bounds);
+        }
+    }
 
     onMount(async () => {
-
         const {default: leaflet } = await import('leaflet');
         L = leaflet;
 
@@ -40,68 +54,49 @@
  
             // choiceList1의 값으로 추천 가게 ID 생성
             const id = choiceList1.join(''); // 예: [1, 1, 1, 1] -> "1111"
-            recommendations = storeData[id] || []; // 해당 조합이 없으면 빈 배열로 초기화
-          
-            // Day 버튼 개수 설정
-            dayCount = choiceList1[1]; // 두 번째 값 사용
-
-            switch (selectedLocation) {
-                case "서울":
-                    coordinate = [37.5665, 126.978];
-                    break;
-                case "제주":
-                    coordinate = [33.3846216, 126.5534925];
-                    break;
-                case "부산":
-                    coordinate = [35.2100142, 129.0688702];
-                    break;
-                case "전주":
-                    coordinate = [35.8280463, 127.1160156];
-                    break;
-                case "포항":
-                    coordinate = [36.0929227, 129.3052666];
-                    break;
-                case "울산":
-                    coordinate = [35.5537228, 129.2380554];
-                    break;
-                case "수원":
-                    coordinate = [37.2803896, 127.0077847];
-                    break;
-                case "대구":
-                    coordinate = [35.8294374, 128.5655119];
-                    break;
-                case "군산":
-                    coordinate = [35.9676772, 126.7366293];
-                    break;
-                case "인천":
-                    coordinate = [37.4477691, 126.7000885];
-                    break;
-                case "경주":
-                    coordinate = [35.8266161, 129.235988];
-                    break;
-                case "강릉":
-                    coordinate = [37.7091295, 128.8324462];
-                    break;
-                default:
-                    break;
+            if (storeData[id]) {
+                recommendations = storeData[id].days; // days 배열 저장
+                dayCount = recommendations.length; // Day의 개수로 설정
             }
         } else {
-            selectedInfo = '선택된 정보가 없습니다.';
+                selectedInfo = '선택된 정보가 없습니다.';
         }
 
-        const map = L.map('map').setView(coordinate, 10);
+        map = L.map('map').setView(coordinate, 10);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        if (selectedLocation) {
-            const marker = L.marker(coordinate).addTo(map);
-            marker.bindPopup(selectedLocation).openPopup();
-            map.setView(coordinate, 13);                
-        }
+        updateMarkers();
     });
+
+    // Day 버튼 클릭 시 호출되는 함수
+    function selectDay(dayIndex) {
+        selectedDay = dayIndex;
+        updateMarkers(); // Day가 변경되면 마커를 업데이트
+    }
 </script>
+
+<style>
+:global(.custom-div-icon) {
+    background-color: transparent;
+    border: none;
+}
+
+:global(.marker-number) {
+    background-color: #3bd3b5;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+  }
+</style>
 
 <div class="choiceResult">
     <h1 class="ask">
@@ -112,16 +107,18 @@
 
     <div class="day-buttons">
         {#each Array(dayCount) as _, index}
-            <button class="day">Day {index + 1}</button>
+            <button class="day" on:click={() => selectDay(index)}>
+                Day {index + 1}
+            </button>
         {/each}
     </div>
-
+    
     <div class="resultList">
         <ol id="store-list">
-            {#each recommendations as { name, address }}
+            {#each (recommendations[selectedDay] || []) as { name, address }}
                 <li><a href="">{name} <span>({address})</span></a></li>
             {/each}
-            {#if recommendations.length === 0}
+            {#if (recommendations[selectedDay] || []).length === 0}
                 <li>추천 가게가 없습니다.</li>
             {/if}
         </ol>          
