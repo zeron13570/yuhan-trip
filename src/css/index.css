@@ -1,12 +1,9 @@
 /* ! section.index */
 section.index{width: 70%; margin: 0 auto; text-align: center;}
-section.index div{
-    margin-top: 70px;
-}
 section.index h2{
     font-size: 30px;
     font-weight: 700;
-    margin-bottom: 50px;
+    margin: 50px 0;
 }
 
 /* ! div.PopularTravel */
@@ -77,16 +74,17 @@ div.uList ul li a > img{
     margin-bottom: 10px;
 }
 
-div.uList ul li span img{
-    width: 20px;
-    height: 20px;
-}
-
 /* ! div.like */
 div.like{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    margin: 0;
+}
+
+div.like span img{
+    width: 20px;
+    height: auto;
 }
 
 /* ! a.indexBtn */
@@ -431,6 +429,8 @@ div.locationDetail div.localDescription ul li:first-child{
     width: 70%;
 }
 
+/* ! LogMoment */
+
 div.locationDetail div.LogMoment{
     width: 70%;
     margin: 0 auto;
@@ -444,6 +444,7 @@ div.locationDetail div.LogMoment ul{
 }
 
 div.locationDetail div.LogMoment ul li{
+    max-width: 200px;
     border-radius: 10px;
     border: 1px solid lightgray;
     margin-right: 30px;
@@ -459,6 +460,10 @@ div.locationDetail div.LogMoment ul li.LogMoment{
     font-weight: 700;
 }
 
+div.locationDetail div.LogMoment ul li p{
+    line-height: 20px;
+}
+
 div.locationDetail div.LogMoment ul li.LogMoment h1{
     margin-bottom: 10px;
 }
@@ -472,9 +477,9 @@ div.locationDetail div.LogMoment ul li.LogMoment a button{
     border-radius: 10px;
 }
 
-div.locationDetail div.LogMoment ul li img{
-    margin-bottom: 20px;
+div.locationDetail div.LogMoment ul li a > img{
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 /* ! div.posting */
