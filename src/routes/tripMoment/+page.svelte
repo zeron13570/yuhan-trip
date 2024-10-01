@@ -25,7 +25,7 @@
                 </div>
             </div>
             <h1>인기 모먼트</h1> 
-            <a href="/momentPosting" class="posting">포스팅</a>
+            <a href="/tripMomentPosting" class="posting">포스팅</a>
         </div>
         
         <div class="uList">

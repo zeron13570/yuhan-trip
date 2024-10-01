@@ -19,7 +19,9 @@ export const nodes = [
 	() => import('./nodes/15'),
 	() => import('./nodes/16'),
 	() => import('./nodes/17'),
-	() => import('./nodes/18')
+	() => import('./nodes/18'),
+	() => import('./nodes/19'),
+	() => import('./nodes/20')
 ];
 
 export const server_loads = [];
@@ -29,18 +31,20 @@ export const dictionary = {
 		"/customerService": [3],
 		"/findRoute": [4],
 		"/locationDetail": [5],
-		"/momentPosting": [6],
-		"/myPage": [7],
-		"/routeChoice1": [8],
-		"/routeChoice2": [9],
-		"/routeChoice3": [10],
-		"/routeChoice4": [11],
-		"/routeMain": [12],
-		"/routeResult": [13],
-		"/test": [14],
-		"/test/list": [15],
+		"/myPage": [6],
+		"/routeChoice1": [7],
+		"/routeChoice2": [8],
+		"/routeChoice3": [9],
+		"/routeChoice4": [10],
+		"/routeMain": [11],
+		"/routeResult": [12],
+		"/test": [13],
+		"/test/list": [14],
+		"/travelLogDetail": [16],
 		"/travelLogPosting": [17],
-		"/travelLog": [16],
+		"/travelLog": [15],
+		"/tripMomentDetail": [19],
+		"/tripMomentPosting": [20],
 		"/tripMoment": [18]
 	};
 

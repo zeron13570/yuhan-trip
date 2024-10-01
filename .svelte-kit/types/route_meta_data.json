@@ -3,7 +3,6 @@
 	"/customerService": [],
 	"/findRoute": [],
 	"/locationDetail": [],
-	"/momentPosting": [],
 	"/myPage": [],
 	"/routeChoice1": [],
 	"/routeChoice2": [],
@@ -13,7 +12,10 @@
 	"/routeResult": [],
 	"/test": [],
 	"/test/list": [],
+	"/travelLogDetail": [],
 	"/travelLogPosting": [],
 	"/travelLog": [],
+	"/tripMomentDetail": [],
+	"/tripMomentPosting": [],
 	"/tripMoment": []
 }
