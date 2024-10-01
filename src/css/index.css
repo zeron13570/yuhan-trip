@@ -704,3 +704,10 @@ section.myPage h3{
     font-size: 16px;
     margin-bottom: 15px;
 }
+
+/* ! section.travelLogD */
+section.travelLogD{
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
