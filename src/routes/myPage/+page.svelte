@@ -5,7 +5,7 @@
 
 <body>
     <section class="myPage">
-        <h1>마이페이지</h1>
+        <div class="userID"><span class="userID">ID</span>님, 환영합니다!</div>
         <h2>내가 작성한 글</h2>
         <h3>트래블로그</h3>
         <div class="uList">

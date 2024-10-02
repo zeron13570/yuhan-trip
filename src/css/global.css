@@ -30,6 +30,10 @@ header nav ul li h1 a img {
     height: auto;
 }
 
+header nav ul li:nth-last-child(3) {
+    float: right;
+}
+
 header nav ul li:nth-last-child(2) {
     float: right;
 }
