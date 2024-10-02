@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte';
     import 'leaflet/dist/leaflet.css';
-    let L;
 
     //storeData.js 파일에서 storeData 가져오기
     import { storeData } from '../storeData.js';
@@ -25,19 +24,29 @@
         // 마커의 경계를 정의하기 위한 LatLngBounds 객체 생성
         const bounds = L.latLngBounds([]);
 
-        // 새로운 마커 추가
+        // 가게 목록에 맞춰 마커 추가
         (recommendations[selectedDay] || []).forEach((store, index) => {
-            const marker = L.marker([store.lat, store.lng]).addTo(map);
-            marker.bindPopup(`<b>${store.name}</b><br>${store.address}`).openPopup();
-            markers.push(marker); // 마커 리스트에 저장
+            const customIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div class="marker-number">${index + 1}</div>`,
+                iconSize: [30, 42], // 아이콘 크기
+                iconAnchor: [15, 42]
+            });
+            const marker = L.marker([store.lat, store.lng], { icon: customIcon }).addTo(map);
+            // 팝업은 클릭 시에만 열리도록 설정
+            marker.bindPopup(`<b>${store.name}</b><br>${store.address}`);
 
-            // 마커의 좌표를 bounds에 추가
+            // LatLngBounds에 마커 좌표 추가
             bounds.extend([store.lat, store.lng]);
+
+            markers.push(marker);
         });
 
-        // 마커가 존재할 경우에만 fitBounds 호출
+        // 마커가 있을 때만 fitBounds 호출 (비동기 처리를 위한 setTimeout)
         if (markers.length > 0) {
-            map.fitBounds(bounds);
+            setTimeout(() => {
+                map.fitBounds(bounds, { padding: [20, 20] }); // 여유 공간을 두고 확대/축소
+            }, 100); // 마커가 추가된 후 지연 시간을 두고 fitBounds 호출
         }
     }
 
@@ -79,23 +88,29 @@
 </script>
 
 <style>
+/* Svelte에서 전역으로 적용되도록 :global() 사용 */
 :global(.custom-div-icon) {
-    background-color: transparent;
-    border: none;
-}
+        background-color: transparent;
+        border: none;
+    }
 
-:global(.marker-number) {
-    background-color: #3bd3b5;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 30px;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-  }
+    :global(.marker-number) {
+        background-color: #3bd3b5;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 30px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+    }
+
+    :global(.marker-number:hover) {
+        transform: scale(1.1);
+        transition: 0.3s ease;
+    }
 </style>
 
 <div class="choiceResult">

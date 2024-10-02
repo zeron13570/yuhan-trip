@@ -1,8 +1,17 @@
 <script>
     import "../css/import.css"
     import Logo from "../img/Logo.png"
+    import Login from "../img/Login.png"
     import LogoW from "../img/LogoBlack.png"
     import Map from "../img/map.png"
+
+    const key = '{1d28a43f8e4e4915d4c2010b36c8a8c7}';
+    const redirect_uri = 'http://localhost:5173';
+    const url = `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=${redirect_uri}&response_type=code`;
+
+    function kakaoLogin(){
+        location.href=url;
+    }
 </script>
 <header>
     <nav>
@@ -13,7 +22,7 @@
             <li><a href="https://www.letskorail.com/">기차표</a></li>            
             <li><a href="/findRoute">경로찾기</a></li>            
             <li><a href="/routeMain">경로추천</a></li>            
-            <li><a href="">로그인</a></li>
+            <li><img src={Login} alt="Login" on:click="{kakaoLogin}"/></li>
             <li><a href="/myPage">마이페이지</a></li>
             <li><a href="/customerService">고객센터</a></li>  
         </ul>
