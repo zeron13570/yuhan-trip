@@ -429,6 +429,16 @@ div.locationDetail div.localDescription ul li:first-child{
     width: 70%;
 }
 
+div.locationDetail div.localDescription ul li h1{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* ! #weatherIcon */
+img#weatherIcon{
+    display: none;
+}
+
 /* ! LogMoment */
 
 div.locationDetail div.LogMoment{
