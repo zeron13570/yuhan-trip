@@ -1,7 +1,6 @@
 <script>
     import "../css/import.css"
     import Logo from "../img/Logo.png"
-    import Login from "../img/Login.png"
     import LogoW from "../img/LogoBlack.png"
     import Map from "../img/map.png"
 
@@ -22,7 +21,7 @@
             <li><a href="https://www.letskorail.com/">기차표</a></li>            
             <li><a href="/findRoute">경로찾기</a></li>            
             <li><a href="/routeMain">경로추천</a></li>            
-            <li><img src={Login} alt="Login" on:click="{kakaoLogin}"/></li>
+            <li><a href ="#" on:click="{kakaoLogin}">로그인</a></li>
             <li><a href="/myPage">마이페이지</a></li>
             <li><a href="/customerService">고객센터</a></li>  
         </ul>
