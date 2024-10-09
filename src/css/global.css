@@ -50,7 +50,7 @@ header nav ul li a {
 }
 
 header div{
-    height: 250px;
+    height: 300px;
     background-image: url("../img/top.jpg");
     background-position: center;
     background-size: cover;
@@ -58,57 +58,12 @@ header div{
     margin-bottom: 35px;
 }
 
-header span{
-    text-align: center;
-    display: block;
-    width: 500px;
-    height: 50px;
-    position: relative;
-    display: flex;
-    margin: 0 auto 50px;
-}
-header span input{
-    width:85%;
-    height:100%;
-    font-size:1em;
-    padding-left: 15px;
-    font-style: oblique;
-    display:inline;
-    outline:none;
-    border: 1px solid lightgray;
-    box-sizing: border-box;
-    color:black;
-}
-header span a{
-    display: block;
-    width: 15%;
-}
-header span button:hover{
-    cursor: pointer;
-}
-header span a button{
-    background-image: url(../img/search.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height:100%;
-    border: 1px solid lightgray;
-    /* background-color: rgba(26, 188, 156, 0.68); */
-    background-color: #3bd3b5;
-    font-size:1em;
-    outline:none;
-    display:inline;
-    margin-left: -10px;
-    box-sizing: border-box;
-}
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     header nav ul {
         flex-direction: column;
     }
-    /* 기타 필요한 스타일 변경 */
-}
+} */
 
 /* ! footer */
 footer{

@@ -47,7 +47,7 @@
         <div class="uList">
             <ul>
                 <li>
-                    <a href="">
+                    <a href="/travelLogDetail">
                         <img src="https://placehold.co/400x200" alt="여행지 사진">
                         <p>본문 제목</p>
                         <div class="like">

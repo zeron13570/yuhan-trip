@@ -80,6 +80,7 @@ div.like{
     align-items: center;
     justify-content: space-evenly;
     margin: 0;
+    cursor: pointer;
 }
 
 div.like span img{
@@ -377,21 +378,13 @@ div.locationDetail nav.selectList{
 }
 
 div.locationDetail nav.selectList ul{
+    width: 70%;
     display: flex; /* flexbox 사용 */
     flex-wrap: wrap; /* 자식 요소가 넘칠 때 줄 바꿈 */
-    justify-content: center; /* 자식 요소들을 가운데 정렬 */
-}
-div.locationDetail nav.selectList ul::after{
-    content: "";
-    visibility: hidden;
-    display: block;
-    clear: both;
+    justify-content: space-between; 
+    margin: 0 auto;
 }
 
-div.locationDetail nav.selectList ul li{
-    float: left;
-    margin-right: 50px;
-}
 div.locationDetail nav.selectList ul li:last-child{
     margin: 0;
 }
@@ -424,19 +417,35 @@ div.locationDetail div.localDescription ul{
 }
 div.locationDetail div.localDescription ul li{
     width: 30%;
+    padding: 15px;
 }
 div.locationDetail div.localDescription ul li:first-child{
     width: 70%;
+    padding-left: 100px;
 }
 
 div.locationDetail div.localDescription ul li h1{
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
+    line-height: 50px;
+}
+
+div.locationDetail div.localDescription ul li:nth-child(2) h1{
+    text-align: center;
+}
+
+div.locationDetail div.localDescription ul li p {
+    line-height: 30px;
 }
 
 /* ! #weatherIcon */
 img#weatherIcon{
     display: none;
+}
+
+/* ! weather */
+div.weather{
+    text-align: center;
 }
 
 /* ! LogMoment */
@@ -451,6 +460,7 @@ div.locationDetail div.LogMoment ul{
     margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 div.locationDetail div.LogMoment ul li{
@@ -724,4 +734,40 @@ section.travelLogD{
     width: 70%;
     margin: 0 auto;
     text-align: center;
+}
+section.travelLogD h1{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+
+section.travelLogD ul{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto 30px;
+    font-size: 18px;
+} 
+
+section.travelLogD div.blogContent{
+    width: 70%;
+    margin: 0 auto;
+}
+
+section.travelLogD div.blogContent img{
+    margin-bottom: 30px;
+}
+section.travelLogD div.blogContent p{
+    margin-bottom: 30px;
+    line-height: 25px;
+}
+
+section.travelLogD div.blogContent{
+    margin-bottom: 50px;
+}
+
+div.blogLike span img{
+    width: 40px;
+    height: auto;
 }

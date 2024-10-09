@@ -26,8 +26,6 @@
             <li><a href="/customerService">고객센터</a></li>  
         </ul>
     </nav>
-
-    <!-- 버튼에 돋보기 아이콘 백그라운드로 추가 예정 -->
 </header>
 
     <!-- 각 page.svelte의 내용을 slot 사이에 넣음 -->

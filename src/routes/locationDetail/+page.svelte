@@ -1,6 +1,6 @@
 <script>
-    import Like from "../../img/like.png"
-    import noLike from "../../img/notLike.png"
+    import Like from "../../img/like.png";
+    import noLike from "../../img/notLike.png";
 </script>
 <body>
     <div class="locationDetail">
@@ -16,22 +16,23 @@
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>지역명</h1>
-                    <p>지역 상세 설명</p>
+                    <h1>서울</h1>
+                    <p>
+                        대한민국의 수도인 서울은 현대적인 고층 빌딩, 
+                        첨단 기술의 지하철, 대중문화와 사찰, 고궁, 
+                        노점상이 공존하는 <br>
+                        대도시입니다. 주목할 만한 명소로는 곡선으로 이루어진 외관과 옥상 공원을
+                        특징으로 하는 초현대적 디자인의 컨벤션 홀인 동대문디자인플라자, 
+                        한때 7,000여 칸의 방이 자리하던 경복궁, 회화나무와 소나무 
+                        고목이 있는 조계사가 있습니다.
+                    </p>
                 </li>
                 <li>
-                    <!-- 날짜 다시 시도해보기 -->
-                    <h1 id="todayDate">
-                        <script>
-                            date = new Date();
-                            year = date.getFullYear();
-                            month = date.getMonth() + 1;
-                            day = date.getDate();
-                            document.getElementById("current_date").innerHTML = month + "/" + day + "/" + year;
-                        </script>
-                    </h1>
-                    <img id="weatherIcon" alt="날씨 아이콘" />
-                    <p id="weatherInfo">날씨 아이콘 및 기온</p>                    
+                    <h1>오늘의 날씨</h1>                 
+                    <div class="weather">
+                        <img id="weatherIcon" alt="날씨 아이콘" />
+                        <p id="weatherInfo"></p>  
+                    </div>     
                 </li>
             </ul>
         </div>
@@ -42,7 +43,6 @@
                     <h1>트래블로그</h1>
                     <a href="../travelLog"><button>더보기</button></a>    
                 </li>
-
                 <li><a href="">
                     <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>본문 제목</p>
@@ -77,7 +77,6 @@
                     <h1>트립모먼트</h1>
                     <a href="../tripMoment"><button>더보기</button></a>
                 </li>
-
                 <li>
                     <a href="">
                         <img src="https://placehold.co/200x200" alt="여행지 사진">
@@ -131,39 +130,34 @@
     </div>
 
     <script>
-        const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 본인의 API 키
-        const lat = 37.5553; // 서울역의 위도
-        const lon = 126.9707; // 서울역의 경도
-
+        // 날씨 정보를 가져오는 함수
         async function getWeather() {
+            const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
+            const lat = 37.5553;
+            const lon = 126.9707;
+
             try {
-                const response = await fetch(`https://thingproxy.freeboard.io/fetch/https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
                 if (!response.ok) {
-                    throw new Error('날씨 정보를 가져올 수 없습니다.');
+                    throw new Error('날씨 정보를 가져오는 데 실패했습니다: ' + response.statusText);
                 }
                 const data = await response.json();
                 const temperature = data.main.temp;
                 const icon = data.weather[0].icon;
 
+                // 날씨 정보 표시
                 document.getElementById('weatherInfo').innerText = `온도: ${temperature}°C`;
-                document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-                document.getElementById('weatherIcon').style.display = 'inline';
+                const weatherIcon = document.getElementById('weatherIcon');
+                weatherIcon.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+                weatherIcon.style.display = 'inline'; // 아이콘 보이기
+
             } catch (error) {
                 console.error("날씨 정보 가져오기 오류:", error);
                 document.getElementById('weatherInfo').innerText = '날씨 정보를 가져오는 데 오류가 발생했습니다.';
             }
         }
 
-        function displayTodayDate() {
-            const today = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            const formattedDate = today.toLocaleDateString('ko-KR', options);
-            document.getElementById('todayDate').innerText = formattedDate;
-        }
-
-        window.onload = () => {
-            displayTodayDate();
-            getWeather();
-        };
+        // 페이지가 로드되면 날씨 정보 가져오기
+        window.onload = getWeather; // 페이지 로드 시 바로 호출
     </script>
 </body>

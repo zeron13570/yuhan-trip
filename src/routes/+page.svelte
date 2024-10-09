@@ -4,10 +4,6 @@
 </script>
 <header>
     <div></div>
-    <span>
-        <input type="text" placeholder="여행지, 명소 등 검색">
-        <a href=""><button></button></a>
-    </span>
 </header>
 <!-- section 시작 -->
 <section class="index">
