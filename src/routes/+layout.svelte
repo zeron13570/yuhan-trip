@@ -1,15 +1,66 @@
 <script>
-    import "../css/import.css"
-    import Logo from "../img/Logo.png"
-    import LogoW from "../img/LogoBlack.png"
-    import Map from "../img/map.png"
+    import "../css/import.css";
+    import Logo from "../img/Logo.png";
+    import LogoW from "../img/LogoBlack.png";
+    import Map from "../img/map.png";
+    import { onMount } from "svelte";  // Svelte에서 onMount 사용
 
-    const key = '{1d28a43f8e4e4915d4c2010b36c8a8c7}';
-    const redirect_uri = 'http://localhost:5173';
-    const url = `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=${redirect_uri}&response_type=code`;
+    let isLoggedIn = false;  // 로그인 여부를 확인하는 변수
+    let userName = '';       // 로그인한 사용자의 이름
 
-    function kakaoLogin(){
-        location.href=url;
+    // 카카오 SDK 불러오기
+    onMount(() => {
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+        script.onload = () => {
+            // 카카오 SDK 초기화
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7'); // 발급받은 JavaScript 키로 초기화
+            console.log(Kakao.isInitialized()); // SDK 초기화 확인
+
+            // 로그인 여부 체크
+            if (Kakao.Auth.getAccessToken()) {
+                getUserInfo();  // 로그인되어 있으면 사용자 정보 가져오기
+            }
+        };
+        document.head.appendChild(script);
+    });
+
+    // 카카오 로그인 함수
+    function kakaoLogin() {
+        Kakao.Auth.login({
+            success: function (authObj) {
+                console.log(authObj); // 로그인 성공 시 토큰 정보 출력
+                getUserInfo();  // 로그인 후 사용자 정보 가져오기
+            },
+            fail: function (err) {
+                console.error(err);
+                alert('로그인 실패');
+            }
+        });
+    }
+
+    // 사용자 정보 가져오기
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function (response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname; // 사용자 이름 가져오기
+                console.log(response);
+            },
+            fail: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // 로그아웃 함수
+    function kakaoLogout() {
+        Kakao.Auth.logout(() => {
+            isLoggedIn = false;
+            userName = '';
+            alert('로그아웃 되었습니다.');
+        });
     }
 </script>
 <header>
@@ -20,8 +71,14 @@
             <li><a href="https://travel.interpark.com/tour/package/main?utm_source=google&utm_medium=cpc&utm_campaign=tour_abroadpackage_20240730_paidsearch_pc_cpc&utm_term=%EC%9D%B8%ED%84%B0%ED%8C%8C%ED%81%AC%20%ED%88%AC%EC%96%B4&utm_content=consider_34&gad_source=1&gclid=EAIaIQobChMIq7eYyqPdiAMVdVkPAh2dbj1bEAAYASAAEgKcBPD_BwE">투어&티켓</a></li>
             <li><a href="https://www.letskorail.com/">기차표</a></li>            
             <li><a href="/findRoute">경로찾기</a></li>            
-            <li><a href="/routeMain">경로추천</a></li>            
-            <li><a href ="#" on:click="{kakaoLogin}">로그인</a></li>
+            <li><a href="/routeMain">경로추천</a></li>
+            {#if isLoggedIn}
+                <!-- 로그인된 경우 로그아웃 버튼 표시 -->
+                <li><a href="../" on:click={kakaoLogout}>로그아웃</a></li>
+            {:else}
+                <!-- 로그인되지 않은 경우 로그인 버튼 표시 -->
+                <li><a href ="" on:click={kakaoLogin}>로그인</a></li>
+            {/if}           
             <li><a href="/myPage">마이페이지</a></li>
             <li><a href="/customerService">고객센터</a></li>  
         </ul>
