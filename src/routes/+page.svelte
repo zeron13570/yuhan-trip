@@ -1,6 +1,15 @@
 <script>
     import Like from "../img/like.png";
     import noLike from "../img/notLike.png";
+    import { onMount } from "svelte";
+
+    let posts = []; // 트래블로그 데이터 저장
+
+    // 로컬 스토리지에서 포스팅 데이터 불러오기
+    onMount(() => {
+        let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+        posts = storedPosts; // 불러온 데이터를 posts에 저장
+    });
 </script>
 <header>
     <div></div>
@@ -31,56 +40,21 @@
     <div class="TravelLog uList">
         <h2>트래블로그</h2>
         <ul>
-            <li><a href="">
-                <img src="https://placehold.co/200x200" alt="여행지 사진">
-                <p>본문 제목</p>
-                <div class="like">
-                    <span>작성자</span>
-                    <span><img src={Like} alt="좋아요" class="like-icon" data-liked="true"></span>
-                </div>
-            </a></li>
-            <li><a href="">
-                <img src="https://placehold.co/200x200" alt="여행지 사진">
-                <p>본문 제목</p>
-                <div class="like">
-                    <span>작성자</span>
-                    <span><img src={Like} alt="좋아요" class="like-icon" data-liked="true"></span>
-                </div>
-            </a></li>
-            <li><a href="">
-                <img src="https://placehold.co/200x200" alt="여행지 사진">
-                <p>본문 제목</p>
-                <div class="like">
-                    <span>작성자</span>
-                    <span><img src={noLike} alt="좋아요" class="like-icon" data-liked="false"></span>
-                </div>
-            </a></li>
-        </ul>
-        <ul>
-            <li><a href="">
-                <img src="https://placehold.co/200x200" alt="여행지 사진">
-                <p>본문 제목</p>
-                <div class="like">
-                    <span>작성자</span>
-                    <span><img src={Like} alt="좋아요" class="like-icon" data-liked="true"></span>
-                </div>
-            </a></li>
-            <li><a href="">
-                <img src="https://placehold.co/200x200" alt="여행지 사진">
-                <p>본문 제목</p>
-                <div class="like">
-                    <span>작성자</span>
-                    <span><img src={noLike} alt="좋아요" class="like-icon" data-liked="false"></span>
-                </div>
-            </a></li>
-            <li><a href="">
-                <img src="https://placehold.co/200x200" alt="여행지 사진">
-                <p>본문 제목</p>
-                <div class="like">
-                    <span>작성자</span>
-                    <span><img src={Like} alt="좋아요" class="like-icon" data-liked="true"></span>
-                </div>
-            </a></li>
+            {#each posts.slice(0, 6) as post}  <!-- 처음 6개만 선택 -->
+            <li>
+                <a href={`/travelLogDetail/${post.id}`}>
+                    <img src={post.image || "https://placehold.co/200x200"} alt="여행지 사진">
+                    <p>{post.title}</p>
+                    <div class="like">
+                        <span>작성자: {post.username}</span>
+                        <span>
+                            <img src={post.likedBy && post.likedBy.includes(localStorage.getItem("username")) ? Like : noLike}
+                                 alt="좋아요" class="like-icon" data-liked={post.likedBy && post.likedBy.includes(localStorage.getItem("username"))}>
+                        </span>
+                    </div>
+                </a>
+            </li>
+            {/each}
         </ul>
         <a href="/travelLog" class="indexBtn">트래블로그 더 보기</a>
     </div>

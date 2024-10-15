@@ -22,32 +22,34 @@ export const nodes = [
 	() => import('./nodes/18'),
 	() => import('./nodes/19'),
 	() => import('./nodes/20'),
-	() => import('./nodes/21')
+	() => import('./nodes/21'),
+	() => import('./nodes/22')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
 		"/": [2],
-		"/customerService": [3],
-		"/findRoute": [4],
-		"/locationDetail": [5],
-		"/login": [6],
-		"/myPage": [7],
-		"/routeChoice1": [8],
-		"/routeChoice2": [9],
-		"/routeChoice3": [10],
-		"/routeChoice4": [11],
-		"/routeMain": [12],
-		"/routeResult": [13],
-		"/test": [14],
-		"/test/list": [15],
-		"/travelLogDetail": [17],
-		"/travelLogPosting": [18],
-		"/travelLog": [16],
-		"/tripMomentDetail": [20],
-		"/tripMomentPosting": [21],
-		"/tripMoment": [19]
+		"/check": [3],
+		"/customerService": [4],
+		"/findRoute": [5],
+		"/locationDetail": [6],
+		"/login": [7],
+		"/myPage": [8],
+		"/routeChoice1": [9],
+		"/routeChoice2": [10],
+		"/routeChoice3": [11],
+		"/routeChoice4": [12],
+		"/routeMain": [13],
+		"/routeResult": [14],
+		"/test": [15],
+		"/test/list": [16],
+		"/travelLogDetail": [18],
+		"/travelLogPosting": [19],
+		"/travelLog": [17],
+		"/tripMomentDetail": [21],
+		"/tripMomentPosting": [22],
+		"/tripMoment": [20]
 	};
 
 export const hooks = {

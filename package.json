@@ -25,6 +25,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"leaflet": "^1.9.4"
+		"express": "^4.21.1",
+		"leaflet": "^1.9.4",
+		"multer": "^1.4.5-lts.1"
 	}
 }

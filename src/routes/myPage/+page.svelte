@@ -1,34 +1,53 @@
 <script>
-    import Like from "../../img/like.png"
-    import noLike from "../../img/notLike.png"
-    import { onMount } from "svelte";  // Svelte의 onMount 사용
+    import { onMount } from "svelte";
+    let posts = [];
+    let username = "";
+    let myPosts = [];
+    let isLoggedIn = false;
+    let userName = "";
 
-    let isLoggedIn = false;  // 로그인 여부를 확인하는 변수
-    let userName = '';       // 로그인한 사용자의 이름
-
-    // 카카오 SDK 불러오기
+    // 카카오 SDK 초기화 및 사용자 로그인 여부 확인
     onMount(() => {
         const script = document.createElement("script");
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
         script.onload = () => {
-            // 카카오 SDK 초기화
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7'); // 발급받은 JavaScript 키로 초기화
-            console.log(Kakao.isInitialized()); // SDK 초기화 확인
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+            console.log(Kakao.isInitialized());
 
-            // 로그인 여부 체크
             if (Kakao.Auth.getAccessToken()) {
-                getUserInfo();  // 로그인되어 있으면 사용자 정보 가져오기
+                getUserInfo();  // 사용자 정보 가져오기
             }
+
+            // 로컬 스토리지에서 포스트 불러오기
+            username = localStorage.getItem("username") || "";
+            let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+            posts = storedPosts;
+            myPosts = posts.filter(post => post.username === username);  // 사용자 작성 글만 필터링
         };
         document.head.appendChild(script);
     });
 
-    // 카카오 로그인 함수
+    // 사용자 정보 가져오기
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function (response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname;
+                localStorage.setItem("username", userName);  // 로컬 스토리지에 저장
+            },
+            fail: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // 카카오 로그인
     function kakaoLogin() {
         Kakao.Auth.login({
             success: function (authObj) {
-                console.log(authObj); // 로그인 성공 시 토큰 정보 출력
-                getUserInfo();  // 로그인 후 사용자 정보 가져오기
+                console.log(authObj);
+                getUserInfo();  // 로그인 성공 후 사용자 정보 가져오기
             },
             fail: function (err) {
                 console.error(err);
@@ -37,22 +56,31 @@
         });
     }
 
-    // 사용자 정보 가져오기
-    function getUserInfo() {
-        Kakao.API.request({
-            url: '/v2/user/me',
-            success: function (response) {
-                isLoggedIn = true;
-                userName = response.kakao_account.profile.nickname; // 사용자 이름 가져오기
-                console.log(response);
-            },
-            fail: function (error) {
-                console.error(error);
-            }
-        });
+    // 글 삭제 기능
+    function deletePost(postId) {
+        let updatedPosts = posts.filter(post => post.id !== postId);
+        localStorage.setItem("posts", JSON.stringify(updatedPosts));
+        myPosts = updatedPosts.filter(post => post.username === username);  // 내 글 리스트 갱신
     }
 
-    // 로그아웃 함수
+    // 좋아요 토글 기능
+    function toggleLike(postId) {
+        let post = posts.find(p => p.id === postId);
+        if (!post.likedBy) post.likedBy = [];
+
+        if (post.likedBy.includes(username)) {
+            post.likes--;
+            post.likedBy = post.likedBy.filter(user => user !== username);
+        } else {
+            post.likes++;
+            post.likedBy.push(username);
+        }
+
+        localStorage.setItem("posts", JSON.stringify(posts));
+        myPosts = posts.filter(post => post.username === username);  // 내 글 리스트 갱신
+    }
+
+    // 카카오 로그아웃
     function kakaoLogout() {
         Kakao.Auth.logout(() => {
             isLoggedIn = false;
@@ -65,141 +93,34 @@
 <body>
     <section class="myPage">
         {#if isLoggedIn}
-        <div class="userID"><span class="userID"></span>{userName}님, 환영합니다!</div>
-        <h2>내가 작성한 글</h2>
-        <h3>트래블로그</h3>
-        <div class="uList">
-            <ul>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <div class="like">
-                            <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <div class="like">
-                            <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <div class="like">
-                            <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <h3>트립모먼트</h3>
-        <div class="uList">
-            <ul>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>작성자</p>
-                        <div class="like">
-                            <span>지역명</span><span><img src={noLike} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>작성자</p>
-                        <div class="like">
-                            <span>지역명</span><span><img src={noLike} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>작성자</p>
-                        <div class="like">
-                            <span>지역명</span><span><img src={noLike} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <h2>내가 좋아하는 글</h2>
-        <h3>트래블로그</h3>
-        <div class="uList">
-            <ul>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <div class="like">
-                            <span>작성자</span><span><img src={Like} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <div class="like">
-                            <span>작성자</span><span><img src={Like} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>본문 제목</p>
-                        <div class="like">
-                            <span>작성자</span><span><img src={Like} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <h3>트립모먼트</h3>   
-        <div class="uList">
-            <ul>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>작성자</p>
-                        <div class="like">
-                            <span>지역명</span><span><img src={Like} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>작성자</p>
-                        <div class="like">
-                            <span>지역명</span><span><img src={Like} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="https://placehold.co/200x200" alt="여행지 사진">
-                        <p>작성자</p>
-                        <div class="like">
-                            <span>지역명</span><span><img src={Like} alt="좋아요"></span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+            <div class="userID"><span class="userID"></span>{userName}님, 환영합니다!</div>
+            {#if myPosts.length > 0}
+                <h2>내가 작성한 글</h2>
+                <ul>
+                    {#each myPosts as post}
+                        <li>
+                            <a href={`/travelLogDetail/${post.id}`}>
+                                <img src={post.image} alt="여행지 사진">
+                                <p>{post.title}</p>
+                            </a>
+                            <div class="like">
+                                <span>작성자: {post.username}</span>
+                                <span>
+                                    <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike}
+                                         alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                                </span>
+                                <span>{post.likes} Likes</span>
+                                <button on:click={() => deletePost(post.id)}>삭제</button>
+                            </div>
+                        </li>
+                    {/each}
+                </ul>
+            {:else}
+                <p>작성한 글이 없습니다.</p>
+            {/if}
         {:else}
-        <!-- 로그인 안 된 경우 -->
-        <h2>로그인 후 이용해주세요</h2>
-        <button on:click={kakaoLogin}>카카오 로그인</button>
-    {/if}
+            <h2>로그인 후 이용해주세요</h2>
+            <button on:click={kakaoLogin}>카카오 로그인</button>
+        {/if}
     </section>
 </body>
