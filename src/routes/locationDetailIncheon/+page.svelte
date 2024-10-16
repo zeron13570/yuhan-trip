@@ -9,19 +9,19 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="https://www.yanolja.com/search/제주" target="_blank">호텔</a></li>
-                <li><a href="https://search-travel.interpark.com/search?q=제주" target="_blank">투어&티켓</a></li>
+                <li><a href="https://www.yanolja.com/search/인천" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=인천" target="_blank">투어&티켓</a></li>
             </ul>
         </nav>
 
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>제주</h1>
+                    <h1>인천</h1>
                     <p>
-                        제주특별자치도는 대한민국의 제주도와 부근 섬들을 관할하는
-                        특별자치도이다. <br> 대한민국에서 가장 큰 섬인 제주도를 비롯하여 마라도, 
-                        우도, 추자군도 등을 포함한 <br> 유인도 8개, 무인도 55개로 구성되어 있다.
+                        인천광역시는 대한민국 북서부에 있는 광역시이다. 서쪽으로 서해, 동쪽으로 서울특별시 강서구,
+                        경기도 부천시, <br> 남동쪽으로 시흥시, 북쪽으로 김포시와 접한다. 인천항과 인천국제공항을 
+                        중심으로 제조업과 물류와 산업이 발달하였다. <br>시청 소재지는 남동구 구월동이고, 행정 구역은 8구 2군이다.
                     </p>
                 </li>
                 <li>
@@ -129,8 +129,8 @@
     <script>
     async function getWeather() {
         const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat =  33.3661;
-        const lon = 126.5440;
+        const lat =  37.4563;
+        const lon = 126.7052;
 
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);

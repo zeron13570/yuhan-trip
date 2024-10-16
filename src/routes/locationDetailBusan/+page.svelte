@@ -9,9 +9,8 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="">호텔</a></li>
-                <li><a href="">투어&티켓</a></li>
-                <li><a href="">기차표</a></li>       
+                <li><a href="https://www.yanolja.com/search/부산" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=부산" target="_blank">투어&티켓</a></li>    
             </ul>
         </nav>
 

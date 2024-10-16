@@ -9,19 +9,19 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="https://www.yanolja.com/search/제주" target="_blank">호텔</a></li>
-                <li><a href="https://search-travel.interpark.com/search?q=제주" target="_blank">투어&티켓</a></li>
+                <li><a href="https://www.yanolja.com/search/울산" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=울산" target="_blank">투어&티켓</a></li> 
             </ul>
         </nav>
 
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>제주</h1>
+                    <h1>울산</h1>
                     <p>
-                        제주특별자치도는 대한민국의 제주도와 부근 섬들을 관할하는
-                        특별자치도이다. <br> 대한민국에서 가장 큰 섬인 제주도를 비롯하여 마라도, 
-                        우도, 추자군도 등을 포함한 <br> 유인도 8개, 무인도 55개로 구성되어 있다.
+                        울산광역시는 대한민국 남동부에 있는 광역시이다. 서쪽으로 경상남도 밀양시, 양산시, 
+                        경상북도 청도군, <br> 북쪽으로 경상북도 경주시, 남쪽으로 부산광역시 기장군과 접한다. 
+                        태화강이 울산광역시를 통과하여 동해로 흐르며, <br>동해안에 울산항과 방어진항, 온산항이 위치한다.
                     </p>
                 </li>
                 <li>
@@ -126,11 +126,11 @@
         </section>
     </div>
 
-    <script>
+<script>
     async function getWeather() {
         const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat =  33.3661;
-        const lon = 126.5440;
+        const lat = 35.5394;
+        const lon = 129.3114;
 
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
@@ -155,7 +155,5 @@
 
     // DOMContentLoaded 이벤트 리스너로 날씨 정보 가져오기
     document.addEventListener('DOMContentLoaded', getWeather);
-
-    </script>
-    
+</script>
 </body>

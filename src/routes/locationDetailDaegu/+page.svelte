@@ -9,19 +9,20 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="https://www.yanolja.com/search/제주" target="_blank">호텔</a></li>
-                <li><a href="https://search-travel.interpark.com/search?q=제주" target="_blank">투어&티켓</a></li>
+                <li><a href="https://www.yanolja.com/search/대구" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=대구" target="_blank">투어&티켓</a></li>   
             </ul>
         </nav>
 
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>제주</h1>
+                    <h1>대구</h1>
                     <p>
-                        제주특별자치도는 대한민국의 제주도와 부근 섬들을 관할하는
-                        특별자치도이다. <br> 대한민국에서 가장 큰 섬인 제주도를 비롯하여 마라도, 
-                        우도, 추자군도 등을 포함한 <br> 유인도 8개, 무인도 55개로 구성되어 있다.
+                        대구광역시는 대한민국의 동남부 내륙에 위치한 광역시이다.
+                        2024년 6월 행정안전부 기준 237만명으로 대한민국 도시 중 <br>
+                        4번째로 인구가 많다. 조선시대에는 경상감영 소재지로서 경상도의 중심지였다.
+                        일제강점기 말 대구는 서울, 평양, 부산에 이어 <br> 네 번째로 주요 도시가 되었다.
                     </p>
                 </li>
                 <li>
@@ -126,11 +127,11 @@
         </section>
     </div>
 
-    <script>
+<script>
     async function getWeather() {
         const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat =  33.3661;
-        const lon = 126.5440;
+        const lat = 35.8714;
+        const lon = 128.6014;
 
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
@@ -155,7 +156,5 @@
 
     // DOMContentLoaded 이벤트 리스너로 날씨 정보 가져오기
     document.addEventListener('DOMContentLoaded', getWeather);
-
-    </script>
-    
+</script>
 </body>

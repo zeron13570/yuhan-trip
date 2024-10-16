@@ -9,19 +9,19 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="https://www.yanolja.com/search/제주" target="_blank">호텔</a></li>
-                <li><a href="https://search-travel.interpark.com/search?q=제주" target="_blank">투어&티켓</a></li>
+                <li><a href="https://www.yanolja.com/search/포항" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=포항" target="_blank">투어&티켓</a></li>      
             </ul>
         </nav>
 
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>제주</h1>
+                    <h1>포항</h1>
                     <p>
-                        제주특별자치도는 대한민국의 제주도와 부근 섬들을 관할하는
-                        특별자치도이다. <br> 대한민국에서 가장 큰 섬인 제주도를 비롯하여 마라도, 
-                        우도, 추자군도 등을 포함한 <br> 유인도 8개, 무인도 55개로 구성되어 있다.
+                        포항시는 대한민국 경상북도 동해안에 있는 시이다. 시의 중심으로 흐르는 형산강이 영일만에
+                        유입되면서 <br> 넓은 충적평야를 형성하고 있다. 1968년부터 포항제철이
+                        조성되면서 철강 산업을 기반으로 경상북도 최대의 도시로 발전했으며, 주민등록 인구는 약 50만명이다.
                     </p>
                 </li>
                 <li>
@@ -126,11 +126,11 @@
         </section>
     </div>
 
-    <script>
+<script>
     async function getWeather() {
         const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat =  33.3661;
-        const lon = 126.5440;
+        const lat = 36.0192;
+        const lon = 129.3425;
 
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
@@ -155,7 +155,5 @@
 
     // DOMContentLoaded 이벤트 리스너로 날씨 정보 가져오기
     document.addEventListener('DOMContentLoaded', getWeather);
-
-    </script>
-    
+</script>
 </body>

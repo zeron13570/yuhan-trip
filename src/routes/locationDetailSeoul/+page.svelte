@@ -9,9 +9,8 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="">호텔</a></li>
-                <li><a href="">투어&티켓</a></li>
-                <li><a href="">기차표</a></li>       
+                <li><a href="https://www.yanolja.com/search/서울" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=서울" target="_blank">투어&티켓</a></li>  
             </ul>
         </nav>
 
@@ -131,34 +130,38 @@
         </section>
     </div>
 
-<script>
-    async function getWeather() {
-        const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat = 37.5553;
-        const lon = 126.9707;
+    <script>
+        async function getWeather() {
+            const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
+             const lat = 37.5553;
+            const lon = 126.9707;
 
-        try {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
-            if (!response.ok) {
-                throw new Error('날씨 정보를 가져오는 데 실패했습니다: ' + response.statusText);
+            document.getElementById('weatherInfo').innerText = '로딩 중...'; // 로딩 메시지 표시
+
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
+                console.log('응답 상태:', response.status); // 응답 상태 로그
+                if (!response.ok) {
+                    throw new Error('날씨 정보를 가져오는 데 실패했습니다: ' + response.statusText);
+                }
+                const data = await response.json();
+                const temperature = data.main.temp;
+                const icon = data.weather[0].icon;
+
+                // 날씨 정보 표시
+                document.getElementById('weatherInfo').innerText = `온도: ${temperature}°C`;
+                const weatherIcon = document.getElementById('weatherIcon');
+                weatherIcon.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+                weatherIcon.style.display = 'inline'; // 아이콘 보이기
+
+            } catch (error) {
+                console.error("날씨 정보 가져오기 오류:", error);
+                document.getElementById('weatherInfo').innerText = '날씨 정보를 가져오는 데 오류가 발생했습니다.';
             }
-            const data = await response.json();
-            const temperature = data.main.temp;
-            const icon = data.weather[0].icon;
-
-            // 날씨 정보 표시
-            document.getElementById('weatherInfo').innerText = `온도: ${temperature}°C`;
-            const weatherIcon = document.getElementById('weatherIcon');
-            weatherIcon.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-            weatherIcon.style.display = 'inline'; // 아이콘 보이기
-
-        } catch (error) {
-            console.error("날씨 정보 가져오기 오류:", error);
-            document.getElementById('weatherInfo').innerText = '날씨 정보를 가져오는 데 오류가 발생했습니다.';
         }
-    }
 
-    // DOMContentLoaded 이벤트 리스너로 날씨 정보 가져오기
-    document.addEventListener('DOMContentLoaded', getWeather);
-</script>
+        // DOMContentLoaded 이벤트 리스너로 날씨 정보 가져오기
+        document.addEventListener('DOMContentLoaded', getWeather);
+    </script>
+    
 </body>

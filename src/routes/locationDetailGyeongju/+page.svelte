@@ -9,19 +9,18 @@
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
                 <li><a href="">카페</a></li>  
-                <li><a href="https://www.yanolja.com/search/제주" target="_blank">호텔</a></li>
-                <li><a href="https://search-travel.interpark.com/search?q=제주" target="_blank">투어&티켓</a></li>
+                <li><a href="https://www.yanolja.com/search/경주" target="_blank">호텔</a></li>
+                <li><a href="https://search-travel.interpark.com/search?q=경주" target="_blank">투어&티켓</a></li>
             </ul>
         </nav>
 
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>제주</h1>
+                    <h1>경주</h1>
                     <p>
-                        제주특별자치도는 대한민국의 제주도와 부근 섬들을 관할하는
-                        특별자치도이다. <br> 대한민국에서 가장 큰 섬인 제주도를 비롯하여 마라도, 
-                        우도, 추자군도 등을 포함한 <br> 유인도 8개, 무인도 55개로 구성되어 있다.
+                        경주시는 대한민국 경상북도 동남부에 있는 시이다. 시청 소재지는 동천동이고, 행정구역은 4읍 8면 11동이다. <br>
+                        기원전 57년 신라의 건국부터 935년 신라 멸망까지 992년 동안 신라의 수도였고, 서라벌, 금성 등으로 불렸다.
                     </p>
                 </li>
                 <li>
@@ -129,8 +128,8 @@
     <script>
     async function getWeather() {
         const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat =  33.3661;
-        const lon = 126.5440;
+        const lat =  35.8354;
+        const lon = 129.2192;
 
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
