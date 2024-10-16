@@ -8,23 +8,23 @@
             <ul>
                 <li><a href="">명소</a></li>
                 <li><a href="">음식점</a></li>
-                <li><a href="">카페</a></li>
-                <li><a href="">놀거리</a></li>         
+                <li><a href="">카페</a></li>  
+                <li><a href="">호텔</a></li>
+                <li><a href="">투어&티켓</a></li>
+                <li><a href="">기차표</a></li>       
             </ul>
         </nav>
 
         <div class="localDescription">
             <ul>
                 <li>
-                    <h1>서울</h1>
+                    <h1>부산</h1>
                     <p>
-                        대한민국의 수도인 서울은 현대적인 고층 빌딩, 
-                        첨단 기술의 지하철, 대중문화와 사찰, 고궁, 
-                        노점상이 공존하는 <br>
-                        대도시입니다. 주목할 만한 명소로는 곡선으로 이루어진 외관과 옥상 공원을
-                        특징으로 하는 초현대적 디자인의 컨벤션 홀인 동대문디자인플라자, 
-                        한때 7,000여 칸의 방이 자리하던 경복궁, 회화나무와 소나무 
-                        고목이 있는 조계사가 있습니다.
+                        부산광역시는 한반도 남동부에 위치한 광역시이다. 
+                        대한민국의 제2의 도시이자 영남권의 중심 도시,  <br>
+                        대한민국 최대의 해양 도시이며, 
+                        부산항을 중심으로 해상 무역과 물류 산업이 발달하였다. 
+                        일본과는 대한해협을 <br> 사이에 두고 마주하고 있다.
                     </p>
                 </li>
                 <li>
@@ -132,8 +132,8 @@
 <script>
     async function getWeather() {
         const apiKey = '013b6110a9dbb3bc5899f78a4b364602'; // 여기에 자신의 API 키를 입력하세요.
-        const lat = 37.5553;
-        const lon = 126.9707;
+        const lat = 35.1587;
+        const lon = 129.1625;
 
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);

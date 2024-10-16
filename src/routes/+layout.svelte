@@ -67,9 +67,7 @@
     <nav>
         <ul>
             <li><h1><a href="../"><img src={Logo} alt="Logo"></a></h1></li>
-            <li><a href="https://www.yanolja.com/?trackcode=mkt_google_sa&utm_source=google_sa&utm_medium=cpc&utm_campaign=20738115572&utm_content=160897187931&utm_term=kwd-298391364620&gad_source=1&gclid=EAIaIQobChMI7syZvKPdiAMVuWwPAh0uKyRREAAYASAAEgKmE_D_BwE">호텔</a></li>
-            <li><a href="https://travel.interpark.com/tour/package/main?utm_source=google&utm_medium=cpc&utm_campaign=tour_abroadpackage_20240730_paidsearch_pc_cpc&utm_term=%EC%9D%B8%ED%84%B0%ED%8C%8C%ED%81%AC%20%ED%88%AC%EC%96%B4&utm_content=consider_34&gad_source=1&gclid=EAIaIQobChMIq7eYyqPdiAMVdVkPAh2dbj1bEAAYASAAEgKcBPD_BwE">투어&티켓</a></li>
-            <li><a href="https://www.letskorail.com/">기차표</a></li>            
+            <li><a href="/travelLog">트래블로그</a></li>            
             <li><a href="/findRoute">경로찾기</a></li>            
             <li><a href="/routeMain">경로추천</a></li>
             {#if isLoggedIn}

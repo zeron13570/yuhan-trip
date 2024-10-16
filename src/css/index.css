@@ -378,7 +378,7 @@ div.locationDetail nav.selectList{
 }
 
 div.locationDetail nav.selectList ul{
-    width: 70%;
+    width: 85%;
     display: flex; /* flexbox 사용 */
     flex-wrap: wrap; /* 자식 요소가 넘칠 때 줄 바꿈 */
     justify-content: space-between; 
@@ -392,7 +392,9 @@ div.locationDetail nav.selectList ul li:last-child{
 div.locationDetail nav.selectList ul li:nth-child(1) a{ background-image: url(../img/sightseeing.png);  }
 div.locationDetail nav.selectList ul li:nth-child(2) a{ background-image: url(../img/restaurant.png);  }
 div.locationDetail nav.selectList ul li:nth-child(3) a{ background-image: url(../img/cafe.png);  }
-div.locationDetail nav.selectList ul li:nth-child(4) a{ background-image: url(../img/attraction.png);  }
+div.locationDetail nav.selectList ul li:nth-child(4) a{ background-image: url(../img/hotel.png);  }
+div.locationDetail nav.selectList ul li:nth-child(5) a{ background-image: url(../img/ticket.png);  }
+div.locationDetail nav.selectList ul li:nth-child(6) a{ background-image: url(../img/train.png);  }
 div.locationDetail nav.selectList ul li a{
     display: block; 
     width: 100px; 

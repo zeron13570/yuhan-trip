@@ -19,22 +19,22 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><a href="../locationDetail"><span>서울</span></a></li>
-            <li><a href="../locationDetail"><span>부산</span></a></li>
-            <li><a href="../locationDetail"><span>제주</span></a></li>
-            <li><a href="../locationDetail"><span>강릉</span></a></li>
+            <li><a href="../locationDetailSeoul"><span>서울</span></a></li>
+            <li><a href="../locationDetailBusan"><span>부산</span></a></li>
+            <li><a href="../locationDetailJeju"><span>제주</span></a></li>
+            <li><a href="../locationDetailGangeung"><span>강릉</span></a></li>
         </ul>
         <ul>
-            <li><a href="../locationDetail"><span>군산</span></a></li>
-            <li><a href="../locationDetail"><span>경주</span></a></li>
-            <li><a href="../locationDetail"><span>인천</span></a></li>
-            <li><a href="../locationDetail"><span>수원</span></a></li>
+            <li><a href="../locationDetailGunsan"><span>군산</span></a></li>
+            <li><a href="../locationDetailGyeongju"><span>경주</span></a></li>
+            <li><a href="../locationDetailIncheon"><span>인천</span></a></li>
+            <li><a href="../locationDetailSuwon"><span>수원</span></a></li>
         </ul>
         <ul>
-            <li><a href="../locationDetail"><span>포항</span></a></li>
-            <li><a href="../locationDetail"><span>울산</span></a></li>
-            <li><a href="../locationDetail"><span>대구</span></a></li>
-            <li><a href="../locationDetail"><span>전주</span></a></li>
+            <li><a href="../locationDetailPohang"><span>포항</span></a></li>
+            <li><a href="../locationDetailUlsan"><span>울산</span></a></li>
+            <li><a href="../locationDetailDaegu"><span>대구</span></a></li>
+            <li><a href="../locationDetailJeonju"><span>전주</span></a></li>
         </ul>
     </div>
     <div class="TravelLog uList">
