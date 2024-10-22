@@ -5,12 +5,21 @@
 
     let posts = []; // 트래블로그 데이터 저장
 
-    // 로컬 스토리지에서 포스팅 데이터 불러오기
     onMount(() => {
-        let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-        posts = storedPosts; // 불러온 데이터를 posts에 저장
+        loadPosts();
     });
+
+    function loadPosts() {
+        let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+        posts = storedPosts;
+    }
+
+    function isPostLiked(post) {
+        const username = localStorage.getItem("username");
+        return post.likedBy && post.likedBy.includes(username);
+    }
 </script>
+
 <header>
     <div></div>
 </header>
@@ -19,22 +28,22 @@
     <div class="PopularTravel">
         <h2>인기 여행지</h2>
         <ul>
-            <li><a href="../locationDetailSeoul"><span>서울</span></a></li>
-            <li><a href="../locationDetailBusan"><span>부산</span></a></li>
-            <li><a href="../locationDetailJeju"><span>제주</span></a></li>
-            <li><a href="../locationDetailGangeung"><span>강릉</span></a></li>
+            <li><a href="../locationDetailSeoul" class="Seoul"><span>서울</span></a></li>
+            <li><a href="../locationDetailBusan" class="Busan"><span>부산</span></a></li>
+            <li><a href="../locationDetailJeju" class="Jeju"><span>제주</span></a></li>
+            <li><a href="../locationDetailGangneung" class="Gangneung"><span>강릉</span></a></li>
         </ul>
         <ul>
-            <li><a href="../locationDetailGunsan"><span>군산</span></a></li>
-            <li><a href="../locationDetailGyeongju"><span>경주</span></a></li>
-            <li><a href="../locationDetailIncheon"><span>인천</span></a></li>
-            <li><a href="../locationDetailSuwon"><span>수원</span></a></li>
+            <li><a href="../locationDetailGunsan" class="Gunsan"><span>군산</span></a></li>
+            <li><a href="../locationDetailGyeongju" class="Gyeongju"><span>경주</span></a></li>
+            <li><a href="../locationDetailIncheon" class="Incheon"><span>인천</span></a></li>
+            <li><a href="../locationDetailSuwon" class="Suwon"><span>수원</span></a></li>
         </ul>
         <ul>
-            <li><a href="../locationDetailPohang"><span>포항</span></a></li>
-            <li><a href="../locationDetailUlsan"><span>울산</span></a></li>
-            <li><a href="../locationDetailDaegu"><span>대구</span></a></li>
-            <li><a href="../locationDetailJeonju"><span>전주</span></a></li>
+            <li><a href="../locationDetailPohang" class="Pohang"><span>포항</span></a></li>
+            <li><a href="../locationDetailUlsan" class="Ulsan"><span>울산</span></a></li>
+            <li><a href="../locationDetailDaegu" class="Daegu"><span>대구</span></a></li>
+            <li><a href="../locationDetailJeonju" class="Jeonju"><span>전주</span></a></li>
         </ul>
     </div>
     <div class="TravelLog uList">
@@ -58,7 +67,7 @@
         </ul>
         <a href="/travelLog" class="indexBtn">트래블로그 더 보기</a>
     </div>
-    <div class="TripMoment uList">
+    <!-- <div class="TripMoment uList">
         <h2>트립 모먼트</h2>
         <ul>
             <li>
@@ -86,7 +95,7 @@
                     <img src="https://placehold.co/200x200" alt="여행지 사진">
                     <p>작성자</p>
                     <div class="like">
-                        <span>지역명</span>
+                        <span>지역명</span> 
                         <span><img src={noLike} alt="좋아요" class="like-icon" data-liked="false"></span>
                     </div>
                 </a>
@@ -103,5 +112,5 @@
             </li>
         </ul>
         <a href="/tripMoment" class="indexBtn">트립 모먼트 더 보기</a>
-    </div>
+    </div> -->
 </section>

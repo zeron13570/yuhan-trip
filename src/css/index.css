@@ -8,18 +8,18 @@ section.index h2{
 
 /* ! div.PopularTravel */
 /* Popular Travel img */
-section.index div.PopularTravel > ul li:nth-child(1) a{background-image: url(../img/Seoul.jpg);}
-section.index div.PopularTravel > ul li:nth-child(2) a{background-image: url(../img/Busan.jpg);}
-section.index div.PopularTravel > ul li:nth-child(3) a{background-image: url(../img/Jeju.jpg);}
-section.index div.PopularTravel > ul li:nth-child(4) a{background-image: url(../img/Gangneung.jpg);}
-section.index div.PopularTravel ul:nth-last-child(2) li:nth-child(1) a{background-image: url(../img/Gunsan.jpg);}
-section.index div.PopularTravel ul:nth-last-child(2) li:nth-child(2) a{background-image: url(../img/Gyeongju.jpg);}
-section.index div.PopularTravel ul:nth-last-child(2) li:nth-child(3) a{background-image: url(../img/Incheon.jpg);}
-section.index div.PopularTravel ul:nth-last-child(2) li:nth-child(4) a{background-image: url(../img/Suwon.jpg);}
-section.index div.PopularTravel ul:last-child li:nth-child(1) a{background-image: url(../img/Pohang.jpg);}
-section.index div.PopularTravel ul:last-child li:nth-child(2) a{background-image: url(../img/Ulsan.jpg);}
-section.index div.PopularTravel ul:last-child li:nth-child(3) a{background-image: url(../img/Daegu.jpg);}
-section.index div.PopularTravel ul:last-child li:nth-child(4) a{background-image: url(../img/Jeonju.jpg);}
+section.index div.PopularTravel ul li a.Seoul{background-image: url(../img/Seoul.jpg);}
+section.index div.PopularTravel ul li a.Busan{background-image: url(../img/Busan.jpg);}
+section.index div.PopularTravel ul li a.Jeju{background-image: url(../img/Jeju.jpg);}
+section.index div.PopularTravel ul li a.Gangneung{background-image: url(../img/Gangneung.jpg);}
+section.index div.PopularTravel ul li a.Gunsan{background-image: url(../img/Gunsan.jpg);}
+section.index div.PopularTravel ul li a.Gyeongju{background-image: url(../img/Gyeongju.jpg);}
+section.index div.PopularTravel ul li a.Incheon{background-image: url(../img/Incheon.jpg);}
+section.index div.PopularTravel ul li a.Suwon{background-image: url(../img/Suwon.jpg);}
+section.index div.PopularTravel ul li a.Pohang{background-image: url(../img/Pohang.jpg);}
+section.index div.PopularTravel ul li a.Ulsan{background-image: url(../img/Ulsan.jpg);}
+section.index div.PopularTravel ul li a.Daegu{background-image: url(../img/Daegu.jpg);}
+section.index div.PopularTravel ul li a.Jeonju{background-image: url(../img/Jeonju.jpg);}
 
 section.index div.PopularTravel ul::after {
     content: "";
@@ -502,6 +502,9 @@ div.locationDetail div.LogMoment ul li.LogMoment a button{
 div.locationDetail div.LogMoment ul li a > img{
     border-radius: 10px;
     margin-bottom: 20px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
 }
 
 /* ! div.posting */

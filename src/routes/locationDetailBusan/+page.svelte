@@ -140,7 +140,7 @@
                 throw new Error('날씨 정보를 가져오는 데 실패했습니다: ' + response.statusText);
             }
             const data = await response.json();
-            const temperature = data.main.temp;
+            const temperature = Math.round(data.main.temp); // 소수점 없이 정수로 변환
             const icon = data.weather[0].icon;
 
             // 날씨 정보 표시

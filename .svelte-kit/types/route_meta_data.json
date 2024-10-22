@@ -1,11 +1,12 @@
 {
 	"/": [],
+	"/SeoulMap": [],
 	"/check": [],
 	"/customerService": [],
 	"/findRoute": [],
 	"/locationDetailBusan": [],
 	"/locationDetailDaegu": [],
-	"/locationDetailGangeung": [],
+	"/locationDetailGangneung": [],
 	"/locationDetailGunsan": [],
 	"/locationDetailGyeongju": [],
 	"/locationDetailIncheon": [],

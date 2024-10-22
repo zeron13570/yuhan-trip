@@ -34,19 +34,21 @@ export const nodes = [
 	() => import('./nodes/30'),
 	() => import('./nodes/31'),
 	() => import('./nodes/32'),
-	() => import('./nodes/33')
+	() => import('./nodes/33'),
+	() => import('./nodes/34')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
 		"/": [2],
+		"/SeoulMap": [26],
 		"/check": [3],
 		"/customerService": [4],
 		"/findRoute": [5],
 		"/locationDetailBusan": [6],
 		"/locationDetailDaegu": [7],
-		"/locationDetailGangeung": [8],
+		"/locationDetailGangneung": [8],
 		"/locationDetailGunsan": [9],
 		"/locationDetailGyeongju": [10],
 		"/locationDetailIncheon": [11],
@@ -64,14 +66,14 @@ export const dictionary = {
 		"/routeChoice4": [23],
 		"/routeMain": [24],
 		"/routeResult": [25],
-		"/test": [26],
-		"/test/list": [27],
-		"/travelLogDetail": [29],
-		"/travelLogPosting": [30],
-		"/travelLog": [28],
-		"/tripMomentDetail": [32],
-		"/tripMomentPosting": [33],
-		"/tripMoment": [31]
+		"/test": [27],
+		"/test/list": [28],
+		"/travelLogDetail": [30],
+		"/travelLogPosting": [31],
+		"/travelLog": [29],
+		"/tripMomentDetail": [33],
+		"/tripMomentPosting": [34],
+		"/tripMoment": [32]
 	};
 
 export const hooks = {
