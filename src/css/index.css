@@ -776,3 +776,40 @@ div.blogLike span img{
     width: 40px;
     height: auto;
 }
+
+/* ! .PlacePage */
+div.PlacePage{
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+div.PlacePage h1{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+
+div.PlacePage ul li{
+    font-size: 16px;
+    line-height: 30px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+div.PlacePage ul li p{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+div.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.pagination button{
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+}
