@@ -670,40 +670,220 @@ input[type="radio"]:checked + .question + .answer {
 }
 
 /* ! div.findRoute */
-div.findRoute{
-    width: 70%;
-    margin: 0 auto;
-    text-align: center;
+div.findRoute {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  div.findRoute div.sidebar {
+    width: 100px;
+    height: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-top: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
+  }
 
-div.findRoute h1{
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
-div.findRoute input{
-    font-size: 16px;
-    line-height: 20px;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid #ccc;
+  div.findRoute div.sidebar div.sidebar-header {
     padding: 10px;
-    margin: 10px 0;
-}
-
-div.findRoute a{
-    display: block;
-    width: 100px;
-    line-height: 30px;
     font-size: 16px;
-    margin: 10px auto;
-    background-color: #3bd3b5;
+    font-weight: 700;
+    background-color: #f0f0f0;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+  }
+  div.findRoute div.sidebar .sidebar-header:hover{
+    background-color: #e0e0e0;
+  }
+
+  div.route-finding-section {
+    display: flex;
+    width: 25%;
+    height: 100%;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    position: absolute;
+    left: 100px;
+    z-index: 1000;
+  }
+
+  div.route-finding-section div.area_1,
+  div.route-finding-section div.area_list {
+    width: 50%;
+    padding: 10px;
+  }
+
+  div.area_list {
+    border-left: 1px solid #ddd;
+  }
+
+  div.area_2 {
+    width: 250px;
+    height: 100%;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: 100px;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  #findMap {
+    margin: 0;
+    height: 100%;
+    flex-grow: 1;
+  }
+  .findMap {
+    height: 100%;
+  }
+  
+  .input-group {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .input-group input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+  }
+  .input-group button {
+    padding: 8px;
+    background-color: #008cba;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+  }
+  .input-group button:hover {
+    background-color: #0079a1;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .options label {
+    margin-right: 5px;
+  }
+  .search-results {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+  }
+  .search-results li {
+    padding: 8px;
+    cursor: pointer;
+  }
+  .search-results li:hover {
+    background-color: #f0f0f0;
+  }
+  .buttons {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .button {
+    padding: 8px;
+    background-color: #008cba;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .button:hover {
+    background-color: #0079a1;
+  }
+  /* 리스트 스타일 추가 */
+  .existing-place-list {
+    overflow-y: auto;
+    max-height: 580px;
+    margin-bottom: 10px;
+  }
+  .existing-place-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .existing-place-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  .existing-place-list li.selected {
+    background-color: #e0e0e0;
+    font-weight: bold;
+  }
+  .existing-place-list li:hover {
+    background-color: #f0f0f0;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .pagination button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ddd;
     border-radius: 5px;
-    color: #fff;
+    cursor: pointer;
+  }
+  .pagination-button:hover {
+    background-color: #ccc;
+  }
+  .pagination span {
+    margin: 0 5px;
+  }
+  .road-info {
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+  .road-info p {
+    margin: 5px 0;
+  }
+  .day-selection {
+  margin-top: 10px;
+}
+.day-selection button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+.day-selection button:hover {
+  background-color: #d0d0d0;
+}
+.selected-day {
+  background-color: #0079a1;
+  color: white;
+}
+.day-place-list {
+  margin-top: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.day-place-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+.day-place-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 /* ! section.myPage*/
