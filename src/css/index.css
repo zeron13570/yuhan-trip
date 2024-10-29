@@ -701,7 +701,7 @@ div.findRoute {
 
   div.route-finding-section {
     display: flex;
-    width: 25%;
+    width: 40%;
     height: 100%;
     background-color: #ffffff;
     border-left: 1px solid #ddd;
@@ -711,26 +711,20 @@ div.findRoute {
   }
 
   div.route-finding-section div.area_1,
-  div.route-finding-section div.area_list {
+  div.route-finding-section div.area_list{
     width: 50%;
     padding: 10px;
-  }
-
-  div.area_list {
-    border-left: 1px solid #ddd;
+    border-right: 1px solid #ccc;
   }
 
   div.area_2 {
-    width: 250px;
+    width: 25%;
     height: 100%;
     background-color: #ffffff;
-    border-left: 1px solid #ddd;
-    padding: 10px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: absolute;
+    padding: 10px;
     left: 100px;
     z-index: 1000;
-    overflow-y: auto;
   }
 
   #findMap {
@@ -742,36 +736,48 @@ div.findRoute {
     height: 100%;
   }
   
-  .input-group {
+  div.input-group {
     display: flex;
     margin-bottom: 10px;
   }
-  .input-group input {
+
+  div.input-group input {
     flex: 1;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px 0 0 4px;
   }
-  .input-group button {
+
+  div.input-group button {
     padding: 8px;
-    background-color: #008cba;
+    background-color: #3bd3b5;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 0 4px 4px 0;
   }
-  .input-group button:hover {
-    background-color: #0079a1;
+  div.input-group button:hover {
+    background-color: #33b49a;
   }
-  .options {
+
+  div.options {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
     gap: 8px;
   }
-  .options label {
-    margin-right: 5px;
+
+  div.options select{
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
   }
+  div.options select:last-child{
+    margin-bottom: 30px;
+  }
+  
   .search-results {
     list-style-type: none;
     padding: 0;
@@ -779,8 +785,8 @@ div.findRoute {
     max-height: 150px;
     overflow-y: auto;
     background-color: white;
-    border: 1px solid #ddd;
   }
+
   .search-results li {
     padding: 8px;
     cursor: pointer;
@@ -788,15 +794,17 @@ div.findRoute {
   .search-results li:hover {
     background-color: #f0f0f0;
   }
+
   .buttons {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
+
   .button {
     padding: 8px;
-    background-color: #008cba;
+    background-color: #3bd3b5;
     color: white;
     border: none;
     cursor: pointer;
@@ -804,8 +812,9 @@ div.findRoute {
     text-align: center;
   }
   .button:hover {
-    background-color: #0079a1;
+    background-color: #33b49a;
   }
+
   /* 리스트 스타일 추가 */
   .existing-place-list {
     overflow-y: auto;

@@ -926,21 +926,21 @@
       <div class="route-finding-section">
         <div class="area_1">
           <div class="options">
-            <label>여행 일정:</label>
+            <label>여행 일정</label>
             <select bind:value={travelOption}>
               <option value="하루">하루</option>
               <option value="1박 2일">1박 2일</option>
               <option value="2박 3일">2박 3일</option>
             </select>
   
-            <label>카테고리:</label>
+            <label>카테고리</label>
             <select bind:value={category}>
               {#each categories as cat}
                 <option value={cat}>{cat}</option>
               {/each}
             </select>
   
-            <label>지역:</label>
+            <label>지역</label>
             <select bind:value={filter}>
               <option value="">모든 지역</option>
               {#each cities as city}
