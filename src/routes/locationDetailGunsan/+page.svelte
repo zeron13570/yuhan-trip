@@ -51,8 +51,8 @@
     <div class="locationDetail">
         <nav class="selectList">
             <ul>
-                <li><a href="">명소</a></li>
-                <li><a href="">음식점</a></li>
+                <li><a href="../Place?name=군산">명소</a></li>
+                <li><a href="../Food?name=군산">음식점</a></li>
                 <li><a href="../Cafe?name=군산">카페</a></li>  
                 <li><a href="https://www.yanolja.com/search/군산" target="_blank">호텔</a></li>
                 <li><a href="https://search-travel.interpark.com/search?q=군산" target="_blank">투어&티켓</a></li>    

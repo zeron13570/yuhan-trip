@@ -51,8 +51,8 @@
     <div class="locationDetail">
         <nav class="selectList">
             <ul>
-                <li><a href="">명소</a></li>
-                <li><a href="">음식점</a></li>
+                <li><a href="../Place?name=전주">명소</a></li>
+                <li><a href="../Food?name=전주">음식점</a></li>
                 <li><a href="../Cafe?name=전주">카페</a></li>  
                 <li><a href="https://www.yanolja.com/search/전주" target="_blank">호텔</a></li>
                 <li><a href="https://search-travel.interpark.com/search?q=전주" target="_blank">투어&티켓</a></li>       

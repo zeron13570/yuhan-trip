@@ -51,8 +51,8 @@
     <div class="locationDetail">
         <nav class="selectList">
             <ul>
-                <li><a href="">명소</a></li>
-                <li><a href="">음식점</a></li>
+                <li><a href="../Place?name=수원">명소</a></li>
+                <li><a href="../Food?name=수원">음식점</a></li>
                 <li><a href="../Cafe?name=수원">카페</a></li>  
                 <li><a href="https://www.yanolja.com/search/수원" target="_blank">호텔</a></li>
                 <li><a href="https://search-travel.interpark.com/search?q=수원" target="_blank">투어&티켓</a></li>
