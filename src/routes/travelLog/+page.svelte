@@ -3,53 +3,65 @@
     import noLike from "../../img/notLike.png";
     import { onMount } from "svelte";
 
-    let posts = [];  // 포스팅 리스트
-    let selectedRegion = "전체 지역";  // 선택한 지역 (기본: 전체)
-    let isLoggedIn = false; // 사용자 로그인 상태 가정
-    let username = ""; // 로그인된 사용자 이름
-    let popularPosts = [];  // 인기 포스트 (좋아요 순으로 정렬된 목록)
+    let posts = [];
+    let selectedRegion = "전체 지역";
+    let username = localStorage.getItem('username') || "";
+    let popularPosts = [];
 
-    // 로컬 스토리지에서 포스팅 데이터 불러오기
+    function sortPostsByLikes() {
+        popularPosts = [...posts].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6);
+    }
+
     onMount(() => {
-        let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-        posts = storedPosts;
-        sortPostsByLikes();  // 최초 로드 시 좋아요 순으로 정렬
+        const accessToken = localStorage.getItem("accessToken");
+
+        fetch('http://localhost:3000/get-posts', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            posts = data;
+            sortPostsByLikes();
+        })
+        .catch(error => {
+            console.error('Error fetching posts:', error);
+        });
     });
 
-    // 좋아요 기능
     function toggleLike(postId) {
         const postIndex = posts.findIndex(post => post.id === postId);
         const post = posts[postIndex];
 
-        if (!post.likedBy) post.likedBy = [];  // 처음에 likedBy 배열이 없으면 초기화
-
-        // 이미 좋아요한 사용자라면 좋아요 취소
+        if (!post.likedBy) post.likedBy = [];
         const userIndex = post.likedBy.indexOf(username);
         if (userIndex === -1) {
             post.likes++;
-            post.likedBy.push(username);  // 좋아요한 사용자 추가
+            post.likedBy.push(username);
         } else {
             post.likes--;
-            post.likedBy.splice(userIndex, 1);  // 좋아요 취소
+            post.likedBy.splice(userIndex, 1);
         }
 
-        // 로컬 스토리지 업데이트
         localStorage.setItem("posts", JSON.stringify(posts));
-        sortPostsByLikes();  // 좋아요 순으로 정렬
+        sortPostsByLikes();
     }
 
-    // 좋아요 수에 따라 인기 블로그 상단 정렬
-    function sortPostsByLikes() {
-        popularPosts = [...posts].sort((a, b) => b.likes - a.likes).slice(0, 6); // 상위 6개 포스트만 저장
-    }
-
-    // 지역 선택
     function selectRegion(region) {
         selectedRegion = region;
     }
 
-    // 선택한 지역에 따라 포스팅 필터링
     function filterPostsByRegion() {
+        if (!posts || posts.length === 0) {
+            return [];
+        }
         if (selectedRegion === "전체 지역") {
             return posts;
         } else {
@@ -80,28 +92,29 @@
                     <a href="#" on:click={() => selectRegion("전주")}>전주</a>
                 </div>
             </div>
-            <h1>추천 블로그</h1>
             <a href="/travelLogPosting" class="posting">포스팅</a>
         </div>
+
+        <h1>추천 블로그</h1>
         <div class="uList">
             <ul>
                 {#each popularPosts as post}
                 <li>
-                    <a href={`/travelLogDetail/${post.id}`}>
-                        <img src={post.image} alt="여행지 사진">
+                    <a href={`/travelLogDetail/${post.id}`} sveltekit:prefetch>
+                        <img src={`http://localhost:3000${post.image}`} alt="여행지 사진" />
                         <p>{post.title}</p>
                     </a>
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
                             <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
-                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
-                        </span>
-                        <span>{post.likes} Likes</span>
+                                alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                            </span>
+                        <span>{post.likes || 0}</span>
                     </div>
                 </li>
                 {/each}
-            </ul>
+            </ul>            
         </div>
 
         <h1>최신 블로그</h1>
@@ -109,21 +122,21 @@
             <ul>
                 {#each filterPostsByRegion() as post}
                 <li>
-                    <a href={`/travelLogDetail/${post.id}`}>
-                        <img src={post.image} alt="여행지 사진">
+                    <a href={`/travelLogDetail/${post.id}`} aria-label={`자세히 보기: ${post.title}`}>
+                        <img src={`http://localhost:3000${post.image}`} alt="여행지 사진" />
                         <p>{post.title}</p>
-                        <div class="like">
-                            <span>작성자: {post.username}</span>
-                            <span>
-                                <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
-                                     alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
-                            </span>
-                            <span>{post.likes} Likes</span>
-                        </div>
                     </a>
+                    <div class="like">
+                        <span>작성자: {post.username}</span>
+                        <span>
+                            <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                            </span>
+                        <span>{post.likes || 0}</span>
+                    </div>
                 </li>
                 {/each}
-            </ul>
+            </ul>            
         </div>
     </div>
 </body>

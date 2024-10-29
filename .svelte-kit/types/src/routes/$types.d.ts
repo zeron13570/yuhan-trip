@@ -12,8 +12,8 @@ type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 export type Snapshot<T = any> = Kit.Snapshot<T>;
 type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/Cafe" | "/check" | "/customerService" | "/findRoute" | "/Food" | "/locationDetailBusan" | "/locationDetailDaegu" | "/locationDetailGangneung" | "/locationDetailGunsan" | "/locationDetailGyeongju" | "/locationDetailIncheon" | "/locationDetailJeju" | "/locationDetailJeonju" | "/locationDetailPohang" | "/locationDetailSeoul" | "/locationDetailSuwon" | "/locationDetailUlsan" | "/login" | "/myPage" | "/Place" | "/routeChoice1" | "/routeChoice2" | "/routeChoice3" | "/routeChoice4" | "/routeMain" | "/routeResult" | "/SeoulMap" | "/test" | "/test/day" | "/test/day2" | "/test/day3" | "/test/day4" | "/test/day4_" | "/travelLog" | "/travelLogDetail" | "/travelLogPosting" | "/tripMoment" | "/tripMomentDetail" | "/tripMomentPosting" | null
-type LayoutParams = RouteParams & {  }
+type LayoutRouteId = RouteId | "/" | "/Cafe" | "/customerService" | "/findRoute" | "/Food" | "/locationDetailBusan" | "/locationDetailDaegu" | "/locationDetailGangneung" | "/locationDetailGunsan" | "/locationDetailGyeongju" | "/locationDetailIncheon" | "/locationDetailJeju" | "/locationDetailJeonju" | "/locationDetailPohang" | "/locationDetailSeoul" | "/locationDetailSuwon" | "/locationDetailUlsan" | "/login" | "/myPage" | "/Place" | "/routeChoice1" | "/routeChoice2" | "/routeChoice3" | "/routeChoice4" | "/routeMain" | "/routeResult" | "/SeoulMap" | "/test" | "/test/day" | "/test/day2" | "/test/day3" | "/test/day4" | "/test/day4_" | "/travelLog" | "/travelLogDetail/[id]" | "/travelLogPosting" | "/tripMoment" | "/tripMomentDetail" | "/tripMomentPosting" | null
+type LayoutParams = RouteParams & { id?: string }
 type LayoutParentData = EnsureDefined<{}>;
 
 export type PageServerData = null;

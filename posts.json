@@ -1,0 +1,32 @@
+[
+  {
+    "id": "14284b4d-2131-4fb2-b018-7461478bc1d0",
+    "title": "나는 개똥벌레",
+    "content": "<img src=\"http://localhost:3000/uploads/image-1729663671636-538126292.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>제발 지피티야 정신차리구 나좀도와줘</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1729663704932-47340544.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>내가 죽어야하니ㅜㅜ</div>",
+    "region": "전주",
+    "username": "유진",
+    "image": "/uploads/image-1729663671636-538126292.jpeg",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "e23c37f4-78b1-49e8-9250-adc9efb527bc",
+    "title": "안녕하세용!",
+    "content": "진심 이제 한 발자국 남았다고 생각이 드네요!<div><br></div><img src=\"http://localhost:3000/uploads/image-1730027342717-307958574.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>하지만 아니겠죠? ㅋㅋ</div><div>전 이제 또 죽어나겠죠,,,,그래도 죽진 않아요 ㅎㅎ</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730027379780-948912257.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>집인데 집 가고 싶은 기분</div>",
+    "region": "제주",
+    "username": "유진",
+    "image": "/uploads/image-1730027342717-307958574.jpeg",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "8ccf6065-c442-48f0-b05b-e498f65dcb77",
+    "title": "그만할레",
+    "content": "재미없서요<div>우엑</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730206795562-452574852.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "대구",
+    "username": "유진",
+    "image": "/uploads/image-1730206795562-452574852.jpeg",
+    "likes": 0,
+    "likedBy": []
+  }
+]
