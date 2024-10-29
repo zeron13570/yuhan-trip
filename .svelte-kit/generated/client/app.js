@@ -38,7 +38,11 @@ export const nodes = [
 	() => import('./nodes/34'),
 	() => import('./nodes/35'),
 	() => import('./nodes/36'),
-	() => import('./nodes/37')
+	() => import('./nodes/37'),
+	() => import('./nodes/38'),
+	() => import('./nodes/39'),
+	() => import('./nodes/40'),
+	() => import('./nodes/41')
 ];
 
 export const server_loads = [];
@@ -73,13 +77,17 @@ export const dictionary = {
 		"/routeMain": [27],
 		"/routeResult": [28],
 		"/test": [30],
-		"/test/list": [31],
-		"/travelLogDetail": [33],
-		"/travelLogPosting": [34],
-		"/travelLog": [32],
-		"/tripMomentDetail": [36],
-		"/tripMomentPosting": [37],
-		"/tripMoment": [35]
+		"/test/day2": [32],
+		"/test/day3": [33],
+		"/test/day4_": [35],
+		"/test/day4": [34],
+		"/test/day": [31],
+		"/travelLogDetail": [37],
+		"/travelLogPosting": [38],
+		"/travelLog": [36],
+		"/tripMomentDetail": [40],
+		"/tripMomentPosting": [41],
+		"/tripMoment": [39]
 	};
 
 export const hooks = {
