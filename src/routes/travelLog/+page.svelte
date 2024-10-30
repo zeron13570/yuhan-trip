@@ -2,17 +2,26 @@
     import Like from "../../img/like.png";
     import noLike from "../../img/notLike.png";
     import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
 
     let posts = [];
     let selectedRegion = "전체 지역";
-    let username = localStorage.getItem('username') || "";
+    let filteredPosts = [];
+    let isLoggedIn = false;
+    let userName = "";
     let popularPosts = [];
 
-    function sortPostsByLikes() {
-        popularPosts = [...posts].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6);
-    }
-
     onMount(() => {
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+        script.onload = () => {
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+            if (Kakao.Auth.getAccessToken()) {
+                getUserInfo();
+            }
+        };
+        document.head.appendChild(script);
+
         const accessToken = localStorage.getItem("accessToken");
 
         fetch('http://localhost:3000/get-posts', {
@@ -29,6 +38,7 @@
         })
         .then(data => {
             posts = data;
+            filterPosts();
             sortPostsByLikes();
         })
         .catch(error => {
@@ -36,37 +46,84 @@
         });
     });
 
-    function toggleLike(postId) {
-        const postIndex = posts.findIndex(post => post.id === postId);
-        const post = posts[postIndex];
-
-        if (!post.likedBy) post.likedBy = [];
-        const userIndex = post.likedBy.indexOf(username);
-        if (userIndex === -1) {
-            post.likes++;
-            post.likedBy.push(username);
-        } else {
-            post.likes--;
-            post.likedBy.splice(userIndex, 1);
-        }
-
-        localStorage.setItem("posts", JSON.stringify(posts));
-        sortPostsByLikes();
+    function filterPosts() {
+        filteredPosts = selectedRegion === "전체 지역" 
+            ? posts 
+            : posts.filter(post => post.region.trim() === selectedRegion.trim());
+        console.log("Filtered posts:", filteredPosts);
     }
 
     function selectRegion(region) {
         selectedRegion = region;
+        console.log("Selected region:", selectedRegion);
+        filterPosts();
     }
 
-    function filterPostsByRegion() {
-        if (!posts || posts.length === 0) {
-            return [];
-        }
-        if (selectedRegion === "전체 지역") {
-            return posts;
+    function kakaoLogin() {
+        Kakao.Auth.login({
+            success: function(authObj) {
+                getUserInfo();
+            },
+            fail: function(err) {
+                console.error('로그인 실패', err);
+            }
+        });
+    }
+
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname;
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); // Access Token 저장
+                console.log("User logged in:", userName);
+            },
+            fail: function(error) {
+                console.error('Error fetching user info:', error);
+            }
+        });
+    }
+
+    function handlePostButtonClick() {
+        console.log("Post button clicked.");
+        if (!isLoggedIn) {
+            kakaoLogin();
         } else {
-            return posts.filter(post => post.region === selectedRegion);
+            goto('/travelLogPosting');
         }
+    }
+
+    function toggleLike(postId) {
+        const accessToken = localStorage.getItem("accessToken");
+        fetch(`http://localhost:3000/posts/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 좋아요 상태 업데이트
+            const postIndex = posts.findIndex(post => post.id === postId);
+            if (postIndex !== -1) {
+                posts[postIndex].likes = data.likes; // 서버로부터 받은 좋아요 수
+                posts[postIndex].likedBy = data.likedBy; // 좋아요를 누른 사용자 목록
+                filterPosts(); // 필터링 업데이트
+            }
+        })
+        .catch(error => {
+            console.error('Error toggling like:', error);
+        });
+    }
+
+    function sortPostsByLikes() {
+        posts.sort((a, b) => (b.likes || 0) - (a.likes || 0));
     }
 </script>
 
@@ -81,18 +138,18 @@
                     <a href="#" on:click={() => selectRegion("서울")}>서울</a>
                     <a href="#" on:click={() => selectRegion("부산")}>부산</a>
                     <a href="#" on:click={() => selectRegion("제주")}>제주</a>
-                    <a href="#" on:click={() => selectRegion("강릉")}>강릉</a>
-                    <a href="#" on:click={() => selectRegion("군산")}>군산</a>
-                    <a href="#" on:click={() => selectRegion("경주")}>경주</a>
-                    <a href="#" on:click={() => selectRegion("인천")}>인천</a>
-                    <a href="#" on:click={() => selectRegion("수원")}>수원</a>
+                    <a href="#" on:click={() => selectRegion("전주")}>전주</a>
                     <a href="#" on:click={() => selectRegion("포항")}>포항</a>
                     <a href="#" on:click={() => selectRegion("울산")}>울산</a>
+                    <a href="#" on:click={() => selectRegion("수원")}>수원</a>
                     <a href="#" on:click={() => selectRegion("대구")}>대구</a>
-                    <a href="#" on:click={() => selectRegion("전주")}>전주</a>
+                    <a href="#" on:click={() => selectRegion("군산")}>군산</a>
+                    <a href="#" on:click={() => selectRegion("인천")}>인천</a>
+                    <a href="#" on:click={() => selectRegion("경주")}>경주</a>
+                    <a href="#" on:click={() => selectRegion("강릉")}>강릉</a>
                 </div>
             </div>
-            <a href="/travelLogPosting" class="posting">포스팅</a>
+            <button class="posting" on:click={handlePostButtonClick}>포스팅</button>
         </div>
 
         <h1>추천 블로그</h1>
@@ -107,9 +164,9 @@
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
-                            <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                            <img src={post.likedBy && post.likedBy.includes(userName) ? Like : noLike} 
                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
-                            </span>
+                        </span>
                         <span>{post.likes || 0}</span>
                     </div>
                 </li>
@@ -120,7 +177,7 @@
         <h1>최신 블로그</h1>
         <div class="uList">
             <ul>
-                {#each filterPostsByRegion() as post}
+                {#each filteredPosts as post}
                 <li>
                     <a href={`/travelLogDetail/${post.id}`} aria-label={`자세히 보기: ${post.title}`}>
                         <img src={`http://localhost:3000${post.image}`} alt="여행지 사진" />
@@ -129,9 +186,9 @@
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
-                            <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                            <img src={post.likedBy && post.likedBy.includes(userName) ? Like : noLike} 
                                  alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
-                            </span>
+                        </span>
                         <span>{post.likes || 0}</span>
                     </div>
                 </li>
@@ -140,3 +197,28 @@
         </div>
     </div>
 </body>
+
+<style>
+    .post-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .post-list li {
+        width: calc(25% - 10px); /* 한 줄에 4개 표시, 여유 공간을 위해 조정 */
+        margin-bottom: 20px; /* 아래쪽 여백 */
+    }
+    .uList img {
+        width: 200px; /* 게시물 이미지 크기 */
+        height: 200px; /* 게시물 이미지 크기 */
+        object-fit: cover; /* 이미지를 잘라서 비율 유지 */
+    }
+
+    .like-icon {
+        width: auto; /* 좋아요 이미지 크기 유지 */
+        height: auto; /* 좋아요 이미지 크기 유지 */
+        max-width: 24px; /* 필요 시 최대 너비 지정 */
+        max-height: 24px; /* 필요 시 최대 높이 지정 */
+    }
+</style>

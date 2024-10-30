@@ -6,53 +6,38 @@
     let isLoggedIn = false;
     let userName = "";
 
-    // 카카오 SDK 초기화 및 사용자 로그인 여부 확인
     onMount(() => {
-        const script = document.createElement("script");
-        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-        script.onload = () => {
+        if (!Kakao.isInitialized()) {
             Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-            console.log(Kakao.isInitialized());
+        }
 
-            if (Kakao.Auth.getAccessToken()) {
-                getUserInfo();  // 사용자 정보 가져오기
-            }
-
-            // 로컬 스토리지에서 포스트 불러오기
-            username = localStorage.getItem("username") || "";
-            let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-            posts = storedPosts;
-            myPosts = posts.filter(post => post.username === username);  // 사용자 작성 글만 필터링
-        };
-        document.head.appendChild(script);
+        const storedUsername = localStorage.getItem("username");
+        if (storedUsername) {
+            username = storedUsername;
+        }
     });
 
-    // 사용자 정보 가져오기
-    function getUserInfo() {
-        Kakao.API.request({
-            url: '/v2/user/me',
-            success: function (response) {
-                isLoggedIn = true;
-                userName = response.kakao_account.profile.nickname;
-                localStorage.setItem("username", userName);  // 로컬 스토리지에 저장
-            },
-            fail: function (error) {
-                console.error(error);
-            }
-        });
-    }
-
-    // 카카오 로그인
     function kakaoLogin() {
         Kakao.Auth.login({
-            success: function (authObj) {
-                console.log(authObj);
-                getUserInfo();  // 로그인 성공 후 사용자 정보 가져오기
+            success: function(authObj) {
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(res) {
+                        const nickname = res.properties.nickname;
+                        localStorage.setItem("username", nickname);
+                        username = nickname;
+                        alert("로그인 성공!");
+                    },
+                    fail: function(err) {
+                        console.error(err);
+                        alert("사용자 정보를 가져오는 중 오류가 발생했습니다.");
+                    },
+                });
             },
-            fail: function (err) {
+            fail: function(err) {
                 console.error(err);
-                alert('로그인 실패');
-            }
+                alert("로그인 중 오류가 발생했습니다.");
+            },
         });
     }
 

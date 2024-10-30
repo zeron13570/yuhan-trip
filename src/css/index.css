@@ -306,7 +306,7 @@ div.trip h1:first-child{
     font-weight: 900;
 }
 
-div.trip a.posting {
+div.trip button.posting {
     float: right;
     width: 100px;
     background-color: #3bd3b5;
@@ -315,6 +315,7 @@ div.trip a.posting {
     line-height: 30px;
     text-align: center;
     font-size: 15px;
+    border: none;
 }
 
 div.trip div.uList{

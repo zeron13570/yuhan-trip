@@ -36,26 +36,27 @@
     const postIndex = posts.findIndex(post => post.id === postId);
     const post = posts[postIndex];
 
-    if (!post.likedBy) post.likedBy = [];  // 처음에 likedBy 배열이 없으면 초기화
+    if (!post.likedBy) post.likedBy = []; // likedBy 배열 초기화
 
-    // 이미 좋아요한 사용자라면 좋아요 취소
     const userIndex = post.likedBy.indexOf(username);
     if (userIndex === -1) {
         post.likes++;
-        post.likedBy.push(username);  // 좋아요한 사용자 추가
+        post.likedBy.push(username); // 좋아요 추가
     } else {
         post.likes--;
-        post.likedBy.splice(userIndex, 1);  // 좋아요 취소
+        post.likedBy.splice(userIndex, 1); // 좋아요 취소
     }
 
+    // Svelte가 반응하도록 posts 배열 다시 할당
+    posts = [...posts]; 
 
-    // 서버에 업데이트된 포스트 데이터를 전송
+    // 서버에 업데이트된 포스트 데이터 전송
     fetch(`http://localhost:3000/update-post/${postId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(post),  // 업데이트된 포스트 데이터
+        body: JSON.stringify(post), // 업데이트된 포스트 데이터
     })
     .then(response => {
         if (!response.ok) {
@@ -66,7 +67,6 @@
     .catch(error => {
         console.error('Error updating post:', error);
     });
-
     // 로컬 스토리지 업데이트
     localStorage.setItem("posts", JSON.stringify(posts)); // 업데이트된 포스트 저장
 }
@@ -168,3 +168,21 @@
         <a href="/tripMoment" class="indexBtn">트립 모먼트 더 보기</a>
     </div> -->
 </section>
+<style>
+    .TravelLog img {
+        width: 200px; /* 이미지 너비 */
+        height: 200px; /* 이미지 높이 */
+        object-fit: cover; /* 비율 유지하며 자르기 */
+        border-radius: 4px; /* 모서리 둥글게 */
+        margin-right: 15px; /* 이미지와 텍스트 사이 여백 */
+    }
+
+
+    .like-icon {
+        width: auto; /* 좋아요 이미지 크기 유지 */
+        height: auto; /* 좋아요 이미지 크기 유지 */
+        max-width: 24px; /* 필요 시 최대 너비 지정 */
+        max-height: 24px; /* 필요 시 최대 높이 지정 */
+    }
+
+</style>

@@ -92,83 +92,92 @@
     }
 
     function submitPost() {
-        const editor = document.querySelector(".editor");
-        content = editor.innerHTML;
+    const editor = document.querySelector(".editor");
+    content = editor.innerHTML.trim(); // 공백 제거
 
-        if (!title || !content || selectedRegion === "지역 선택") {
-            alert("모든 필드를 입력해주세요.");
-            return;
-        }
+    // 모든 필드 확인
+    if (!title.trim() || !content || selectedRegion === "지역 선택") {
+        let errorMessage = "모든 필드를 입력해주세요.";
+        if (!title.trim()) errorMessage += "\n- 제목을 입력하세요.";
+        if (!content) errorMessage += "\n- 내용을 입력하세요.";
+        if (selectedRegion === "지역 선택") errorMessage += "\n- 지역을 선택하세요.";
 
-        const firstImageUrl = imageUrls.length > 0 ? imageUrls[0] : null;
-
-        const newPost = {
-            title,
-            content,
-            region: selectedRegion,
-            username: localStorage.getItem("username"),
-            likes: 0,
-            likedBy: [],
-            image: firstImageUrl
-        };
-
-        fetch('http://localhost:3000/add-post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newPost),
-        })
-        .then(response => {
-            console.log('Response status:', response.status);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Response data:', data);
-            if (data.message) {
-                alert(data.message);
-            }
-            window.location.href = "/travelLog";
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            alert("포스팅 중 오류가 발생했습니다.");
-        });
+        alert(errorMessage);
+        return; // 경고 메시지 후 종료
     }
+
+    const firstImageUrl = imageUrls.length > 0 ? imageUrls[0] : null;
+
+    const newPost = {
+        title,
+        content,
+        region: selectedRegion,
+        username: localStorage.getItem("username"),
+        likes: 0,
+        likedBy: [],
+        image: firstImageUrl
+    };
+
+    fetch('http://localhost:3000/add-post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newPost),
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        if (data.message) {
+            alert(data.message);
+        }
+        window.location.href = "/travelLog";
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+        alert("포스팅 중 오류가 발생했습니다.");
+    });
+}
+
 </script>
 
 <body>
     <div class="travelLogP posting">
-            <h1>트래블로그 포스팅하기</h1>
+        <h1>트래블로그 포스팅하기</h1>
 
-            <!-- 지역 선택 버튼 -->
-            <div class="dropBtn">
-                <button class="dropbtn" aria-label="지역선택">{selectedRegion} <span class="arrow">▼</span></button>
-                <div class="dropdown-content">
-                    <a href="#" on:click={() => selectRegion("제주")}>제주</a>
-                    <a href="#" on:click={() => selectRegion("강릉")}>강릉</a>
-                    <a href="#" on:click={() => selectRegion("군산")}>군산</a>
-                    <a href="#" on:click={() => selectRegion("경주")}>경주</a>
-                    <a href="#" on:click={() => selectRegion("인천")}>인천</a>
-                    <a href="#" on:click={() => selectRegion("수원")}>수원</a>
-                    <a href="#" on:click={() => selectRegion("포항")}>포항</a>
-                    <a href="#" on:click={() => selectRegion("울산")}>울산</a>
-                    <a href="#" on:click={() => selectRegion("대구")}>대구</a>
-                    <a href="#" on:click={() => selectRegion("전주")}>전주</a>
-                </div>
+        <!-- 지역 선택 버튼 -->
+        <div class="dropBtn">
+            <button class="dropbtn" aria-label="지역선택">{selectedRegion} <span class="arrow">▼</span></button>
+            <div class="dropdown-content">
+                <a href="#" on:click={() => selectRegion("서울")}>서울</a>
+                <a href="#" on:click={() => selectRegion("부산")}>부산</a>
+                <a href="#" on:click={() => selectRegion("제주")}>제주</a>
+                <a href="#" on:click={() => selectRegion("전주")}>전주</a>
+                <a href="#" on:click={() => selectRegion("포항")}>포항</a>
+                <a href="#" on:click={() => selectRegion("울산")}>울산</a>
+                <a href="#" on:click={() => selectRegion("수원")}>수원</a>
+                <a href="#" on:click={() => selectRegion("대구")}>대구</a>
+                <a href="#" on:click={() => selectRegion("군산")}>군산</a>
+                <a href="#" on:click={() => selectRegion("인천")}>인천</a>
+                <a href="#" on:click={() => selectRegion("경주")}>경주</a>
+                <a href="#" on:click={() => selectRegion("강릉")}>강릉</a>
             </div>
+        </div>
 
-            <!-- 제목 입력 -->
-            <p>제목</p>
-            <input type="text" placeholder="멋진 제목을 지어보아요" bind:value={title} id="post-title">
+        <!-- 제목 입력 -->
+        <p>제목</p>
+        <input type="text" placeholder="멋진 제목을 지어보아요" bind:value={title} id="post-title">
 
-            <!-- 글 작성 및 이미지 추가 -->
-            <div class="editor" contenteditable="true" placeholder="여행에서 있던 일을 공유해주세요~!"></div>
+        <!-- 글 작성 및 이미지 추가 -->
+        <div class="editor" contenteditable="true" placeholder="여행에서 있던 일을 공유해주세요~!"></div>
 
-            <!-- 이미지 업로드 버튼 -->
-            <input type="file" accept="image/*" multiple on:change={handleImageUpload} class="upload-btn" id="image-upload">
+        <!-- 이미지 업로드 버튼 -->
+        <input type="file" accept="image/*" multiple on:change={handleImageUpload} class="upload-btn" id="image-upload">
 
-            <!-- 포스팅 버튼 -->
-            <a href="#" class="posting" on:click={submitPost} aria-label="포스트 작성하기">포스팅</a>
+        <!-- 포스팅 버튼 -->
+        <a href="#" class="posting" on:click={submitPost} aria-label="포스트 작성하기">포스팅</a>
     </div>
 </body>

@@ -28,5 +28,25 @@
     "image": "/uploads/image-1730206795562-452574852.jpeg",
     "likes": 0,
     "likedBy": []
+  },
+  {
+    "id": "ac388d8a-cae8-43ed-82e1-e485feeb2990",
+    "title": "제발",
+    "content": "왜 이러는거야 ㄷ갑자기 제발 좀<div><br></div><img src=\"http://localhost:3000/uploads/image-1730264410003-119294782.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "포항",
+    "username": "유진",
+    "image": "/uploads/image-1730264410003-119294782.jpg",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "9aaebe02-59f7-4a82-ba22-40ae063b91ec",
+    "title": "안녕하셔요",
+    "content": "ㅎ하<div><br></div><img src=\"http://localhost:3000/uploads/image-1730270242763-499203802.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "수원",
+    "username": "유진",
+    "image": "/uploads/image-1730270242763-499203802.jpg",
+    "likes": 0,
+    "likedBy": []
   }
 ]
