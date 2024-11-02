@@ -1,4 +1,3 @@
-
 export const storeData = {
     // ! 서울 (1)
     //  TODO 서울 당일치기
@@ -200,6 +199,151 @@ export const storeData = {
                 { name: "마포아트센터", address: "서울특별시 마포구 대흥로20길 28 마포아트센터", lat: 37.549761, lng: 126.945571},
                 { name: "정원 광화문", address: "서울특별시 종로구 새문안로5길 37", lat: 37.573606, lng: 126.974193 },
                 { name: "통인스윗", address: "서울특별시 종로구 통인동 73", lat: 37.579611, lng: 37.579611 }
+            ]
+        ]
+    },
+    //? - 친구와
+    '1231': { // 서울 - 1박2일 - 친구와 - 빽빽
+        days: [
+            [//day1
+                { name: "일민미술관", address: "서울특별시 종로구 세종대로 152", lat: 37.569879, lng: 126.977554 },
+                { name: "심심헌", address: "서울특별시 종로구 북촌로11길 47", lat: 37.582803, lng: 126.983458 },
+                { name: "롯데월드타워&몰", address: "서울 송파구 올림픽로 300 롯데월드몰 지하 1층", lat: 37.513623, lng: 127.104116 },
+                { name: "양반댁 광화문", address: "서울특별시 종로구 인사동길 19-18 양반댁", lat: 37.572254, lng: 126.985924 },
+                { name: "서촌스코프,", address: "서울특별시 종로구 필운대로5가길 31", lat: 37.580361, lng: 126.967481 }
+            ],
+                [//day2
+                { name: "문화비축기지", address: "서울특별시 마포구 증산로 87", lat: 37.571252, lng: 126.893921 },
+                { name: "충무아트센터", address: "서울특별시 중구 퇴계로 387", lat: 37.565923, lng: 127.014861 },
+                { name: "종로반상회 종각역", address: "서울특별시 종로구 우정국로2길 8 지하 1층", lat: 37.569718, lng: 126.984302 },
+                { name: "스타픽스", address: "서울특별시 종로구 사직로9길 22 102호", lat: 35.577467, lng: 126.967975 }
+                ]
+        ]
+    },
+    '1232': { // 서울 - 1박2일 - 친구와 - 여유
+        days: [
+           [//day1
+           { name: "박물관은 살아있다", address: "서울특별시 종로구 인사동길 12 대일빌딩 지하 1층", lat: 37.571977, lng: 126.987219 },
+           { name: "성우이용원", address: "서울특별시 마포구 효창원로97길 4-1", lat: 37.549557, lng: 126.98047 },
+           { name: "금성식당 종로 3가", address: "서울특별시 종로구 돈화문로 5길 26 1층", lat: 37.570809, lng: 126.990591 },
+           { name: "사월의 물고기", address: "서울특별시 종로구 인사동길 62-5 2층", lat: 37.575429, lng: 126.983708 }
+       ],
+            [//day2
+            { name: "홍대앞 예술시장 프리마켓", address: "서울특별시 마포구 와우산로 21길 19-3", lat: 37.552254, lng: 126.913326 },
+            { name: "한성 백제 박물관", address: "서울특별시 송파구 위레성대로 71 한성백제박물관", lat: 37.515406, lng: 127.120866 },
+            { name: "인사동그집 쌈지길", address: "서울특별시 종로구 인사동길 44 쌈지길", lat: 37.574302, lng: 126.984904 },
+            { name: "카페 아키비스트", address: "서울특별시 종로구 효자로 13길 52", lat: 37.58217, lng: 126.97266 },
+            ]
+        ]
+    },
+    //? - 부모님과
+    '1231': { // 서울 - 1박2일 - 부모님과 - 빽빽
+        days: [
+            [//day1
+                { name: "국회의사당", address: "서울특별시 영등포구 여의도동 의사당대로 1", lat: 37.519944, lng: 126.929573 },
+                { name: "와룡모", address: "서울특별시 중구 남산공원길 609", lat: 37.553893, lng: 126.989927 },
+                { name: "더 현대 서울", address: "서울특별시 영등포구 여의대로 108 더현대 서울", lat: 37.526044, lng: 126.928288 },
+                { name: "전주집 인사동", address: "서울특별시 종록 인사동 220-27", lat: 37.571642, lng: 126.98562 },
+                { name: "카페 하이웨스트", address: "서울특별시 종로구 돈화문로 11다길 18", lat: 37.573117, lng: 126.99071 }
+            ],
+            [//day2
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  }
+            ]
+        ]
+    },
+    '1232': { // 서울 - 1박2일 - 부모님과 - 여유
+        days: [
+           [//day1
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  }
+       ],
+            [//day2
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  }
+            ]
+        ]
+    },
+    //? - 아이와
+    '1231': { // 서울 - 1박2일 - 아이와 - 빽빽
+        days: [
+            [//day1
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  }
+            ],
+            [//day2
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  }
+            ]
+        ]
+    },
+    '1232': { // 서울 - 1박2일 - 아이와 - 여유
+        days: [
+           [//day1
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  }
+       ],
+            [//day2
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  }
+            ]
+        ]
+    },
+    //? - 기타
+    '1231': { // 서울 - 1박2일 - 기타 - 빽빽
+        days: [
+            [//day1
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  },
+                { name: "", address: "", lat: , lng:  }
+            ],
+            [//day2
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  }
+            ]
+        ]
+    },
+    '1232': { // 서울 - 1박2일 - 기타 - 여유
+        days: [
+           [//day1
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  },
+           { name: "", address: "", lat: , lng:  }
+       ],
+            [//day2
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  },
+            { name: "", address: "", lat: , lng:  }
             ]
         ]
     },

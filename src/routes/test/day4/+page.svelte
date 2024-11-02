@@ -1,12 +1,6 @@
 <script>
   import { onMount, tick } from "svelte";
 
-  let startSearchQuery = "";
-  let endSearchQuery = "";
-  let waypointSearchQueries = [];
-  let startSearchResults = [];
-  let endSearchResults = [];
-  let waypointSearchResults = [];
   let openSection = "경로찾기";
 
   let waypoints = [];
@@ -14,7 +8,6 @@
   let polylines = [];
   let markers = {};
   let selectedPlaces = []; // 선택된 장소 목록
-  let routePolyline;
   let strokeOpacity = 1;
   let roadInfo = []; // 각 일정별 도로 정보 저장
   let dayMarkers = [];
@@ -32,7 +25,7 @@
   let dayRoutes = []; // 일차별 장소 저장
   let selectedDay = null; // 현재 선택된 일차
   let dayPolylines = []; // 각 일차별 경로 저장
-  let selectedDayIndex = 0; // 선택된 일차
+  let selectedDayIndex = null; // 선택된 일차
   let draggedPlace = null; // 드래그된 장소의 정보를 저장
   let draggedDayIndex = null; // 드래그된 장소의 일차 인덱스
 
@@ -42,68 +35,53 @@
 
   let listElement = null;
 
-  const cities = ["서울", "부산", "제주", "강릉", "군산", "경주", "인천", "수원", "포항", "울산", "대구", "전주"];
+  let area3Width = 300;
+  let isArea3Visible = true;
+  let isDragging = false;
+  let startX;
+
+  const cities = [
+    "서울",
+    "부산",
+    "제주",
+    "강릉",
+    "군산",
+    "경주",
+    "인천",
+    "수원",
+    "포항",
+    "울산",
+    "대구",
+    "전주",
+  ];
   const categories = ["관광지", "카페", "음식점", "숙박"];
   const categoryToTableName = {
-    "관광지": "place",
-    "카페": "cafe",
-    "음식점": "food",
-    "숙박": "lodgment"
+    관광지: "place",
+    카페: "cafe",
+    음식점: "food",
+    숙박: "lodgment",
   };
   let travelOption = "하루";
   let routeColor = "#008cba";
   let opacity = 1.0;
 
-  // 선택된 장소를 저장하는 변수
-  let selectedStartPoint = null;
-  let selectedEndPoint = null;
-  let selectedWaypointPoints = [];
-
   $: if (category || filter) {
     currentPage = 1; // 페이지를 1로 초기화
     fetchPlaces();
+    tick().then(() => {
     scrollToTopOfList();
+  });
   }
 
   $: totalPages = Math.ceil(places.length / itemsPerPage);
   $: roadInfo = [...roadInfo];
 
-  const createNumberedMarker = (position, number) => {
-    const markerContent = `
-      <div style="background-color: ${routeColor}; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; color: white; font-size: 16px;">
-        ${number}
-      </div>
-    `;
-
-    const marker = new kakao.maps.CustomOverlay({
-      position,
-      content: markerContent,
-      yAnchor: 1,
-      map,
-    });
-
-    return marker;
-  };
-
-  const searchPlaces = (type, index = null) => {
+  // 장소 검색을 위한 searchPlaces 함수 정의
+  const searchPlaces = () => {
     const ps = new kakao.maps.services.Places();
-    let query = '';
-    if (type === 'start') {
-      query = startSearchQuery;
-    } else if (type === 'end') {
-      query = endSearchQuery;
-    } else if (type === 'waypoint' && index !== null) {
-      query = waypointSearchQueries[index];
-    }
-
-    if (!query) {
-      alert("검색어를 입력하세요.");
-      return;
-    }
-
-    ps.keywordSearch(query, (data, status) => {
+    ps.keywordSearch(searchQuery, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        const results = data.map((place) => ({
+        searchResults = data.map((place) => ({
           id: place.id,
           name: place.place_name,
           address: place.address_name,
@@ -113,15 +91,6 @@
           category_group_name: place.category_group_name,
           tableName: mapKakaoCategoryToTableName(place.category_group_code),
         }));
-
-        if (type === 'start') {
-          startSearchResults = results;
-        } else if (type === 'end') {
-          endSearchResults = results;
-        } else if (type === 'waypoint' && index !== null) {
-          waypointSearchResults[index] = results;
-          waypointSearchResults = [...waypointSearchResults]; // 반응성 확보
-        }
       } else {
         alert("검색 결과가 없습니다.");
       }
@@ -168,36 +137,15 @@
   const updatePagedPlaces = () => {
     const filteredPlaces = places.filter((place) => {
       return (
-        (!filter || place.address.includes(filter)) // 지역 필터
+        !filter || place.address.includes(filter) // 지역 필터
       );
     });
 
     totalPages = Math.ceil(filteredPlaces.length / itemsPerPage);
-    pagedPlaces = filteredPlaces.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  };
-
-  const selectPlace = (place, type, index = null) => {
-    if (type === 'start') {
-      startSearchQuery = place.name;
-      startSearchResults = [];
-      selectedStartPoint = place; // 선택된 출발지 저장
-    } else if (type === 'end') {
-      endSearchQuery = place.name;
-      endSearchResults = [];
-      selectedEndPoint = place; // 선택된 도착지 저장
-    } else if (type === 'waypoint' && index !== null) {
-      waypointSearchQueries[index] = place.name;
-      waypointSearchQueries = [...waypointSearchQueries]; // 반응성 확보
-      waypointSearchResults[index] = [];
-      waypointSearchResults = [...waypointSearchResults]; // 반응성 확보
-      selectedWaypointPoints[index] = place; // 선택된 경유지 저장
-      selectedWaypointPoints = [...selectedWaypointPoints]; // 반응성 확보
-    }
-
-    const position = new kakao.maps.LatLng(place.latitude, place.longitude);
-    const marker = createNumberedMarker(position, index + 1);
-    markers[place.id] = marker;
-    map.setCenter(position);
+    pagedPlaces = filteredPlaces.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
   };
 
   const getContrastYIQ = (hexcolor) => {
@@ -229,7 +177,7 @@
 
   // 마커 스타일 업데이트를 위한 반응형 선언문
   $: if (routeColor) {
-    if (selectedDayIndex !== null && dayMarkers && dayRoutes) {
+    if (selectedDayIndex !== null) {
       updateMarkersForDay(selectedDayIndex);
     }
   }
@@ -355,9 +303,7 @@
 
     // 1박 2일 또는 2박 3일 선택 시 숙박 장소 필수 조건 확인
     if (numDays > 1 && lodgmentPlaces.length === 0) {
-      alert(
-        "1박 2일 또는 2박 3일을 선택한 경우 숙박 장소를 포함해야 합니다."
-      );
+      alert("1박 2일 또는 2박 3일을 선택한 경우 숙박 장소를 포함해야 합니다.");
       return;
     }
 
@@ -471,15 +417,6 @@
           y: place.latitude.toString(),
         }));
 
-      // 요청 데이터 콘솔 출력
-      console.log("숙박 장소 확인 (추가 후):", lodgmentPlaces);
-      console.log("Day Routes 구성 확인:", dayRoutes);
-      console.log("API 요청 데이터:", {
-        origin,
-        destination,
-        waypoints,
-      });
-
       try {
         const response = await fetch("http://localhost:8080/findRoute2", {
           method: "POST",
@@ -494,7 +431,6 @@
           continue;
         }
 
-        console.log(`Day ${i + 1} Route Data:`, data.route);
         drawRoute(data.route, i);
       } catch (error) {
         console.error(`Error finding route for day ${i + 1}:`, error);
@@ -512,8 +448,6 @@
     dayRoutes.forEach((route, dayIndex) => {
       updateMarkersForDay(dayIndex);
     });
-
-    selectedDayIndex = 0;
 
     showDayRoute(selectedDayIndex);
     alert("경로가 만들어 졌습니다.");
@@ -611,6 +545,52 @@
     selectedDayIndex = dayIndex;
   };
 
+  // 선택된 일차의 경로 업데이트 함수
+  const updateRoute = async (dayIndex) => {
+    const places = dayRoutes[dayIndex];
+    if (places.length < 2) return;
+
+    const origin = {
+      name: places[0].name,
+      x: places[0].longitude.toString(),
+      y: places[0].latitude.toString(),
+    };
+
+    const destination = {
+      name: places[places.length - 1].name,
+      x: places[places.length - 1].longitude.toString(),
+      y: places[places.length - 1].latitude.toString(),
+    };
+
+    const waypoints = places.slice(1, places.length - 1).map((place) => ({
+      name: place.name,
+      x: place.longitude.toString(),
+      y: place.latitude.toString(),
+    }));
+
+    try {
+      const response = await fetch("http://localhost:8080/findRoute2", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ origin, destination, waypoints }),
+      });
+
+      const data = await response.json();
+      if (!data.success) {
+        alert("경로를 찾을 수 없습니다222: " + data.error);
+        return;
+      }
+
+      // 선택된 일차의 경로만 다시 그림
+      drawRoute(data.route, dayIndex);
+
+      // 다른 일차의 경로 숨김
+      synchronizeMap();
+    } catch (error) {
+      alert("경로를 업데이트할 수 없습니다.");
+    }
+  };
+
   const drawRoute = (routeData, dayIndex) => {
     // 기존 경로 삭제
     if (dayPolylines[dayIndex]) {
@@ -693,7 +673,7 @@
     // 모든 일차의 마커를 숨기고 선택된 일차의 마커만 표시
     dayMarkers.forEach((markersArray, idx) => {
       if (markersArray) {
-        markersArray.forEach(marker => {
+        markersArray.forEach((marker) => {
           marker.setMap(idx === dayIndex ? map : null); // 선택된 일차만 지도에 표시
         });
       }
@@ -709,50 +689,41 @@
 
   // 일차별로 마커를 초기화하고 일차별로 마커 배열에 저장
   const updateMarkersForDay = (dayIndex) => {
-    // dayMarkers와 dayRoutes가 정의되어 있는지 확인
-    if (!dayMarkers || !dayRoutes) {
-      console.error("dayMarkers 또는 dayRoutes가 정의되지 않았습니다.");
-      return;
-    }
-
     // 기존 마커 모두 숨김
-    if (dayMarkers[dayIndex] && Array.isArray(dayMarkers[dayIndex])) {
-      dayMarkers[dayIndex].forEach(marker => marker.setMap(null));
+    if (dayMarkers[dayIndex]) {
+      dayMarkers[dayIndex].forEach((marker) => marker.setMap(null));
     }
     dayMarkers[dayIndex] = []; // 마커 배열 초기화
 
     // 새로운 마커 생성 및 저장
-    if (dayRoutes[dayIndex] && Array.isArray(dayRoutes[dayIndex])) {
-      dayRoutes[dayIndex].forEach((place, placeIndex) => {
-        const position = new kakao.maps.LatLng(place.latitude, place.longitude);
-        const index = placeIndex + 1;
+    dayRoutes[dayIndex].forEach((place, placeIndex) => {
+      const position = new kakao.maps.LatLng(place.latitude, place.longitude);
+      const textColor = getContrastYIQ(routeColor);
+      const index = placeIndex + 1;
 
-        const content = `
+      const content = `
           <div class="label_" style="background-color: ${routeColor};">
-              <span class="number" style="padding: 3px; font-size: 20px; color: white;">${index}</span>
+              <span class="number" style="padding: 3px; font-size: 20px; color: ${textColor};">${index}</span>
           </div>
         `;
 
-        const marker = new kakao.maps.CustomOverlay({
-          position,
-          content,
-          yAnchor: 1,
-          map: selectedDayIndex === dayIndex ? map : null, // 현재 선택된 일차만 지도에 표시
-        });
-
-        dayMarkers[dayIndex].push(marker); // 마커 저장
+      const marker = new kakao.maps.CustomOverlay({
+        position,
+        content,
+        yAnchor: 1,
+        map: selectedDayIndex === dayIndex ? map : null, // 현재 선택된 일차만 지도에 표시
       });
-    } else {
-      console.error(`dayRoutes[${dayIndex}]가 정의되지 않았습니다.`);
-    }
+
+      dayMarkers[dayIndex].push(marker); // 마커 저장
+    });
   };
 
   // 모든 마커를 숨기는 함수
   const hideAllMarkers = () => {
     if (dayMarkers && dayMarkers.length > 0) {
-      dayMarkers.forEach(markersArray => {
+      dayMarkers.forEach((markersArray) => {
         if (markersArray) {
-          markersArray.forEach(marker => {
+          markersArray.forEach((marker) => {
             marker.setMap(null); // 모든 마커 숨김
           });
         }
@@ -779,7 +750,7 @@
   };
 
   $: if (polylines.length > 0) {
-    polylines.forEach(polyline => {
+    polylines.forEach((polyline) => {
       polyline.setOptions({
         strokeColor: routeColor,
         strokeOpacity: opacity,
@@ -852,22 +823,20 @@
   const prevPage = async (event) => {
     if (event) event.preventDefault();
     if (currentPage > 1) {
-      currentPage--;
+      currentPage -= 1;
       await tick();
-      updatePagedPlaces();
       scrollToTopOfList();
     }
-  }
+  };
 
   const nextPage = async (event) => {
     if (event) event.preventDefault();
     if (currentPage < totalPages) {
-      currentPage++;
+      currentPage += 1;
       await tick();
-      updatePagedPlaces();
       scrollToTopOfList();
     }
-  }
+  };
 
   $: pagedPlaces = places
     .filter((place) => place.name.toLowerCase().includes(filter.toLowerCase()))
@@ -875,6 +844,7 @@
 
   onMount(async () => {
     isClient = true;
+    fetchPlaces();
 
     if (window.kakao && window.kakao.maps) {
       const container = document.getElementById("map");
@@ -887,23 +857,80 @@
       bounds = new kakao.maps.LatLngBounds();
       await tick();
 
-      const mapTypeControl = new kakao.maps.MapTypeControl();
-      map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+      // 빈 화면 방지를 위해 리사이즈 이벤트 추가
+      function handleResize() {
+        const currentCenter = map.getCenter();
+        map.relayout();
+        map.setCenter(currentCenter);
+      }
 
-      const zoomControl = new kakao.maps.ZoomControl();
-      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-      await fetchPlaces();
+      // 윈도우 크기가 변경될 때마다 중심을 고정
+      window.addEventListener("resize", handleResize);
+
+      // 반복적으로 중심 갱신 (빈 화면 방지)
+      setInterval(() => {
+        handleResize();
+      }, 500); // 500ms 간격으로 중심 유지
+
+      // 섹션이 열리거나 닫힐 때도 동일한 방식 적용
+      const section = document.querySelector(".route-finding-section");
+      if (section) {
+        const observer = new MutationObserver(handleResize);
+        observer.observe(section, {
+          attributes: true,
+          attributeFilter: ["style"],
+        });
+      }
     } else {
       console.error("Kakao Maps API가 로드되지 않았습니다.");
     }
-    await fetchPlaces();
   });
 
+  function toggleArea3() {
+    isArea3Visible = !isArea3Visible;
+  }
   const selectDay = (dayIndex) => {
-  selectedDayIndex = dayIndex;
-  showDayRoute(dayIndex);
-};
+    selectedDayIndex = dayIndex;
+    showDayRoute(dayIndex);
+  };
+  // area3Width가 변경될 때 지도 업데이트
+  $: if (map && isClient) {
+    map.relayout();
+    const currentCenter = map.getCenter();
+    map.setCenter(currentCenter);
+  }
 
+  // isArea3Visible이 변경될 때 지도 업데이트
+  $: if (map && isClient && isArea3Visible !== undefined) {
+    map.relayout();
+    const currentCenter = map.getCenter();
+    map.setCenter(currentCenter);
+  }
+  function startDragging(event) {
+    isDragging = true;
+    startX = event.clientX;
+    window.addEventListener("mousemove", onDrag);
+    window.addEventListener("mouseup", stopDragging);
+  }
+
+  function onDrag(event) {
+    if (!isDragging) return;
+    const deltaX = event.clientX - startX;
+    area3Width = Math.max(100, area3Width + deltaX); // 최소 너비 100px
+    startX = event.clientX; // 다음 이동을 위해 startX 갱신
+
+    if (map) {
+      map.relayout();
+      const currentCenter = map.getCenter();
+      map.setCenter(currentCenter);
+    }
+  }
+
+  function stopDragging() {
+    isDragging = false;
+    window.removeEventListener("mousemove", onDrag);
+    window.removeEventListener("mouseup", stopDragging);
+  }
 </script>
 
 <svelte:head>
@@ -923,184 +950,173 @@
   </div>
 
   {#if openSection === "경로찾기"}
-    <div class="route-finding-section">
-      <div class="area_1">
-        <div class="options">
-          <label>여행 일정:</label>
-          <select bind:value={travelOption}>
-            <option value="하루">하루</option>
-            <option value="1박 2일">1박 2일</option>
-            <option value="2박 3일">2박 3일</option>
-          </select>
+    <div class="area_1">
+      <div class="options">
+        <label>여행 일정:</label>
+        <select bind:value={travelOption}>
+          <option value="하루">하루</option>
+          <option value="1박 2일">1박 2일</option>
+          <option value="2박 3일">2박 3일</option>
+        </select>
 
-          <label>카테고리:</label>
-          <select bind:value={category}>
-            {#each categories as cat}
-              <option value={cat}>{cat}</option>
-            {/each}
-          </select>
+        <label>카테고리:</label>
+        <select bind:value={category}>
+          {#each categories as cat}
+            <option value={cat}>{cat}</option>
+          {/each}
+        </select>
 
-          <label>지역:</label>
-          <select bind:value={filter}>
-            <option value="">모든 지역</option>
-            {#each cities as city}
-              <option value={city}>{city}</option>
-            {/each}
-          </select>
-        </div>
-
-        <!-- 출발지 검색 -->
-        <div class="input-group">
-          <input
-            type="text"
-            placeholder="출발지"
-            bind:value={startSearchQuery}
-          />
-          <button on:click={() => searchPlaces("start")}>검색</button>
-        </div>
-        <ul class="search-results">
-          {#each startSearchResults as result}
-            <li on:click={() => selectPlace(result, "start")}>
+        <label>지역:</label>
+        <select bind:value={filter}>
+          <option value="">모든 지역</option>
+          {#each cities as city}
+            <option value={city}>{city}</option>
+          {/each}
+        </select>
+      </div>
+      <div>
+        <!-- 장소 검색 -->
+        <label>장소 검색:</label>
+        <input
+          type="text"
+          bind:value={searchQuery}
+          placeholder="장소 검색어 입력"
+        />
+        <button on:click={searchPlaces}>검색</button>
+      </div>
+      <!-- 검색된 장소 리스트 -->
+      <div class="place-list">
+        <ul>
+          {#each searchResults as result}
+            <li on:click={() => toggleMarker(result)}>
               {result.name} - {result.address}
             </li>
           {/each}
         </ul>
+      </div>
+      <div class="buttons">
+        <button class="button" on:click|preventDefault={findRoute}>찾기</button>
+      </div>
+    </div>
 
-        <!-- 도착지 검색 -->
-        <div class="input-group">
-          <input type="text" placeholder="도착지" bind:value={endSearchQuery} />
-          <button on:click={() => searchPlaces("end")}>검색</button>
-        </div>
-        <ul class="search-results">
-          {#each endSearchResults as result}
-            <li on:click={() => selectPlace(result, "end")}>
-              {result.name} - {result.address}
-            </li>
-          {/each}
-        </ul>
-
-        <!-- 경유지 검색 -->
-        {#each waypoints as waypoint, index}
-          <div class="input-group">
-            <input
-              type="text"
-              placeholder="경유지"
-              bind:value={waypointSearchQueries[index]}
-            />
-            <button on:click={() => searchPlaces("waypoint", index)}
-              >검색</button
+    <div class="area_list">
+      <div class="existing-place-list" bind:this={listElement}>
+        <ul>
+          {#each pagedPlaces as place}
+            <li
+              class:selected={selectedPlaces.some((p) => p.id === place.id)}
+              on:click={() => toggleMarker(place)}
+              on:keydown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  toggleMarker(place);
+                }
+              }}
             >
-          </div>
-          <ul class="search-results">
-            {#each waypointSearchResults[index] || [] as result}
-              <li on:click={() => selectPlace(result, "waypoint", index)}>
-                {result.name} - {result.address}
-              </li>
-            {/each}
-          </ul>
-        {/each}
-
-        <div class="buttons">
-          <button class="button" on:click|preventDefault={addWaypoint}
-            >경유지 추가</button
-          >
-          <button class="button" on:click|preventDefault={removeWaypoint}
-            >경유지 제거</button
-          >
-          <button class="button" on:click|preventDefault={findRoute}
-            >찾기</button
-          >
-        </div>
+              {place.name} - {place.address}
+            </li>
+          {/each}
+        </ul>
       </div>
 
-      <div class="area_list">
-        <div class="existing-place-list">
-          <ul>
-            {#each pagedPlaces as place}
-              <li
-                class:selected={selectedPlaces.some((p) => p.id === place.id)}
-                on:click={() => toggleMarker(place)}
-                on:keydown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    toggleMarker(place);
-                  }
-                }}
-              >
-                {place.name} - {place.address}
-              </li>
-            {/each}
-          </ul>
-        </div>
-
-        <div class="pagination">
-          <button
-            on:click={(event) => prevPage(event)}
-            disabled={currentPage === 1}>이전</button
-          >
-          <span>{currentPage} / {totalPages}</span>
-          <button
-            on:click={(event) => nextPage(event)}
-            disabled={currentPage === totalPages}>다음</button
-          >
-        </div>
+      <div class="pagination">
+        <button
+          on:click={(event) => prevPage(event)}
+          disabled={currentPage === 1}>이전</button
+        >
+        <span>{currentPage} / {totalPages}</span>
+        <button
+          on:click={(event) => nextPage(event)}
+          disabled={currentPage === totalPages}>다음</button
+        >
       </div>
     </div>
   {/if}
 
   {#if openSection === "경로보기"}
     <div class="area_2">
+      <button on:click={toggleArea3}  class="toggle-button">
+        {#if isArea3Visible}
+          &lt;
+        {:else}
+          &gt;
+        {/if}
+      </button>
       <div class="options">
+        <br>
         <label>경로 색상:</label>
         <input type="color" bind:value={routeColor} />
 
         <label>투명도:</label>
         <input type="range" min="0" max="1" step="0.1" bind:value={opacity} />
       </div>
-      
-      {#if dayRoutes && dayRoutes.length > 0}
-  <div class="day-selection">
-    {#each dayRoutes as _, index}
-      <button
-        class="{selectedDayIndex === index ? 'selected-day' : ''}"
-        on:click={() => selectDay(index)}
-      >
-        {index + 1}일차
-      </button>
-    {/each}
-  </div>
-{/if}
+    </div>
 
-{#if dayRoutes && dayRoutes[selectedDayIndex]}
-<div class="day-place-list">
-  <ul>
-    {#each dayRoutes[selectedDayIndex] as place, idx}
-      <li>
-        {idx + 1}. {place.name} - {place.address}
-      </li>
-    {/each}
-  </ul>
-</div>
-{/if}
-      
-{#if roadInfo && roadInfo[selectedDayIndex]}
-        <div class="road-info">
-          {#each roadInfo[selectedDayIndex] as info}
-            <p>{info}</p>
+    <div
+      class="area_3"
+      style="width: {isArea3Visible ? area3Width + 'px' : '0'};"
+    >
+      <div class="resize-handle" on:mousedown={startDragging}></div>
+      {#if dayRoutes && dayRoutes.length > 0}
+        <div class="day-areas">
+          {#each dayRoutes as dayRoute, dayIndex}
+            <div class="day-area">
+              <button
+                class:selected-day={selectedDayIndex === dayIndex}
+                on:click={() => selectDay(dayIndex)}
+              >
+                {dayIndex + 1}일차
+              </button>
+
+              <!-- 일차별 장소 목록 -->
+              {#if dayRoute}
+                <div class="day-place-list">
+                  <h4>{dayIndex + 1}일차 장소 목록</h4>
+                  <ul
+                    on:dragover={handleDragOver}
+                    on:drop={(event) => handleDrop(dayIndex, dayRoute.length)}
+                  >
+                    {#each dayRoute as place, idx}
+                      <li
+                        draggable="true"
+                        on:dragstart={() => handleDragStart(dayIndex, idx)}
+                        on:dragover={handleDragOver}
+                        on:drop={() => handleDrop(dayIndex, idx)}
+                      >
+                        {idx + 1}. {place.name} - {place.address}
+                      </li>
+                    {/each}
+                  </ul>
+                </div>
+              {/if}
+
+              <!-- 도로 정보 표시 -->
+              {#if roadInfo && roadInfo[dayIndex]}
+                <div class="road-info">
+                  {#each roadInfo[dayIndex] as info}
+                    <p>{info}</p>
+                  {/each}
+                </div>
+              {/if}
+            </div>
           {/each}
         </div>
       {/if}
     </div>
   {/if}
 
-  <div id="map" class="map"></div>
+  <div class="map-container">
+    <div id="map" class="map"></div>
+  </div>
 </div>
 
 <style>
+  /* Container to hold all sections in a row layout */
   .container {
     display: flex;
-    flex-direction: row;
     height: 100vh;
   }
+
+  /* Sidebar styles */
   .sidebar {
     width: 100px;
     height: 100%;
@@ -1109,6 +1125,7 @@
     display: flex;
     flex-direction: column;
   }
+
   .sidebar-header {
     padding: 10px;
     font-size: 16px;
@@ -1118,56 +1135,99 @@
     cursor: pointer;
     border-bottom: 1px solid #ddd;
   }
-  .route-finding-section {
-    display: flex;
-    width: 500px; /* area_1과 area_list의 너비 합 */
-    height: 100%;
-    background-color: #ffffff;
-    border-left: 1px solid #ddd;
-    position: absolute;
-    left: 100px;
-    z-index: 1000;
-  }
-  .area_1,
-  .area_list {
-    width: 250px;
-    height: 100%;
-    padding: 10px;
-    overflow-y: auto;
-  }
-  .area_list {
-    border-left: 1px solid #ddd;
-  }
-  .area_2 {
+
+  /* Individual areas within the route-finding section */
+  .area_1 {
     width: 250px;
     height: 100%;
     background-color: #ffffff;
     border-left: 1px solid #ddd;
-    padding: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    left: 100px;
-    z-index: 1000;
-    overflow-y: auto;
   }
+
+  .area_list {
+    width: 250px;
+    height: 100%;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  .area_2,
+  .area_3 {
+    position: static;
+    overflow: hidden;
+  }
+  /* Area 2 styles */
+  .area_2 {
+    width: 200px;
+    height: 100%;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Area 3 styles */
+  .area_3 {
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+  }
+  .area_3.hidden[style*="width: 0"] {
+    display: none;
+  }
+  .toggle-button {
+  position: absolute;
+  left: 283px;
+  z-index: 1000;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+  .resize-handle {
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    background-color: transparent;
+  }
+  /* Map container to allow flexible resizing */
+  .map-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Map styling */
   #map {
     margin: 0;
     height: 100%;
     flex-grow: 1;
   }
-  .map {
-    height: 100%;
+  .map-container {
+    flex-grow: 1; /* 남은 공간을 모두 차지 */
+    display: flex;
+    flex-direction: column;
   }
+  /* Input group styles */
   .input-group {
     display: flex;
     margin-bottom: 10px;
   }
+
   .input-group input {
     flex: 1;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px 0 0 4px;
   }
+
   .input-group button {
     padding: 8px;
     background-color: #008cba;
@@ -1176,18 +1236,42 @@
     cursor: pointer;
     border-radius: 0 4px 4px 0;
   }
+
   .input-group button:hover {
     background-color: #0079a1;
   }
+  .place-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 100px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+  }
+
+  .place-list li {
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .place-list li:hover {
+    background-color: #f0f0f0;
+  }
+
+  /* Options styling */
   .options {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
     gap: 8px;
   }
+
   .options label {
     margin-right: 5px;
   }
+
+  /* Search results styling */
   .search-results {
     list-style-type: none;
     padding: 0;
@@ -1197,19 +1281,24 @@
     background-color: white;
     border: 1px solid #ddd;
   }
+
   .search-results li {
     padding: 8px;
     cursor: pointer;
   }
+
   .search-results li:hover {
     background-color: #f0f0f0;
   }
+
+  /* Buttons styling */
   .buttons {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
+
   .button {
     padding: 8px;
     background-color: #008cba;
@@ -1219,37 +1308,46 @@
     border-radius: 4px;
     text-align: center;
   }
+
   .button:hover {
     background-color: #0079a1;
   }
-  /* 리스트 스타일 추가 */
+
+  /* Existing place list styling */
   .existing-place-list {
     overflow-y: auto;
     max-height: 580px;
     margin-bottom: 10px;
   }
+
   .existing-place-list ul {
     list-style-type: none;
     padding: 0;
   }
+
   .existing-place-list li {
     padding: 8px;
     border-bottom: 1px solid #ddd;
     cursor: pointer;
   }
+
   .existing-place-list li.selected {
     background-color: #e0e0e0;
     font-weight: bold;
   }
+
   .existing-place-list li:hover {
     background-color: #f0f0f0;
   }
+
+  /* Pagination styling */
   .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
   }
+
   .pagination button {
     display: inline-block;
     padding: 10px 20px;
@@ -1257,49 +1355,96 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
   .pagination-button:hover {
     background-color: #ccc;
   }
+
   .pagination span {
     margin: 0 5px;
   }
+
+  /* Road info section styling */
   .road-info {
     margin-top: 20px;
     overflow-y: auto;
     max-height: 400px;
   }
+
   .road-info p {
     margin: 5px 0;
   }
-  .day-selection {
-  margin-top: 10px;
-}
-.day-selection button {
-  margin-right: 5px;
-  padding: 5px 10px;
-  border: none;
-  background-color: #e0e0e0;
-  cursor: pointer;
-}
-.day-selection button:hover {
-  background-color: #d0d0d0;
-}
-.selected-day {
-  background-color: #0079a1;
-  color: white;
-}
-.day-place-list {
-  margin-top: 10px;
-  max-height: 150px;
-  overflow-y: auto;
-}
-.day-place-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-.day-place-list li {
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd;
-}
 
+  /* Day selection button styling */
+  .day-selection {
+    margin-top: 10px;
+  }
+
+  .day-selection button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+  }
+
+  .day-selection button:hover {
+    background-color: #d0d0d0;
+  }
+
+  .selected-day {
+    background-color: #0079a1;
+    color: white;
+  }
+
+  /* Day areas layout */
+  .day-areas {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .day-area {
+    flex: 1 0 250px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 500px;
+  }
+
+  .day-area button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+  }
+
+  .day-area h3 {
+    margin-top: 0;
+  }
+
+  /* Day place list styling */
+  .day-place-list {
+    margin-top: 10px;
+  }
+
+  .day-place-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .day-place-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .day-place-area {
+    margin-top: 20px;
+  }
+
+  .day-place-area h2 {
+    margin-bottom: 10px;
+  }
 </style>

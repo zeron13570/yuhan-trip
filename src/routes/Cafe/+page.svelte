@@ -5,39 +5,8 @@
     let currentPage = 1;
     const itemsPerPage = 10;
 
-    const allCafes = [
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" },
-        { name: "카페 이름", description: "카페주소" }
-    ];
-
+    let category = "cafe"; // 기본 카테고리
+    const allCafes = [];
     let currentCafes = [];
     let totalPages = 0;
 
@@ -53,10 +22,26 @@
         updateCafes();
     }
 
+    // 서버에서 데이터를 가져오는 함수
+    const fetchPlaces = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/${category}`);
+        if (!response.ok) throw new Error("네트워크 응답에 문제가 있습니다.");
+        const data = await response.json();
+  
+        // 주소에 지역명이 포함된 데이터만 필터링
+        allFoods = data.filter(
+            (place) => place.address && place.address.includes(city));
+        updateFoods(); // 페이지 데이터 업데이트
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      }
+    };
+  
     onMount(() => {
-        const params = new URLSearchParams(window.location.search);
-        city = params.get("name") || "카페"; // 기본값 설정
-        updateCafes(); // 초기 카페 리스트 설정
+      const params = new URLSearchParams(window.location.search);
+      city = params.get("name"); // URL에서 지역명 가져오기, 기본값은 서울
+      fetchPlaces(); // 데이터 가져오기
     });
 </script>
 
@@ -68,7 +53,7 @@
                 <a href="" target="_blank">
                     <li>
                         <p>{cafe.name}</p>
-                        {cafe.description}
+                        {cafe.address}
                     </li>
                 </a>
             {/each}

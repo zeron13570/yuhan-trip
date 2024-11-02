@@ -5,58 +5,43 @@
     let currentPage = 1;
     const itemsPerPage = 10;
 
-    const allCafes = [
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" },
-        { name: "명소 이름", description: "주소" }
-    ];
-
-    let currentCafes = [];
+    let category = "place"; // 기본 카테고리
+    let allPlaces = [];
+    let currentPlaces = [];
     let totalPages = 0;
 
-    function updateCafes() {
+    function updatePlaces() {
         const start = (currentPage - 1) * itemsPerPage;
-        currentCafes = allCafes.slice(start, start + itemsPerPage);
-        totalPages = Math.ceil(allCafes.length / itemsPerPage);
+        currentPlaces = allPlaces.slice(start, start + itemsPerPage);
+        totalPages = Math.ceil(allPlaces.length / itemsPerPage);
     }
 
     function changePage(page) {
         if (page < 1 || page > totalPages) return; // 유효성 검사
         currentPage = page;
-        updateCafes();
+        updatePlaces();
     }
 
+    // 서버에서 데이터를 가져오는 함수
+    const fetchPlaces = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/${category}`);
+        if (!response.ok) throw new Error("네트워크 응답에 문제가 있습니다.");
+        const data = await response.json();
+  
+        // 주소에 지역명이 포함된 데이터만 필터링
+        allPlaces = data.filter(
+            (place) => place.address && place.address.includes(city));
+        updatePlaces(); // 페이지 데이터 업데이트
+      } catch (error) {
+        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+      }
+    };
+  
     onMount(() => {
-        const params = new URLSearchParams(window.location.search);
-        city = params.get("name") || "명소"; // 기본값 설정
-        updateCafes(); // 초기 카페 리스트 설정
+      const params = new URLSearchParams(window.location.search);
+      city = params.get("name") || "서울"; // URL에서 지역명 가져오기, 기본값은 서울
+      fetchPlaces(); // 데이터 가져오기
     });
 </script>
 
@@ -64,11 +49,11 @@
     <div class="PlacePage">
         <h1>{city} 명소</h1>
         <ul>
-            {#each currentCafes as cafe}
+            {#each currentPlaces as Place}
                 <a href="" target="_blank">
                     <li>
-                        <p>{cafe.name}</p>
-                        {cafe.description}
+                        <p>{Place.name}</p>
+                        {Place.address}
                     </li>
                 </a>
             {/each}
@@ -76,7 +61,7 @@
         <div class="pagination">
             <button class={currentPage > 1 ? '' : 'hidden'} on:click={() => changePage(currentPage - 1)}>&lt;</button>
             <p>{currentPage}/{totalPages}</p>
-            <button class={currentPage * itemsPerPage < allCafes.length ? '' : 'hidden'} on:click={() => changePage(currentPage + 1)}>&gt;</button>
+            <button class={currentPage * itemsPerPage < allPlaces.length ? '' : 'hidden'} on:click={() => changePage(currentPage + 1)}>&gt;</button>
         </div>  
     </div>
 </body>
