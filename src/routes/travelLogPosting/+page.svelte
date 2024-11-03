@@ -169,7 +169,18 @@
 
         <!-- 제목 입력 -->
         <p>제목</p>
-        <input type="text" placeholder="멋진 제목을 지어보아요" bind:value={title} id="post-title">
+        <input 
+            type="text"
+            placeholder="멋진 제목을 지어보아요"
+            bind:value={title}
+            id="post-title"
+            on:input={() => {
+                if (title.length > 16) {
+                    title = title.slice(0, 16); // 16글자까지만 입력 가능하도록 제한
+                    alert("제목은 16글자 이내로 작성해주세요.");
+                }
+            }}
+        >
 
         <!-- 글 작성 및 이미지 추가 -->
         <div class="editor" contenteditable="true" placeholder="여행에서 있던 일을 공유해주세요~!"></div>

@@ -38,7 +38,7 @@
         })
         .then(data => {
             posts = data;
-            filterPosts();
+            applyRegionFilterFromQuery();
             sortPostsByLikes();
         })
         .catch(error => {
@@ -46,16 +46,22 @@
         });
     });
 
+    function applyRegionFilterFromQuery() {
+        // URL에서 region 파라미터를 가져와 필터링
+        const urlParams = new URLSearchParams(window.location.search);
+        const region = urlParams.get("region");
+        selectedRegion = region || "전체 지역"; // 쿼리 값이 없으면 기본값은 "전체 지역"
+        filterPosts();
+    }
+
     function filterPosts() {
         filteredPosts = selectedRegion === "전체 지역" 
             ? posts 
             : posts.filter(post => post.region.trim() === selectedRegion.trim());
-        console.log("Filtered posts:", filteredPosts);
     }
 
     function selectRegion(region) {
         selectedRegion = region;
-        console.log("Selected region:", selectedRegion);
         filterPosts();
     }
 
@@ -77,7 +83,6 @@
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
                 localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); // Access Token 저장
-                console.log("User logged in:", userName);
             },
             fail: function(error) {
                 console.error('Error fetching user info:', error);
@@ -149,7 +154,7 @@
                     <a href="#" on:click={() => selectRegion("강릉")}>강릉</a>
                 </div>
             </div>
-            <button class="posting" on:click={handlePostButtonClick}>포스팅</button>
+            <a class="posting" on:click={handlePostButtonClick}>포스팅</a>
         </div>
 
         <h1>추천 블로그</h1>

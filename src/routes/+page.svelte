@@ -169,20 +169,36 @@
     </div> -->
 </section>
 <style>
-    .TravelLog img {
-        width: 200px; /* 이미지 너비 */
-        height: 200px; /* 이미지 높이 */
-        object-fit: cover; /* 비율 유지하며 자르기 */
-        border-radius: 4px; /* 모서리 둥글게 */
-        margin-right: 15px; /* 이미지와 텍스트 사이 여백 */
-    }
+.TravelLog ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* 아이템 간격 */
+    justify-content: space-between; /* 여유 공간을 양쪽으로 나누어 배치 */
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
 
+.TravelLog ul li {
+    width: calc(25% - 16px); /* 한 줄에 4개씩 배치 */
+    margin-bottom: 20px;
+}
 
-    .like-icon {
-        width: auto; /* 좋아요 이미지 크기 유지 */
-        height: auto; /* 좋아요 이미지 크기 유지 */
-        max-width: 24px; /* 필요 시 최대 너비 지정 */
-        max-height: 24px; /* 필요 시 최대 높이 지정 */
-    }
+/* 두 줄까지만 4개씩 고정 */
+.TravelLog ul li:nth-child(n+9) {
+    display: none; /* 8개까지만 표시 */
+}
 
+.uList img {
+    width: 100%; /* 이미지 가로 크기 맞춤 */
+    height: 200px; /* 이미지 높이 고정 */
+    object-fit: cover;
+}
+
+.like-icon {
+    width: auto; /* 좋아요 이미지 크기 유지 */
+    height: auto; /* 좋아요 이미지 크기 유지 */
+    max-width: 24px; /* 필요 시 최대 너비 지정 */
+    max-height: 24px; /* 필요 시 최대 높이 지정 */
+}
 </style>

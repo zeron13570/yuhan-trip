@@ -48,5 +48,55 @@
     "image": "/uploads/image-1730270242763-499203802.jpg",
     "likes": 0,
     "likedBy": []
+  },
+  {
+    "id": "e2ef477a-e657-4a08-a874-cb49a6b7e5f4",
+    "title": "지금은 정렬에 대해 수정 중",
+    "content": "ㅓㅁ넘 하기 시러요ㅜㅜ<div><br></div><img src=\"http://localhost:3000/uploads/image-1730615407959-361726253.png\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "서울",
+    "username": "유진",
+    "image": "/uploads/image-1730615407959-361726253.png",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "e7bde146-0733-4901-9505-0c136d314893",
+    "title": "예시 포스트가 48개씩 있어야 하는데요",
+    "content": "경로도 다들 하고 있겠죠? 으악!<div><br><div>다들 홧팅 이거 누가 보긴 하나요?</div></div><img src=\"http://localhost:3000/uploads/image-1730615499121-722875807.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "인천",
+    "username": "유진",
+    "image": "/uploads/image-1730615499121-722875807.jpeg",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "8bda5234-796b-4f1c-bc89-4f6dfcaf6311",
+    "title": "글을 써봐야 뭘 확인 할 수 있는데",
+    "content": "집가고 싶어요ㅜ 근데 사실 이미 집잉죠ㅡㅡ<div><br></div><img src=\"http://localhost:3000/uploads/image-1730615684799-996961725.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "서울",
+    "username": "유진",
+    "image": "/uploads/image-1730615684799-996961725.jpeg",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "12df6864-520e-4818-a290-b950bda184ca",
+    "title": "머하구 계실까요 다들?",
+    "content": "저는 이거 하는 중 넘 졸리구 하기 싫고 으악이네요!<div><br></div><img src=\"http://localhost:3000/uploads/image-1730615785719-842192956.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "서울",
+    "username": "유진",
+    "image": "/uploads/image-1730615785719-842192956.jpeg",
+    "likes": 0,
+    "likedBy": []
+  },
+  {
+    "id": "52a12567-4e26-4f7f-9670-02076bb21ed2",
+    "title": "예시 마지막",
+    "content": "열개만 할라구 햇기에 이게 마지막 예시 포스트입니다 와학!<div><br></div><img src=\"http://localhost:3000/uploads/image-1730615883570-384968911.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "서울",
+    "username": "유진",
+    "image": "/uploads/image-1730615883570-384968911.jpeg",
+    "likes": 0,
+    "likedBy": []
   }
 ]

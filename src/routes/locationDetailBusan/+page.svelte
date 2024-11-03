@@ -148,23 +148,23 @@
             <ul>
                 <li class="LogMoment">
                     <h1>트래블로그</h1>
-                    <a href="../travelLog"><button>더보기</button></a>    
+                    <a href="../travelLog?region=부산"><button>더보기</button></a>    
                 </li>
-                {#each posts.slice(0, 4) as post}
-                <li>
-                    <a href={`/travelLogDetail/${post.id}`}>
-                        <img src={`http://localhost:3000${post.image}`} alt="여행지 사진"/>
-                        <p>{post.title}</p>
-                    </a>
-                    <div class="like">
-                        <span>작성자: {post.username}</span>
-                        <span>
-                            <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
-                                alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
-                        </span>
-                        <span>{post.likes || 0}</span> <!-- 좋아요 수 추가 -->
-                    </div>
-                </li>
+                {#each posts.filter(post => post.city === "부산").slice(0, 4) as post}
+                    <li>
+                        <a href={`/travelLogDetail/${post.id}`}>
+                            <img src={`http://localhost:3000${post.image}`} alt="여행지 사진"/>
+                            <p>{post.title}</p>
+                        </a>
+                        <div class="like">
+                            <span>작성자: {post.username}</span>
+                            <span>
+                                <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                                    alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                            </span>
+                            <span>{post.likes || 0}</span>
+                        </div>
+                    </li>
                 {/each}
             </ul>
         </div>

@@ -3,6 +3,8 @@
     import Like from "../../img/like.png";
     import noLike from "../../img/notLike.png";
 
+    let posts = []; // 트래블로그 데이터 저장
+    let username = localStorage.getItem('username') || ""; // 로그인된 사용자 이름 가져오기
     let recommendedDestinations = []; 
     let weatherInfo = ""; // 날씨 정보 저장
     let weatherIcon = ""; // 날씨 아이콘 URL
@@ -42,10 +44,71 @@
         }
     }
 
+    // 트래블로그 데이터 가져오기
     onMount(() => {
+        const accessToken = localStorage.getItem("accessToken");
+
+        fetch('http://localhost:3000/get-posts', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(errMsg => {
+                    throw new Error(`HTTP error! status: ${response.status}, message: ${errMsg}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            posts = data; // 서버에서 받은 데이터를 posts에 저장
+        })
+        .catch(error => {
+            console.error('Error fetching posts:', error);
+        });
+
         recommendedDestinations = getRandomDestinations(4);
         fetchWeather(); // 날씨 정보 가져오기
     });
+
+    function toggleLike(postId) {
+        const postIndex = posts.findIndex(post => post.id === postId);
+        const post = posts[postIndex];
+
+        if (!post.likedBy) post.likedBy = []; // likedBy 배열 초기화
+
+        const userIndex = post.likedBy.indexOf(username);
+        if (userIndex === -1) {
+            post.likes++;
+            post.likedBy.push(username); // 좋아요 추가
+        } else {
+            post.likes--;
+            post.likedBy.splice(userIndex, 1); // 좋아요 취소
+        }
+
+        // Svelte가 반응하도록 posts 배열 다시 할당
+        posts = [...posts]; 
+
+        // 서버에 업데이트된 포스트 데이터 전송
+        fetch(`http://localhost:3000/update-post/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(post), // 업데이트된 포스트 데이터
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update post');
+            }
+            console.log('Post updated successfully');
+        })
+        .catch(error => {
+            console.error('Error updating post:', error);
+        });
+    }
 </script>
 <body>
     <div class="locationDetail">
@@ -83,36 +146,24 @@
             <ul>
                 <li class="LogMoment">
                     <h1>트래블로그</h1>
-                    <a href="../travelLog"><button>더보기</button></a>    
+                    <a href="../travelLog?region=전주"><button>더보기</button></a>    
                 </li>
-                <li><a href="">
-                    <img src="https://placehold.co/200x200" alt="여행지 사진">
-                    <p>본문 제목</p>
-                    <div class="like">
-                        <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                    </div>
-                </a></li>
-                <li><a href="">
-                    <img src="https://placehold.co/200x200" alt="여행지 사진">
-                    <p>본문 제목</p>
-                    <div class="like">
-                        <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                    </div>
-                </a></li>
-                <li><a href="">
-                    <img src="https://placehold.co/200x200" alt="여행지 사진">
-                    <p>본문 제목</p>
-                    <div class="like">
-                        <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                    </div>
-                </a></li>
-                <li><a href="">
-                    <img src="https://placehold.co/200x200" alt="여행지 사진">
-                    <p>본문 제목</p>
-                    <div class="like">
-                        <span>작성자</span><span><img src={noLike} alt="좋아요"></span>
-                    </div>
-                </a></li>
+                {#each posts.filter(post => post.region === "전주").slice(0, 4) as post}
+                    <li>
+                        <a href={`/travelLogDetail/${post.id}`}>
+                            <img src={`http://localhost:3000${post.image}`} alt="여행지 사진"/>
+                            <p>{post.title}</p>
+                        </a>
+                        <div class="like">
+                            <span>작성자: {post.username}</span>
+                            <span>
+                                <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                                    alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                            </span>
+                            <span>{post.likes || 0}</span>
+                        </div>
+                    </li>
+                {/each}
             </ul>
         </div>
 
