@@ -4,10 +4,22 @@
     import { onMount } from "svelte";
 
     let posts = []; // 트래블로그 데이터 저장
+    let isLoggedIn = false;
+    let userName = "";
     let username = localStorage.getItem('username') || ""; // 로그인된 사용자 이름 가져오기
 
     // 로컬 스토리지에서 포스팅 데이터 불러오기
     onMount(() => {
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+        script.onload = () => {
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+            if (Kakao.Auth.getAccessToken()) {
+                getUserInfo();
+            }
+        };
+        document.head.appendChild(script);
+
         const accessToken = localStorage.getItem("accessToken");
 
         fetch('http://localhost:3000/get-posts', {
@@ -31,45 +43,62 @@
             console.error('Error fetching posts:', error);  // 오류 처리
         });
     });
-
-    function toggleLike(postId) {
-    const postIndex = posts.findIndex(post => post.id === postId);
-    const post = posts[postIndex];
-
-    if (!post.likedBy) post.likedBy = []; // likedBy 배열 초기화
-
-    const userIndex = post.likedBy.indexOf(username);
-    if (userIndex === -1) {
-        post.likes++;
-        post.likedBy.push(username); // 좋아요 추가
-    } else {
-        post.likes--;
-        post.likedBy.splice(userIndex, 1); // 좋아요 취소
+    function kakaoLogin() {
+        Kakao.Auth.login({
+            success: function(authObj) {
+                getUserInfo();
+            },
+            fail: function(err) {
+                console.error('로그인 실패', err);
+            }
+        });
+    }
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname;
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
+            },
+            fail: function(error) {
+                console.error('Error fetching user info:', error);
+            }
+        });
     }
 
-    // Svelte가 반응하도록 posts 배열 다시 할당
-    posts = [...posts]; 
-
-    // 서버에 업데이트된 포스트 데이터 전송
-    fetch(`http://localhost:3000/update-post/${postId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(post), // 업데이트된 포스트 데이터
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to update post');
+    function toggleLike(postId) {
+        if (!isLoggedIn || !userName) {
+            return kakaoLogin(); // 로그인 창을 표시
         }
-        console.log('Post updated successfully');
-    })
-    .catch(error => {
-        console.error('Error updating post:', error);
-    });
-    // 로컬 스토리지 업데이트
-    localStorage.setItem("posts", JSON.stringify(posts)); // 업데이트된 포스트 저장
-}
+    const accessToken = localStorage.getItem("accessToken");
+
+    fetch(`http://localhost:3000/get-post/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ userName })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 좋아요 상태 업데이트
+            const postIndex = posts.findIndex(post => post.id === postId);
+            if (postIndex !== -1) {
+                posts[postIndex].likes = data.likes; // 응답에서 업데이트된 좋아요 수
+                posts[postIndex].likedBy = data.likedBy; // 응답에서 업데이트된 좋아요를 누른 사용자 목록
+            }
+        })
+        .catch(error => {
+            console.error('Error toggling like:', error);
+        });
+    }
 
 </script>
 

@@ -5,22 +5,39 @@
     import noLike from "../../../img/notLike.png";
 
     let postId; 
-    let postDetail = {
+    let post = {
+        username: "",
         images: [],
         content: "",
         likes: 0,
         likedBy: []
     };
-    let username = localStorage.getItem('username') || ""; // 사용자 이름 가져오기
+    let userName = ""; // 사용자 이름 가져오기
+    let isLoggedIn = false;
 
+    // 페이지 매개변수에서 postId 가져오기
     $: postId = $page.params.id;
 
     onMount(async () => {
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+        script.onload = () => {
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+            if (Kakao.Auth.getAccessToken()) {
+                getUserInfo();
+            }
+        };
+        document.head.appendChild(script);
+        
+        const accessToken = localStorage.getItem("accessToken");
         try {
-            const res = await fetch(`http://localhost:3000/get-post/${postId}`);
+            const res = await fetch(`http://localhost:3000/get-post/${postId}`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
             if (res.ok) {
-                postDetail = await res.json();
-                console.log(postDetail);
+                post = await res.json();
             } else {
                 console.error("Failed to load post details");
             }
@@ -29,57 +46,92 @@
         }
     });
 
+    function kakaoLogin() {
+        Kakao.Auth.login({
+            success: function(authObj) {
+                getUserInfo();
+            },
+            fail: function(err) {
+                console.error('로그인 실패', err);
+            }
+        });
+    }
+
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname; // username을 여기서 설정
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken());
+            },
+            fail: function(error) {
+                console.error('Error fetching user info:', error);
+            }
+        });
+    }
+
     function toggleLike() {
-        if (!postDetail.likedBy) postDetail.likedBy = [];
-        
-        const userIndex = postDetail.likedBy.indexOf(username);
-        if (userIndex === -1) {
-            postDetail.likes++;
-            postDetail.likedBy.push(username);
-        } else {
-            postDetail.likes--;
-            postDetail.likedBy.splice(userIndex, 1);
+        if (!isLoggedIn || !userName) {
+            alert("로그인이 필요합니다.");
+            return kakaoLogin(); // 로그인 창을 표시
         }
 
-        // 서버에 업데이트된 포스트 데이터를 전송
-        fetch(`http://localhost:3000/update-post/${postId}`, {
+        const accessToken = localStorage.getItem("accessToken");
+        // 서버에 업데이트 요청
+        fetch(`http://localhost:3000/get-post/${postId}/like`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
             },
-            body: JSON.stringify(postDetail),
+            body: JSON.stringify({ userName }), // userName 사용
         })
         .then(response => {
             if (!response.ok) {
-                return response.text().then(err => {
-                throw new Error(`Failed to update post: ${response.status} - ${err}`);
-                });
+                throw new Error(`Failed to update post: HTTP status: ${response.status}, Message: ${response.statusText}`);
             }
-            console.log('Post updated successfully');
+            return response.json(); // JSON 응답을 처리합니다.
+        })
+        .then(data => {
+            // 좋아요 상태 업데이트
+            post.likes = data.likes; // 응답에서 업데이트된 좋아요 수
+            post.likedBy = data.likedBy; // 응답에서 업데이트된 좋아요를 누른 사용자 목록
         })
         .catch(error => {
             console.error('Error updating post:', error);
+            alert("오류가 발생했습니다.");
         });
-
-        // 로컬 스토리지 업데이트 (선택 사항)
-        localStorage.setItem("posts", JSON.stringify([postDetail]));
     }
 </script>
 
 <section class="travelLogD">
-    <h1>{postDetail.title || 'Loading...'}</h1>
+    <h1>{post.title || 'Loading...'}</h1>
     <ul>
-        <li>{postDetail.region || 'Unknown'}</li>
-        <li>{postDetail.username || 'Anonymous'}</li>
+        <li>{post.region || 'Unknown'}</li>
+        <li>{post.username || 'Anonymous'}</li>
     </ul>
     <div class="blogContent">
-        {@html postDetail.content || '<p>No content available.</p>'}
+        {@html post.content || '<p>No content available.</p>'}
     </div>
     <div class="like blogLike">
         <span>
-            <img src={postDetail.likedBy.includes(username) ? Like : noLike} 
-                 alt="좋아요" class="like-icon" on:click={toggleLike}>
-                 {postDetail.likes || 0}<!-- 좋아요 수 표시 -->
+            <img src={post.likedBy.includes(userName) ? Like : noLike}
+                alt="좋아요" class="like-icon" on:click={toggleLike} />
+            {post.likes || 0} <!-- 좋아요 수 표시 -->
         </span>
     </div>
 </section>
+
+<style>
+    .like-icon {
+        cursor: pointer; /* 포인터 커서 추가 */
+        width: 24px; /* 좋아요 이미지 크기 */
+        height: 24px; /* 좋아요 이미지 크기 */
+        transition: transform 0.2s; /* 클릭 효과 */
+    }
+
+    .like-icon:hover {
+        transform: scale(1.1); /* 호버 시 확대 효과 */
+    }
+</style>

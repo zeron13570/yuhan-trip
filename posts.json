@@ -6,8 +6,10 @@
     "region": "전주",
     "username": "유진",
     "image": "/uploads/image-1729663671636-538126292.jpeg",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      "유진"
+    ]
   },
   {
     "id": "e23c37f4-78b1-49e8-9250-adc9efb527bc",
@@ -16,8 +18,10 @@
     "region": "제주",
     "username": "유진",
     "image": "/uploads/image-1730027342717-307958574.jpeg",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      "유진"
+    ]
   },
   {
     "id": "8ccf6065-c442-48f0-b05b-e498f65dcb77",
@@ -26,8 +30,10 @@
     "region": "대구",
     "username": "유진",
     "image": "/uploads/image-1730206795562-452574852.jpeg",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      "."
+    ]
   },
   {
     "id": "ac388d8a-cae8-43ed-82e1-e485feeb2990",
@@ -36,8 +42,10 @@
     "region": "포항",
     "username": "유진",
     "image": "/uploads/image-1730264410003-119294782.jpg",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      "유진"
+    ]
   },
   {
     "id": "9aaebe02-59f7-4a82-ba22-40ae063b91ec",
@@ -96,6 +104,19 @@
     "region": "서울",
     "username": "유진",
     "image": "/uploads/image-1730615883570-384968911.jpeg",
+    "likes": 2,
+    "likedBy": [
+      ".",
+      "유진"
+    ]
+  },
+  {
+    "id": "09a6456c-a3f6-447d-a9b9-37c35ed7cd34",
+    "title": "하 스발",
+    "content": "죽어라 졸작<div><br></div><img src=\"http://localhost:3000/uploads/image-1730725059297-201217548.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "인천",
+    "username": ".",
+    "image": "/uploads/image-1730725059297-201217548.jpeg",
     "likes": 0,
     "likedBy": []
   }

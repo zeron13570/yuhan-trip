@@ -7,15 +7,39 @@
     let userName = "";
 
     onMount(() => {
-        if (!Kakao.isInitialized()) {
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-        }
+    if (!Kakao.isInitialized()) {
+        Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+    }
 
-        const storedUsername = localStorage.getItem("username");
-        if (storedUsername) {
-            username = storedUsername;
-        }
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+        username = storedUsername;
+        userName = storedUsername;
+        isLoggedIn = true;
+    } else {
+        isLoggedIn = false;
+        userName = '';
+        myPosts = [];
+    }
+
+    console.log('현재 로그인 상태:', isLoggedIn); // 초기 상태 확인
+});
+
+function kakaoLogout() {
+    Kakao.Auth.logout(() => {
+        isLoggedIn = false;
+        username = '';
+        userName = '';
+        myPosts = [];
+        localStorage.removeItem("username");
+        
+        console.log('로그아웃 상태:', isLoggedIn); // 로그아웃 상태 확인
+        alert('로그아웃 되었습니다.');
+
+        // 페이지 리로드
+        window.location.reload();
     });
+}
 
     function kakaoLogin() {
         Kakao.Auth.login({
@@ -26,6 +50,8 @@
                         const nickname = res.properties.nickname;
                         localStorage.setItem("username", nickname);
                         username = nickname;
+                        userName = nickname; // userName도 업데이트
+                        isLoggedIn = true; // 로그인 상태 업데이트
                         alert("로그인 성공!");
                     },
                     fail: function(err) {
@@ -64,17 +90,7 @@
         localStorage.setItem("posts", JSON.stringify(posts));
         myPosts = posts.filter(post => post.username === username);  // 내 글 리스트 갱신
     }
-
-    // 카카오 로그아웃
-    function kakaoLogout() {
-        Kakao.Auth.logout(() => {
-            isLoggedIn = false;
-            userName = '';
-            alert('로그아웃 되었습니다.');
-        });
-    }
 </script>
-
 <body>
     <section class="myPage">
         {#if isLoggedIn}

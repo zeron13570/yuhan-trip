@@ -47,10 +47,9 @@
     });
 
     function applyRegionFilterFromQuery() {
-        // URL에서 region 파라미터를 가져와 필터링
         const urlParams = new URLSearchParams(window.location.search);
         const region = urlParams.get("region");
-        selectedRegion = region || "전체 지역"; // 쿼리 값이 없으면 기본값은 "전체 지역"
+        selectedRegion = region || "전체 지역"; 
         filterPosts();
     }
 
@@ -82,7 +81,7 @@
             success: function(response) {
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
-                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); // Access Token 저장
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
             fail: function(error) {
                 console.error('Error fetching user info:', error);
@@ -91,7 +90,6 @@
     }
 
     function handlePostButtonClick() {
-        console.log("Post button clicked.");
         if (!isLoggedIn) {
             kakaoLogin();
         } else {
@@ -100,12 +98,20 @@
     }
 
     function toggleLike(postId) {
+        if (!isLoggedIn || !userName) {
+            return kakaoLogin(); // 로그인 창을 표시
+        }
+
         const accessToken = localStorage.getItem("accessToken");
-        fetch(`http://localhost:3000/posts/${postId}/like`, {
+        console.log("Access Token:", accessToken);
+
+        fetch(`http://localhost:3000/get-post/${postId}/like`, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`,
             },
+            body: JSON.stringify({ userName })
         })
         .then(response => {
             if (!response.ok) {
@@ -117,9 +123,9 @@
             // 좋아요 상태 업데이트
             const postIndex = posts.findIndex(post => post.id === postId);
             if (postIndex !== -1) {
-                posts[postIndex].likes = data.likes; // 서버로부터 받은 좋아요 수
-                posts[postIndex].likedBy = data.likedBy; // 좋아요를 누른 사용자 목록
-                filterPosts(); // 필터링 업데이트
+                posts[postIndex].likes = data.likes; // 응답에서 업데이트된 좋아요 수
+                posts[postIndex].likedBy = data.likedBy; // 응답에서 업데이트된 좋아요를 누른 사용자 목록
+                filterPosts(); // 필터링된 포스트 목록 갱신
             }
         })
         .catch(error => {
@@ -170,7 +176,7 @@
                         <span>작성자: {post.username}</span>
                         <span>
                             <img src={post.likedBy && post.likedBy.includes(userName) ? Like : noLike} 
-                                alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                                alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)} />
                         </span>
                         <span>{post.likes || 0}</span>
                     </div>
@@ -192,7 +198,7 @@
                         <span>작성자: {post.username}</span>
                         <span>
                             <img src={post.likedBy && post.likedBy.includes(userName) ? Like : noLike} 
-                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
+                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)} />
                         </span>
                         <span>{post.likes || 0}</span>
                     </div>
@@ -215,8 +221,8 @@
         margin-bottom: 20px; /* 아래쪽 여백 */
     }
     .uList img {
-        width: 200px; /* 게시물 이미지 크기 */
-        height: 200px; /* 게시물 이미지 크기 */
+        width: 300px; /* 게시물 이미지 크기 */
+        height: 300px; /* 게시물 이미지 크기 */
         object-fit: cover; /* 이미지를 잘라서 비율 유지 */
     }
 

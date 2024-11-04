@@ -168,6 +168,53 @@ app.get('/get-post/:id', (req, res) => {
         }
     });
 });
+// 좋아요 API
+app.post('/get-post/:id/like', (req, res) => {
+    const postId = req.params.id;
+    const userName = req.body.userName;
+
+    if (!userName) {
+        return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return handleError(res, '파일을 읽는 중 오류가 발생했습니다.');
+        }
+
+        let posts;
+        try {
+            posts = JSON.parse(data);
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            return handleError(res, 'JSON 파싱 중 오류가 발생했습니다.');
+        }
+
+        const post = posts.find(p => p.id === postId);
+        if (!post) {
+            console.error(`Post not found for ID: ${postId}`);
+            return res.status(404).json({ message: '포스트를 찾을 수 없습니다.' });
+        }
+
+        // 좋아요 토글 로직
+        if (post.likedBy.includes(userName)) {
+            post.likedBy = post.likedBy.filter(name => name !== userName);
+            post.likes--;
+        } else {
+            post.likedBy.push(userName);
+            post.likes++;
+        }
+
+        fs.writeFile(filePath, JSON.stringify(posts, null, 2), (err) => {
+            if (err) {
+                console.error('Error writing to file:', err);
+                return handleError(res, '파일 저장 중 오류가 발생했습니다.');
+            }
+            res.status(200).json({ likes: post.likes, likedBy: post.likedBy });
+        });
+    });
+});
 
 // 포스트를 좋아요 수에 따라 정렬하는 함수
 function sortPostsByLikes(posts) {
