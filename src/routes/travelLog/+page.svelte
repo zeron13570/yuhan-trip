@@ -11,40 +11,72 @@
     let userName = "";
     let popularPosts = [];
 
+    // 페이지네이션 관련 변수
+    let currentPage = 1;
+    const postsPerPage = 16;
+
+    // 페이지 수 계산
+    $: totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+
     onMount(() => {
-        const script = document.createElement("script");
-        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-        script.onload = () => {
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+        if (!window.Kakao) {
+            const script = document.createElement("script");
+            script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+            script.onload = () => {
+                Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+                if (Kakao.Auth.getAccessToken()) {
+                    getUserInfo();
+                }
+            };
+            document.head.appendChild(script);
+        } else if (Kakao.isInitialized()) {
             if (Kakao.Auth.getAccessToken()) {
                 getUserInfo();
             }
-        };
-        document.head.appendChild(script);
+        }
 
-        const accessToken = localStorage.getItem("accessToken");
-
-        fetch('http://localhost:3000/get-posts', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            posts = data;
-            applyRegionFilterFromQuery();
-            sortPostsByLikes();
-        })
-        .catch(error => {
-            console.error('Error fetching posts:', error);
-        });
+        fetchPosts();
     });
+
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname;
+                const userId = response.id; // 사용자 고유 ID
+                localStorage.setItem("userId", userId); // 사용자 ID 저장
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
+            },
+            fail: function(error) {
+                console.error('Error fetching user info:', error);
+            }
+        });
+    }
+    
+    function fetchPosts() {
+    const accessToken = localStorage.getItem("accessToken");
+    const userId = localStorage.getItem("userId"); // 사용자 ID 가져오기
+
+    fetch(`http://localhost:3000/get-posts?userId=${userId}`, { // 사용자 ID를 쿼리 파라미터로 추가
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        posts = data;
+        applyRegionFilterFromQuery();
+        sortPostsByLikesAndDate(); // 수정된 함수 호출
+    })
+    .catch(error => console.error('Error fetching posts:', error));
+}
 
     function applyRegionFilterFromQuery() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -62,31 +94,7 @@
     function selectRegion(region) {
         selectedRegion = region;
         filterPosts();
-    }
-
-    function kakaoLogin() {
-        Kakao.Auth.login({
-            success: function(authObj) {
-                getUserInfo();
-            },
-            fail: function(err) {
-                console.error('로그인 실패', err);
-            }
-        });
-    }
-
-    function getUserInfo() {
-        Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(response) {
-                isLoggedIn = true;
-                userName = response.kakao_account.profile.nickname;
-                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
-            },
-            fail: function(error) {
-                console.error('Error fetching user info:', error);
-            }
-        });
+        currentPage = 1; // 페이지를 초기화
     }
 
     function handlePostButtonClick() {
@@ -128,14 +136,26 @@
                 filterPosts(); // 필터링된 포스트 목록 갱신
             }
         })
-        .catch(error => {
-            console.error('Error toggling like:', error);
-        });
+        .catch(error => console.error('Error toggling like:', error));
     }
 
-    function sortPostsByLikes() {
+    function sortPostsByLikesAndDate() {
+        // 포스트를 좋아요 수로 정렬
         posts.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+
+        // 좋아요가 많은 게시글 4개를 추천 블로그에 표시
+        popularPosts = posts.slice(0, 4);
+
+        // 포스트를 업로드된 날짜로 정렬 (가장 최근의 날짜가 앞에 오도록)
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
+
+    // 페이지 이동 함수
+    function changePage(page) {
+        currentPage = page;
+    }
+
+    $: paginatedPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
 </script>
 
 <body>
@@ -171,7 +191,7 @@
                     <a href={`/travelLogDetail/${post.id}`} sveltekit:prefetch>
                         <img src={`http://localhost:3000${post.image}`} alt="여행지 사진" />
                         <p>{post.title}</p>
-                    </a>
+                    </a> 
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
@@ -185,15 +205,16 @@
             </ul>            
         </div>
 
-        <h1>최신 블로그</h1>
-        <div class="uList">
-            <ul>
-                {#each filteredPosts as post}
+    <!-- 최신 블로그 -->
+    <h1>최신 블로그</h1>
+    <div class="uList">
+        <ul>
+            {#each paginatedPosts as post}
                 <li>
-                    <a href={`/travelLogDetail/${post.id}`} aria-label={`자세히 보기: ${post.title}`}>
+                    <a href={`/travelLogDetail/${post.id}`} sveltekit:prefetch>
                         <img src={`http://localhost:3000${post.image}`} alt="여행지 사진" />
                         <p>{post.title}</p>
-                    </a>
+                    </a>                    
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
@@ -203,13 +224,31 @@
                         <span>{post.likes || 0}</span>
                     </div>
                 </li>
-                {/each}
-            </ul>            
-        </div>
+            {/each}
+        </ul>            
+    </div>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        {#each Array(totalPages) as _, index}
+            <button 
+                on:click={() => changePage(index + 1)} 
+                class:selected={currentPage === index + 1}>
+                {index + 1}
+            </button>
+        {/each}
     </div>
 </body>
 
 <style>
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    .pagination button.selected {
+        font-weight: bold;
+    }
     .post-list {
         display: flex;
         flex-wrap: wrap;
@@ -221,8 +260,8 @@
         margin-bottom: 20px; /* 아래쪽 여백 */
     }
     .uList img {
-        width: 300px; /* 게시물 이미지 크기 */
-        height: 300px; /* 게시물 이미지 크기 */
+        width: 250px; /* 게시물 이미지 크기 */
+        height: 250px; /* 게시물 이미지 크기 */
         object-fit: cover; /* 이미지를 잘라서 비율 유지 */
     }
 

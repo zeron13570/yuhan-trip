@@ -93,6 +93,7 @@ app.post('/add-post', (req, res) => {
         region,
         username,
         image,
+        date: new Date().toISOString(), // 현재 날짜를 ISO 형식으로 저장
         likes: 0,
         likedBy: []
     };
@@ -137,13 +138,15 @@ app.get('/get-posts', (req, res) => {
 
         try {
             const posts = JSON.parse(data);
-            const sortedPosts = sortPostsByLikes(posts); // 좋아요 수에 따라 정렬
+            const sortedPosts = sortPostsByDate(posts); // 날짜 기준으로 정렬
+            console.log('Sorted Posts:', sortedPosts); // 정렬된 포스트 로그
             res.status(200).json(sortedPosts); // 정렬된 포스트 반환
         } catch (parseError) {
             return handleError(res, 'JSON 파싱 중 오류가 발생했습니다.');
         }
     });
 });
+
 
 // 특정 포스트 가져오기 API
 app.get('/get-post/:id', (req, res) => {
@@ -168,6 +171,7 @@ app.get('/get-post/:id', (req, res) => {
         }
     });
 });
+
 // 좋아요 API
 app.post('/get-post/:id/like', (req, res) => {
     const postId = req.params.id;
@@ -215,6 +219,11 @@ app.post('/get-post/:id/like', (req, res) => {
         });
     });
 });
+
+// 포스트를 날짜 순으로 정렬하는 함수
+function sortPostsByDate(posts) {
+    return posts.sort((a, b) => new Date(b.date) - new Date(a.date)); // 내림차순으로 정렬
+}
 
 // 포스트를 좋아요 수에 따라 정렬하는 함수
 function sortPostsByLikes(posts) {

@@ -62,8 +62,10 @@
             url: '/v2/user/me',
             success: function(response) {
                 isLoggedIn = true;
-                userName = response.kakao_account.profile.nickname; // username을 여기서 설정
-                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken());
+                userName = response.kakao_account.profile.nickname;
+                const userId = response.id; // 사용자 고유 ID
+                localStorage.setItem("userId", userId); // 사용자 ID 저장
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
             fail: function(error) {
                 console.error('Error fetching user info:', error);
