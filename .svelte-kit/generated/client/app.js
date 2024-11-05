@@ -41,7 +41,8 @@ export const nodes = [
 	() => import('./nodes/37'),
 	() => import('./nodes/38'),
 	() => import('./nodes/39'),
-	() => import('./nodes/40')
+	() => import('./nodes/40'),
+	() => import('./nodes/41')
 ];
 
 export const server_loads = [];
@@ -51,7 +52,7 @@ export const dictionary = {
 		"/Cafe": [3],
 		"/Food": [6],
 		"/Place": [21],
-		"/SeoulMap": [28],
+		"/SeoulMap": [29],
 		"/customerService": [4],
 		"/findRoute": [5],
 		"/locationDetailBusan": [7],
@@ -74,18 +75,19 @@ export const dictionary = {
 		"/routeChoice4": [25],
 		"/routeMain": [26],
 		"/routeResult": [27],
-		"/test": [29],
-		"/test/day2": [31],
-		"/test/day3": [32],
-		"/test/day4_": [34],
-		"/test/day4": [33],
-		"/test/day": [30],
-		"/travelLogDetail/[id]": [36],
-		"/travelLogPosting": [37],
-		"/travelLog": [35],
-		"/tripMomentDetail": [39],
-		"/tripMomentPosting": [40],
-		"/tripMoment": [38]
+		"/routeSave": [28],
+		"/test": [30],
+		"/test/day2": [32],
+		"/test/day3": [33],
+		"/test/day4_": [35],
+		"/test/day4": [34],
+		"/test/day": [31],
+		"/travelLogDetail/[id]": [37],
+		"/travelLogPosting": [38],
+		"/travelLog": [36],
+		"/tripMomentDetail": [40],
+		"/tripMomentPosting": [41],
+		"/tripMoment": [39]
 	};
 
 export const hooks = {

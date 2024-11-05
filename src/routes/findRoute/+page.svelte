@@ -65,6 +65,10 @@
   let routeColor = "#008cba";
   let opacity = 1.0;
 
+  function goToRoutePage() {
+    location.href = `/route?option=${encodeURIComponent(travelOption)}`;
+  }
+
   $: if (category || filter) {
     currentPage = 1; // 페이지를 1로 초기화
     fetchPlaces();
@@ -956,7 +960,7 @@
           <option value="하루">하루</option>
           <option value="1박 2일">1박 2일</option>
           <option value="2박 3일">2박 3일</option>
-        </select>
+        </select>              
 
         <label>카테고리</label>
         <select bind:value={category}>
@@ -1100,6 +1104,9 @@
           {/each}
         </div>
       {/if}
+      <a href={`/routeSave?option=${encodeURIComponent(travelOption)}`} class="button routeSaveBtn">
+        경로 저장하기
+      </a>
     </div>
   {/if}
 

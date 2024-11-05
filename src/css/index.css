@@ -1084,3 +1084,27 @@ div.pagination button{
     background-color: #fff;
     cursor: pointer;
 }
+
+/*! .routSaveBtn */
+a.routeSaveBtn{
+    margin: 30px auto 0;
+    display: block;
+    width: 30%;
+}
+
+/*! routeSave*/
+section.routeSave{
+    width: 70%;
+    margin: 0 auto;
+}
+
+section.routeSave h1{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+section.routeSave pre{
+    display: flex;
+}

@@ -70,6 +70,7 @@
           on:click={() => changePage(currentPage + 1)}>&gt;</button
         >
       </div>
+      <button class="button">전체목록보기</button> 
     </div>
   </body>
   
