@@ -6,7 +6,7 @@
     const itemsPerPage = 10;
 
     let category = "cafe"; // 기본 카테고리
-    const allCafes = [];
+    let allCafes = [];
     let currentCafes = [];
     let totalPages = 0;
 
@@ -30,9 +30,9 @@
         const data = await response.json();
   
         // 주소에 지역명이 포함된 데이터만 필터링
-        allFoods = data.filter(
+        allCafes = data.filter(
             (place) => place.address && place.address.includes(city));
-        updateFoods(); // 페이지 데이터 업데이트
+        updateCafes(); // 페이지 데이터 업데이트
       } catch (error) {
         console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
       }
@@ -62,6 +62,7 @@
             <button class={currentPage > 1 ? '' : 'hidden'} on:click={() => changePage(currentPage - 1)}>&lt;</button>
             <p>{currentPage}/{totalPages}</p>
             <button class={currentPage * itemsPerPage < allCafes.length ? '' : 'hidden'} on:click={() => changePage(currentPage + 1)}>&gt;</button>
-        </div>  
+        </div> 
+        <button class="button">전체목록보기</button> 
     </div>
 </body>
