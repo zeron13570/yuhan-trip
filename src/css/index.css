@@ -718,6 +718,7 @@ div.findRoute {
     background-color: #ffffff;
     left: 100px;
     z-index: 1000;
+    padding: 10px;
   }
 
   div.area_3 {
@@ -731,13 +732,13 @@ div.findRoute {
   }
 
   button.toggle-button {
-    position: absolute;
-    left: 253px;
-    z-index: 1000;
     background: transparent;
     border: none;
     font-size: 24px;
     cursor: pointer;
+    z-index: 1000; /* 다른 요소들 위에 오도록 설정 */
+    position: absolute;  /* 부모 요소 내에서 위치 고정 */
+    left: 20%;
   }
 
   .resize-handle {
@@ -794,7 +795,6 @@ div.findRoute {
     max-height: 100px;
     overflow-y: auto;
     background-color: white;
-    border: 1px solid #ddd;
   }
 
   div.place-list li {
@@ -829,6 +829,7 @@ div.findRoute {
   }
   
   .search-input {
+    width: 50%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px 0 0 5px;

@@ -1042,7 +1042,6 @@
         {/if}
       </button>
       <div class="options">
-        <br />
         <label>경로 색상:</label>
         <input type="color" bind:value={routeColor} />
 
