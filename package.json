@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "fs": "^0.0.1-security",
+    "html2pdf.js": "^0.10.2",
     "leaflet": "^1.9.4",
     "multer": "^1.4.5-lts.1",
     "svelte-spa-router": "^4.0.1",

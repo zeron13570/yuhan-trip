@@ -111,7 +111,7 @@
     <h1>{post.title || 'Loading...'}</h1>
     <ul>
         <li>{post.region || 'Unknown'}</li>
-        <li>{post.username || 'Anonymous'}</li>
+        <li>작성자 : {post.username || 'Anonymous'}</li>
     </ul>
     <div class="blogContent">
         {@html post.content || '<p>No content available.</p>'}

@@ -1104,8 +1104,12 @@
           {/each}
         </div>
       {/if}
-      <a href={`/routeSave?option=${encodeURIComponent(travelOption)}`} class="button routeSaveBtn">
-        경로 저장하기
+      <!-- 경로 저장하기 버튼에서 dayRoutes와 roadInfo를 URL 파라미터로 전달 -->
+      <a
+      href={`/routeSave?option=${encodeURIComponent(travelOption)}&dayRoutes=${encodeURIComponent(JSON.stringify(dayRoutes))}&roadInfo=${encodeURIComponent(JSON.stringify(roadInfo))}`}
+      class="button routeSaveBtn"
+      >
+      경로 저장하기
       </a>
     </div>
   {/if}

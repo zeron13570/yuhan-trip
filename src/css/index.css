@@ -1026,6 +1026,10 @@ section.travelLogD ul{
     font-size: 18px;
 } 
 
+section.travelLogD li{
+    font-weight: 700;
+}
+
 section.travelLogD div.blogContent{
     width: 70%;
     margin: 0 auto;
@@ -1077,6 +1081,7 @@ div.pagination{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 div.pagination button{
@@ -1105,6 +1110,21 @@ section.routeSave h1{
     margin-bottom: 30px;
 }
 
-section.routeSave pre{
-    display: flex;
+section.routeSave h3{
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+section.routeSave button{    
+    display: block;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+section.routeSave div.day-area {
+    max-height: 1500px;
+}
+
+section.routeSave div.road-info {
+    max-height: 1500px;
 }
