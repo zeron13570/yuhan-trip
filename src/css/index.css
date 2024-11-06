@@ -315,6 +315,7 @@ div.trip a.posting {
     line-height: 30px;
     text-align: center;
     font-size: 15px;
+    cursor: pointer;
 }
 
 div.trip div.uList{

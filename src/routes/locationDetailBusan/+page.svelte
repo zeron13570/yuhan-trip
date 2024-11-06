@@ -150,7 +150,7 @@
                     <h1>트래블로그</h1>
                     <a href="../travelLog?region=부산"><button>더보기</button></a>    
                 </li>
-                {#each posts.filter(post => post.city === "부산").slice(0, 4) as post}
+                {#each posts.filter(post => post.region === "부산").slice(0, 4) as post}
                     <li>
                         <a href={`/travelLogDetail/${post.id}`}>
                             <img src={`http://localhost:3000${post.image}`} alt="여행지 사진"/>
