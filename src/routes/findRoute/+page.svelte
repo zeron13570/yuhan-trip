@@ -40,6 +40,9 @@
   let isDragging = false;
   let startX;
 
+  let previousCategory = category;
+let previousFilter = filter;
+
   const cities = [
     "서울",
     "부산",
@@ -69,15 +72,16 @@
     location.href = `/route?option=${encodeURIComponent(travelOption)}`;
   }
 
-  $: if (category || filter) {
-    currentPage = 1; // 페이지를 1로 초기화
-    fetchPlaces();
-    tick().then(() => {
-      scrollToTopOfList();
-    });
-  }
+  $: if (category !== previousCategory || filter !== previousFilter) {
+  previousCategory = category;
+  previousFilter = filter;
+  currentPage = 1; // 페이지를 1로 초기화
+  fetchPlaces();
+  tick().then(() => {
+    scrollToTopOfList();
+  });
+}
 
-  $: totalPages = Math.ceil(places.length / itemsPerPage);
   $: roadInfo = [...roadInfo];
 
   // 장소 검색을 위한 searchPlaces 함수 정의
@@ -118,38 +122,38 @@
   };
 
   const fetchPlaces = async () => {
-    try {
-      const tableName = categoryToTableName[category];
-      const response = await fetch(`http://localhost:8080/api/${tableName}`);
-      if (!response.ok) throw new Error("네트워크 응답에 문제가 있습니다.");
-      const data = await response.json();
+  try {
+    const tableName = categoryToTableName[category]; // category는 '카페', '음식점' 등
 
-      places = data.map((place) => ({
-        ...place,
-        id: `${tableName}_${place.id}`,
-        tableName: place.tableName || tableName,
-      }));
-
-      totalPages = Math.ceil(places.length / itemsPerPage);
-      updatePagedPlaces();
-    } catch (error) {
-      console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-    }
-  };
-
-  const updatePagedPlaces = () => {
-    const filteredPlaces = places.filter((place) => {
-      return (
-        !filter || place.address.includes(filter) // 지역 필터
-      );
+    const params = new URLSearchParams({
+      filter: filter || '',
+      page: currentPage.toString(),
+      limit: itemsPerPage.toString(),
     });
 
-    totalPages = Math.ceil(filteredPlaces.length / itemsPerPage);
-    pagedPlaces = filteredPlaces.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
-  };
+    const response = await fetch(`http://localhost:8080/api/${tableName}?${params.toString()}`);
+    if (!response.ok) throw new Error("네트워크 응답에 문제가 있습니다.");
+    const data = await response.json();
+
+    const dataKey = tableName === 'place' ? 'places' : tableName + 's';
+
+    if (!data[dataKey]) {
+      console.error(`데이터 키 '${dataKey}'를 찾을 수 없습니다. 서버 응답을 확인하세요.`);
+      return;
+    }
+
+    places = data[dataKey].map((place) => ({
+      ...place,
+      id: `${tableName}_${place.id}`,
+      tableName: place.tableName || tableName,
+    }));
+
+    totalPages = Math.ceil(data.totalCount / itemsPerPage);
+    pagedPlaces = places;
+  } catch (error) {
+    console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+  }
+};
 
   const getContrastYIQ = (hexcolor) => {
     hexcolor = hexcolor.replace("#", "");
@@ -814,6 +818,7 @@
     if (event) event.preventDefault();
     if (page >= 1 && page <= totalPages) {
       currentPage = page;
+      await fetchPlaces(); // 페이지 변경 시 데이터 다시 가져오기
       await tick(); // DOM 업데이트가 끝날 때까지 대기
       if (listElement) {
         scrollToTopOfList();
@@ -827,6 +832,7 @@
     if (event) event.preventDefault();
     if (currentPage > 1) {
       currentPage -= 1;
+      await fetchPlaces();
       await tick();
       scrollToTopOfList();
     }
@@ -836,14 +842,11 @@
     if (event) event.preventDefault();
     if (currentPage < totalPages) {
       currentPage += 1;
+      await fetchPlaces();
       await tick();
       scrollToTopOfList();
     }
   };
-
-  $: pagedPlaces = places
-    .filter((place) => place.name.toLowerCase().includes(filter.toLowerCase()))
-    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   onMount(async () => {
     isClient = true;
