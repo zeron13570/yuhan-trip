@@ -1,127 +1,153 @@
 <script>
     import { onMount } from "svelte";
+    import Like from "../../img/like.png";
+    import noLike from "../../img/notLike.png";
     let posts = [];
+    let myLikedPosts = [];
     let username = "";
-    let myPosts = [];
+    let userId = "";
     let isLoggedIn = false;
-    let userName = "";
 
+    const API_URL = "http://localhost:3000"; // 서버 URL
+
+    // 초기화 및 로그인 상태 확인
     onMount(() => {
-    if (!Kakao.isInitialized()) {
-        Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-    }
+        const storedUsername = localStorage.getItem("username");
+        const storedUserId = localStorage.getItem("userId"); // 사용자 ID 저장 여부 확인
 
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-        username = storedUsername;
-        userName = storedUsername;
-        isLoggedIn = true;
-    } else {
-        isLoggedIn = false;
-        userName = '';
-        myPosts = [];
-    }
-
-    console.log('현재 로그인 상태:', isLoggedIn); // 초기 상태 확인
-});
-
-function kakaoLogout() {
-    Kakao.Auth.logout(() => {
-        isLoggedIn = false;
-        username = '';
-        userName = '';
-        myPosts = [];
-        localStorage.removeItem("username");
-        
-        console.log('로그아웃 상태:', isLoggedIn); // 로그아웃 상태 확인
-        alert('로그아웃 되었습니다.');
-
-        // 페이지 리로드
-        window.location.reload();
+        if (storedUsername && storedUserId) {
+            username = storedUsername;
+            userId = storedUserId;
+            isLoggedIn = true;
+            loadPosts();  // 게시물 로드
+            loadLikedPosts();  // 내가 좋아요를 누른 글 로드
+        } else {
+            isLoggedIn = false;
+            username = '';
+            userId = '';
+            posts = [];
+            myLikedPosts = [];
+        }
     });
-}
 
-    function kakaoLogin() {
-        Kakao.Auth.login({
-            success: function(authObj) {
-                Kakao.API.request({
-                    url: '/v2/user/me',
-                    success: function(res) {
-                        const nickname = res.properties.nickname;
-                        localStorage.setItem("username", nickname);
-                        username = nickname;
-                        userName = nickname; // userName도 업데이트
-                        isLoggedIn = true; // 로그인 상태 업데이트
-                        alert("로그인 성공!");
-                    },
-                    fail: function(err) {
-                        console.error(err);
-                        alert("사용자 정보를 가져오는 중 오류가 발생했습니다.");
-                    },
-                });
-            },
-            fail: function(err) {
-                console.error(err);
-                alert("로그인 중 오류가 발생했습니다.");
-            },
-        });
+    function loadPosts() {
+        fetch(`http://localhost:3000/get-posts`)
+            .then(response => response.json())
+            .then(data => {
+                posts = data;
+            })
+            .catch(err => console.error('Error loading posts:', err));
     }
 
-    // 글 삭제 기능
-    function deletePost(postId) {
-        let updatedPosts = posts.filter(post => post.id !== postId);
-        localStorage.setItem("posts", JSON.stringify(updatedPosts));
-        myPosts = updatedPosts.filter(post => post.username === username);  // 내 글 리스트 갱신
+    function loadLikedPosts() {
+        if (userId) {
+            fetch(`http://localhost:3000/liked-posts/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    myLikedPosts = data;
+                })
+                .catch(err => console.error('Error loading liked posts:', err));
+        }
     }
 
     // 좋아요 토글 기능
     function toggleLike(postId) {
-        let post = posts.find(p => p.id === postId);
-        if (!post.likedBy) post.likedBy = [];
+        fetch(`http://localhost:3000/get-post/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ postId, userId })
+        })
+            .then(response => response.json())
+            .then(updatedPost => {
+                // 로컬 게시물 리스트 업데이트
+                posts = posts.map(post => post.id === updatedPost.id ? updatedPost : post);
+                loadLikedPosts();  // 내가 좋아요를 누른 글 목록 갱신
+            })
+            .catch(err => console.error('Error toggling like:', err));
+    }
 
-        if (post.likedBy.includes(username)) {
-            post.likes--;
-            post.likedBy = post.likedBy.filter(user => user !== username);
-        } else {
-            post.likes++;
-            post.likedBy.push(username);
-        }
+    // 로그아웃
+    function kakaoLogout() {
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId");
+        username = "";
+        userId = "";
+        posts = [];
+        myLikedPosts = [];
+        isLoggedIn = false;
+        alert('로그아웃 되었습니다.');
+    }
 
-        localStorage.setItem("posts", JSON.stringify(posts));
-        myPosts = posts.filter(post => post.username === username);  // 내 글 리스트 갱신
+    // 로그인 후 사용자 정보 업데이트
+    function kakaoLogin() {
+        // 카카오 로그인 구현 부분 (Kakao SDK 이용)
+        const nickname = "user1";  // 예시, 실제로는 카카오 API에서 닉네임을 받아옵니다.
+        const userIdFromKakao = "user1_id";  // 카카오로부터 받아온 사용자 ID
+        localStorage.setItem("username", nickname);
+        localStorage.setItem("userId", userIdFromKakao);
+        username = nickname;
+        userId = userIdFromKakao;
+        isLoggedIn = true;
+        loadPosts();
+        loadLikedPosts();
     }
 </script>
+
 <body>
     <section class="myPage">
         {#if isLoggedIn}
-            <div class="userID"><span class="userID"></span>{userName}님, 환영합니다!</div>
-            {#if myPosts.length > 0}
-                <h2>내가 작성한 글</h2>
+            <div class="userID"><span class="userID"></span>{username}님, 환영합니다!</div>
+
+            <h2>내가 좋아요를 누른 글</h2>
+            {#if myLikedPosts.length > 0}
+            <div class="uList">
                 <ul>
-                    {#each myPosts as post}
-                        <li>
-                            <a href={`/travelLogDetail/${post.id}`}>
-                                <img src={post.image} alt="여행지 사진">
-                                <p>{post.title}</p>
-                            </a>
-                            <div class="like">
-                                <span>작성자: {post.username}</span>
-                                <span>
-                                    <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike}
-                                         alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
-                                </span>
-                                <span>{post.likes} Likes</span>
-                                <button on:click={() => deletePost(post.id)}>삭제</button>
-                            </div>
-                        </li>
+                    {#each myLikedPosts as post}
+                    <li>
+                        <a href={`/travelLogDetail/${post.id}`} sveltekit:prefetch>
+                            <img src={`http://localhost:3000${post.image}`} alt="여행지 사진" />
+                            <p>{post.title}</p>
+                        </a>                    
+                        <div class="like">
+                            <span>작성자: {post.username}</span>
+                            <span>
+                                <img src={post.likedBy && post.likedBy.includes(userId) ? Like : noLike} 
+                                    alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)} />
+                            </span>
+                            <span>{post.likes || 0}</span>
+                        </div>
+                    </li>
                     {/each}
                 </ul>
+            </div>
             {:else}
-                <p>작성한 글이 없습니다.</p>
+                <p>좋아요를 누른 글이 없습니다.</p>
             {/if}
+
         {:else}
             <h2>로그인 후 이용해주세요</h2>
             <button on:click={kakaoLogin}>카카오 로그인</button>
         {/if}
     </section>
 </body>
+<style>
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    .pagination button.selected {
+        font-weight: bold;
+    }
+    .uList img {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+    }
+    .like-icon {
+        max-width: 24px;
+        max-height: 24px;
+    }
+</style>

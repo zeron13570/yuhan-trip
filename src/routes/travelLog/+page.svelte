@@ -9,9 +9,9 @@
     let filteredPosts = [];
     let isLoggedIn = false;
     let userName = "";
+    let userId = "";
     let popularPosts = [];
-
-    // 페이지네이션 관련 변수
+    
     let currentPage = 1;
     const postsPerPage = 16;
 
@@ -38,14 +38,27 @@
         fetchPosts();
     });
 
+    function kakaoLogin(){
+        Kakao.Auth.isLoggedIn({
+            success: function(authObj){
+                isLoggedIn = true;
+                localStorage.setItem("accessToken", authObj.accessToken);
+                getUserInfo();
+            },
+            fail: function(error){
+                console.error("Kakao login failed:",error);
+            }
+        });
+    }
+
     function getUserInfo() {
         Kakao.API.request({
             url: '/v2/user/me',
             success: function(response) {
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
-                const userId = response.id; // 사용자 고유 ID
-                localStorage.setItem("userId", userId); // 사용자 ID 저장
+                userId = response.id;  // userId 추가
+                localStorage.setItem("userId", userId);  // userId를 localStorage에 저장
                 localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
             fail: function(error) {
@@ -55,34 +68,36 @@
     }
     
     function fetchPosts() {
-    const accessToken = localStorage.getItem("accessToken");
-    const userId = localStorage.getItem("userId"); // 사용자 ID 가져오기
+        const accessToken = localStorage.getItem("accessToken");
+        const userId = localStorage.getItem("userId");
 
-    fetch(`http://localhost:3000/get-posts?userId=${userId}`, { // 사용자 ID를 쿼리 파라미터로 추가
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        posts = data;
-        applyRegionFilterFromQuery();
-        sortPostsByLikesAndDate(); // 수정된 함수 호출
-    })
-    .catch(error => console.error('Error fetching posts:', error));
-}
+        fetch(`http://localhost:3000/get-posts?userId=${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            posts = data;
+            applyRegionFilterFromQuery();  // 지역 필터 함수 호출
+            sortPostsByLikesAndDate();
+        })
+        .catch(error => console.error('Error fetching posts:', error));
+    }
 
     function applyRegionFilterFromQuery() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const region = urlParams.get("region");
-        selectedRegion = region || "전체 지역"; 
-        filterPosts();
+        if (selectedRegion === "전체 지역") {
+            filteredPosts = posts;
+        } else {
+            filteredPosts = posts.filter(post => post.region === selectedRegion);
+        }
+    }
+
+    function sortPostsByLikesAndDate() {
+        posts.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+        popularPosts = posts.slice(0, 4);  // 상위 4개의 인기 포스트만 추천 블로그에 표시
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
 
     function filterPosts() {
@@ -106,12 +121,15 @@
     }
 
     function toggleLike(postId) {
-        if (!isLoggedIn || !userName) {
-            return kakaoLogin(); // 로그인 창을 표시
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) {
+            alert("로그인이 필요합니다.");
+            kakaoLogin();  // 로그인 처리 함수
+            return;
         }
 
         const accessToken = localStorage.getItem("accessToken");
-        console.log("Access Token:", accessToken);
 
         fetch(`http://localhost:3000/get-post/${postId}/like`, {
             method: 'POST',
@@ -119,40 +137,24 @@
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ userName })
+            body: JSON.stringify({ userId })  // 서버로 userId 전송
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            // 좋아요 상태 업데이트
+            // 서버에서 반환된 data에서 likedBy와 likes 업데이트
             const postIndex = posts.findIndex(post => post.id === postId);
             if (postIndex !== -1) {
-                posts[postIndex].likes = data.likes; // 응답에서 업데이트된 좋아요 수
-                posts[postIndex].likedBy = data.likedBy; // 응답에서 업데이트된 좋아요를 누른 사용자 목록
-                filterPosts(); // 필터링된 포스트 목록 갱신
+                posts[postIndex].likes = data.likes;
+                posts[postIndex].likedBy = data.likedBy;  // likedBy 배열 업데이트
             }
+
+            // 최신 블로그 (filteredPosts) 업데이트
+            filterPosts();
+
+            // 추천 블로그 (popularPosts)도 업데이트
+            sortPostsByLikesAndDate();  // 좋아요 순으로 정렬 후, 인기 포스트 재설정
         })
-        .catch(error => console.error('Error toggling like:', error));
-    }
-
-    function sortPostsByLikesAndDate() {
-        // 포스트를 좋아요 수로 정렬
-        posts.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-
-        // 좋아요가 많은 게시글 4개를 추천 블로그에 표시
-        popularPosts = posts.slice(0, 4);
-
-        // 포스트를 업로드된 날짜로 정렬 (가장 최근의 날짜가 앞에 오도록)
-        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-
-    // 페이지 이동 함수
-    function changePage(page) {
-        currentPage = page;
+        .catch(error => console.error('좋아요 토글 오류:', error));
     }
 
     $: paginatedPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
@@ -182,7 +184,6 @@
             </div>
             <a class="posting" on:click={handlePostButtonClick}>포스팅</a>
         </div>
-
         <h1>추천 블로그</h1>
         <div class="uList">
             <ul>
@@ -195,7 +196,7 @@
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
-                            <img src={post.likedBy && post.likedBy.includes(userName) ? Like : noLike} 
+                            <img src={post.likedBy && post.likedBy.includes(userId) ? Like : noLike} 
                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)} />
                         </span>
                         <span>{post.likes || 0}</span>
@@ -205,7 +206,6 @@
             </ul>            
         </div>
 
-    <!-- 최신 블로그 -->
     <h1>최신 블로그</h1>
     <div class="uList">
         <ul>
@@ -218,8 +218,8 @@
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
-                            <img src={post.likedBy && post.likedBy.includes(userName) ? Like : noLike} 
-                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)} />
+                            <img src={post.likedBy && post.likedBy.includes(userId) ? Like : noLike} 
+                                alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)} />
                         </span>
                         <span>{post.likes || 0}</span>
                     </div>
@@ -228,7 +228,6 @@
         </ul>            
     </div>
 
-    <!-- 페이지네이션 -->
     <div class="pagination">
         {#each Array(totalPages) as _, index}
             <button 
@@ -249,26 +248,13 @@
     .pagination button.selected {
         font-weight: bold;
     }
-    .post-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .post-list li {
-        width: calc(25% - 10px); /* 한 줄에 4개 표시, 여유 공간을 위해 조정 */
-        margin-bottom: 20px; /* 아래쪽 여백 */
-    }
     .uList img {
-        width: 250px; /* 게시물 이미지 크기 */
-        height: 250px; /* 게시물 이미지 크기 */
-        object-fit: cover; /* 이미지를 잘라서 비율 유지 */
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
     }
-
     .like-icon {
-        width: auto; /* 좋아요 이미지 크기 유지 */
-        height: auto; /* 좋아요 이미지 크기 유지 */
-        max-width: 24px; /* 필요 시 최대 너비 지정 */
-        max-height: 24px; /* 필요 시 최대 높이 지정 */
+        max-width: 24px;
+        max-height: 24px;
     }
 </style>

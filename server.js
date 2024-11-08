@@ -171,13 +171,13 @@ app.get('/get-post/:id', (req, res) => {
         }
     });
 });
-
-// 좋아요 API
+//좋아요
 app.post('/get-post/:id/like', (req, res) => {
     const postId = req.params.id;
-    const userName = req.body.userName;
+    const userId = req.body.userId; // 계정 ID 사용
+    console.log('Received userId:', userId); // userId 확인
 
-    if (!userName) {
+    if (!userId) {
         return res.status(401).json({ message: '로그인이 필요합니다.' });
     }
 
@@ -201,14 +201,18 @@ app.post('/get-post/:id/like', (req, res) => {
             return res.status(404).json({ message: '포스트를 찾을 수 없습니다.' });
         }
 
-        // 좋아요 토글 로직
-        if (post.likedBy.includes(userName)) {
-            post.likedBy = post.likedBy.filter(name => name !== userName);
+        console.log('Post before like:', post); // 좋아요 변경 전 상태 확인
+
+        // 좋아요 토글 로직 (userId로 체크)
+        if (post.likedBy.includes(userId)) {
+            post.likedBy = post.likedBy.filter(id => id !== userId);
             post.likes--;
         } else {
-            post.likedBy.push(userName);
+            post.likedBy.push(userId);
             post.likes++;
         }
+
+        console.log('Post after like:', post); // 좋아요 변경 후 상태 확인
 
         fs.writeFile(filePath, JSON.stringify(posts, null, 2), (err) => {
             if (err) {
@@ -219,7 +223,33 @@ app.post('/get-post/:id/like', (req, res) => {
         });
     });
 });
+// 내가 좋아요를 누른 게시물 가져오기
+app.get('/liked-posts/:userId', (req, res) => {
+    const { userId } = req.params;  // URL 파라미터에서 userId 가져오기
 
+    // JSON 파일에서 posts 데이터 읽기
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return handleError(res, '파일을 읽는 중 오류가 발생했습니다.');
+        }
+
+        try {
+            const posts = JSON.parse(data);  // JSON 데이터 파싱
+            // userId가 likedBy 배열에 포함된 게시물 필터링
+            const likedPosts = posts.filter(post => post.likedBy.includes(userId));  
+
+            if (likedPosts.length > 0) {
+                res.status(200).json(likedPosts);  // 좋아요를 누른 게시물 반환
+            } else {
+                res.status(404).json({ message: '좋아요를 누른 게시물이 없습니다.' });
+            }
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            return handleError(res, 'JSON 파싱 중 오류가 발생했습니다.');
+        }
+    });
+});
 // 포스트를 날짜 순으로 정렬하는 함수
 function sortPostsByDate(posts) {
     return posts.sort((a, b) => new Date(b.date) - new Date(a.date)); // 내림차순으로 정렬

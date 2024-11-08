@@ -8,9 +8,7 @@
     "image": "/uploads/image-1729663671636-538126292.jpeg",
     "date": "2024-10-18T13:29:41.489Z",
     "likes": 1,
-    "likedBy": [
-      "유진"
-    ]
+    "likedBy": []
   },
   {
     "id": "e23c37f4-78b1-49e8-9250-adc9efb527bc",
@@ -32,9 +30,7 @@
     "image": "/uploads/image-1730206795562-452574852.jpeg",
     "date": "2024-10-20T13:29:41.489Z",
     "likes": 1,
-    "likedBy": [
-      "."
-    ]
+    "likedBy": []
   },
   {
     "id": "ac388d8a-cae8-43ed-82e1-e485feeb2990",
@@ -45,9 +41,7 @@
     "image": "/uploads/image-1730264410003-119294782.jpg",
     "date": "2024-10-21T13:29:41.489Z",
     "likes": 1,
-    "likedBy": [
-      "유진"
-    ]
+    "likedBy": []
   },
   {
     "id": "9aaebe02-59f7-4a82-ba22-40ae063b91ec",
@@ -112,12 +106,8 @@
     "username": "유진",
     "image": "/uploads/image-1730615883570-384968911.jpeg",
     "date": "2024-10-27T13:29:41.489Z",
-    "likes": 3,
-    "likedBy": [
-      ".",
-      "유진",
-      "아름"
-    ]
+    "likes": 2,
+    "likedBy": []
   },
   {
     "id": "09a6456c-a3f6-447d-a9b9-37c35ed7cd34",
@@ -148,63 +138,6 @@
     "region": "군산",
     "username": "유진",
     "image": "/uploads/image-1730813015444-366467153.jpeg",
-    "date": "2024-10-30T13:29:41.489Z",
-    "likes": 1,
-    "likedBy": [
-      "아름"
-    ]
-  },
-  {
-    "id": "d94ac509-10d9-4d8e-94b6-f8ed180e75c6",
-    "title": "그만하고 싶음 ",
-    "content": "다들 이제 그만하구 집에서 놀기<div><br></div><img src=\"http://localhost:3000/uploads/image-1730813015444-366467153.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
-    "region": "군산",
-    "username": "유진",
-    "image": "/uploads/image-1730813015444-366467153.jpeg",
-    "date": "2024-10-31T13:29:41.489Z",
-    "likes": 0,
-    "likedBy": []
-  },
-  {
-    "id": "d94ac509-10d9-4d8e-94b6-f8ed180e75c6",
-    "title": "그만하고 싶음 ",
-    "content": "다들 이제 그만하구 집에서 놀기<div><br></div><img src=\"http://localhost:3000/uploads/image-1730813015444-366467153.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
-    "region": "군산",
-    "username": "유진",
-    "image": "/uploads/image-1730813015444-366467153.jpeg",
-    "date": "2024-11-01T13:29:41.489Z",
-    "likes": 0,
-    "likedBy": []
-  },
-  {
-    "id": "d94ac509-10d9-4d8e-94b6-f8ed180e75c6",
-    "title": "그만하고 싶음 ",
-    "content": "다들 이제 그만하구 집에서 놀기<div><br></div><img src=\"http://localhost:3000/uploads/image-1730813015444-366467153.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
-    "region": "군산",
-    "username": "유진",
-    "image": "/uploads/image-1730813015444-366467153.jpeg",
-    "date": "2024-11-02T13:29:41.489Z",
-    "likes": 0,
-    "likedBy": []
-  },
-  {
-    "id": "d94ac509-10d9-4d8e-94b6-f8ed180e75c6",
-    "title": "그만하고 싶음 ",
-    "content": "다들 이제 그만하구 집에서 놀기<div><br></div><img src=\"http://localhost:3000/uploads/image-1730813015444-366467153.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
-    "region": "군산",
-    "username": "유진",
-    "image": "/uploads/image-1730813015444-366467153.jpeg",
-    "date": "2024-11-03T13:29:41.489Z",
-    "likes": 0,
-    "likedBy": []
-  },
-  {
-    "id": "d94ac509-10d9-4d8e-94b6-f8ed180e75c6",
-    "title": "그만하고 싶음 ",
-    "content": "다들 이제 그만하구 집에서 놀기<div><br></div><img src=\"http://localhost:3000/uploads/image-1730813015444-366467153.jpeg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
-    "region": "군산",
-    "username": "유진",
-    "image": "/uploads/image-1730813015444-366467153.jpeg",
     "date": "2024-11-04T13:29:41.489Z",
     "likes": 0,
     "likedBy": []
@@ -217,10 +150,8 @@
     "username": "유진",
     "image": "/uploads/image-1730813380243-85495212.jpeg",
     "date": "2024-11-05T13:29:41.489Z",
-    "likes": 1,
-    "likedBy": [
-      "유진"
-    ]
+    "likes": 0,
+    "likedBy": []
   },
   {
     "id": "d4cd655a-a070-4cce-ba09-4bd072fa7f17",
@@ -230,10 +161,8 @@
     "username": "아름",
     "image": "/uploads/image-1730871760101-852918906.jpg",
     "date": "2024-11-06T05:43:28.475Z",
-    "likes": 1,
-    "likedBy": [
-      "아름"
-    ]
+    "likes": 0,
+    "likedBy": []
   },
   {
     "id": "b78b7172-dfae-4279-83c7-c12ea8864570",
@@ -243,8 +172,10 @@
     "username": "아름",
     "image": "/uploads/image-1730872235957-447655070.jpg",
     "date": "2024-11-06T05:51:42.340Z",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      "3745401693"
+    ]
   },
   {
     "id": "de05db41-eb3f-4d53-809b-f99f00382d71",
@@ -254,8 +185,10 @@
     "username": "아름",
     "image": "/uploads/image-1730872475709-893221998.jpg",
     "date": "2024-11-06T05:55:17.586Z",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      "3745401693"
+    ]
   },
   {
     "id": "f354dc0a-4de5-4a98-a1cd-1e5f323d6475",
@@ -287,9 +220,9 @@
     "username": "아름",
     "image": "/uploads/image-1730873822990-437089536.jpg",
     "date": "2024-11-06T06:18:09.577Z",
-    "likes": 1,
+    "likes": 2,
     "likedBy": [
-      "아름"
+      "3745401693"
     ]
   }
 ]
