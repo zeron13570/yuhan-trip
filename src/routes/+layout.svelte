@@ -8,18 +8,19 @@
     let isLoggedIn = false;  // 로그인 여부를 확인하는 변수
     let userName = '';       // 로그인한 사용자의 이름
 
-    // 카카오 SDK 불러오기
+    // 초기화 및 로그인 여부 확인
     onMount(() => {
         const script = document.createElement("script");
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
         script.onload = () => {
-            // 카카오 SDK 초기화
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7'); // 발급받은 JavaScript 키로 초기화
-            console.log(Kakao.isInitialized()); // SDK 초기화 확인
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+            console.log(Kakao.isInitialized());
 
-            // 로그인 여부 체크
-            if (Kakao.Auth.getAccessToken()) {
-                getUserInfo();  // 로그인되어 있으면 사용자 정보 가져오기
+            // 로그인 여부 체크 및 사용자 정보 불러오기
+            const accessToken = localStorage.getItem("accessToken");
+            if (accessToken) {
+                isLoggedIn = true;
+                userName = localStorage.getItem("userName");
             }
         };
         document.head.appendChild(script);
@@ -29,8 +30,8 @@
     function kakaoLogin() {
         Kakao.Auth.login({
             success: function (authObj) {
-                console.log(authObj); // 로그인 성공 시 토큰 정보 출력
-                getUserInfo();  // 로그인 후 사용자 정보 가져오기
+                console.log(authObj);
+                getUserInfo();
             },
             fail: function (err) {
                 console.error(err);
@@ -39,14 +40,17 @@
         });
     }
 
+    // 사용자 정보 가져오기
     function getUserInfo() {
         Kakao.API.request({
             url: '/v2/user/me',
             success: function(response) {
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
-                const userId = response.id; // 사용자 고유 ID
-                localStorage.setItem("userId", userId); // 사용자 ID 저장
+                const userId = response.id;
+                
+                localStorage.setItem("userName", userName);
+                localStorage.setItem("userId", userId);
                 localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
             fail: function(error) {
@@ -58,12 +62,20 @@
     // 로그아웃 함수
     function kakaoLogout() {
         Kakao.Auth.logout(() => {
+            localStorage.removeItem("userName");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("accessToken");
+
+            // 로그인 상태를 false로 설정
             isLoggedIn = false;
-            userName = '';
+            username = "";
+            userId = "";
+                
             alert('로그아웃 되었습니다.');
         });
     }
 </script>
+
 <header>
     <nav>
         <ul>
@@ -76,7 +88,7 @@
                 <li><a href="../" on:click={kakaoLogout}>로그아웃</a></li>
             {:else}
                 <!-- 로그인되지 않은 경우 로그인 버튼 표시 -->
-                <li><a href ="" on:click={kakaoLogin}>로그인</a></li>
+                <li><a href="#" on:click={kakaoLogin}>로그인</a></li>
             {/if}           
             <li><a href="/myPage">마이페이지</a></li>
             <li><a href="/customerService">고객센터</a></li>  

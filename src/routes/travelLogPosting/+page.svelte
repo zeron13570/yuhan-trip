@@ -6,6 +6,7 @@
     let content = '';
     let region = '';
     let username = localStorage.getItem('username') || '';
+    let userId = localStorage.getItem('userId') || '';  // localStorage에서 userId 가져오기
     let post = { image: '' };
     let imageUrls = [];
     let selectedRegion = "지역 선택";
@@ -19,29 +20,38 @@
         if (storedUsername) {
             username = storedUsername;
         }
+        userId = localStorage.getItem('userId'); // userId를 가져오기
     });
 
     function kakaoLogin() {
+        if (!Kakao.isInitialized()) {
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+        }
         Kakao.Auth.login({
             success: function(authObj) {
-                Kakao.API.request({
-                    url: '/v2/user/me',
-                    success: function(res) {
-                        const nickname = res.properties.nickname;
-                        localStorage.setItem("username", nickname);
-                        username = nickname;
-                        alert("로그인 성공!");
-                    },
-                    fail: function(err) {
-                        console.error(err);
-                        alert("사용자 정보를 가져오는 중 오류가 발생했습니다.");
-                    },
-                });
+                console.log("Kakao login successful:", authObj);
+                isLoggedIn = true;
+                localStorage.setItem("accessToken", authObj.access_token);
+                getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
             },
-            fail: function(err) {
-                console.error(err);
-                alert("로그인 중 오류가 발생했습니다.");
+            fail: function(error) {
+                console.error("Kakao login failed:", error);
+            }
+        });
+    }
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(response) {
+                isLoggedIn = true;
+                userName = response.kakao_account.profile.nickname;
+                userId = response.id;  // userId 추가
+                localStorage.setItem("userId", userId);  // userId를 localStorage에 저장
+                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
+            fail: function(error) {
+                console.error('Error fetching user info:', error);
+            }
         });
     }
 
@@ -113,6 +123,7 @@
         content,
         region: selectedRegion,
         username: localStorage.getItem("username"),
+        userId: userId,  // 작성자 userId 추가
         likes: 0,
         likedBy: [],
         image: firstImageUrl

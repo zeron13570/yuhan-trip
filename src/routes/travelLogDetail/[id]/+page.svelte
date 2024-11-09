@@ -13,6 +13,7 @@
         likedBy: []
     };
     let userName = ""; // 사용자 이름 가져오기
+    let userId = ""; // 사용자 ID 가져오기
     let isLoggedIn = false;
 
     // 페이지 매개변수에서 postId 가져오기
@@ -63,7 +64,7 @@
             success: function(response) {
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
-                const userId = response.id; // 사용자 고유 ID
+                userId = response.id; // 사용자 고유 ID
                 localStorage.setItem("userId", userId); // 사용자 ID 저장
                 localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
@@ -74,7 +75,7 @@
     }
 
     function toggleLike() {
-        if (!isLoggedIn || !userName) {
+        if (!isLoggedIn || !userId) {
             alert("로그인이 필요합니다.");
             return kakaoLogin(); // 로그인 창을 표시
         }
@@ -87,7 +88,7 @@
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ userName }), // userName 사용
+            body: JSON.stringify({ userId }), // userId 사용
         })
         .then(response => {
             if (!response.ok) {
@@ -118,7 +119,7 @@
     </div>
     <div class="like blogLike">
         <span>
-            <img src={post.likedBy.includes(userName) ? Like : noLike}
+            <img src={post.likedBy.includes(userId) ? Like : noLike}
                 alt="좋아요" class="like-icon" on:click={toggleLike} />
             {post.likes || 0} <!-- 좋아요 수 표시 -->
         </span>

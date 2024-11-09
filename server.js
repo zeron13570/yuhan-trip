@@ -81,8 +81,8 @@ const handleError = (res, message, status = 500) => {
 app.post('/add-post', (req, res) => {
     console.log('Received new post:', req.body);
 
-    const { title, content, region, username, image } = req.body;
-    if (!title || !content || !region || !username) {
+    const { title, content, region, username, image, userId } = req.body;  // userId 추가
+    if (!title || !content || !region || !username || !userId) {  // userId 체크 추가
         return handleError(res, '모든 필드를 입력해주세요.', 400);
     }
 
@@ -92,6 +92,7 @@ app.post('/add-post', (req, res) => {
         content,
         region,
         username,
+        userId,  // userId 사용
         image,
         date: new Date().toISOString(), // 현재 날짜를 ISO 형식으로 저장
         likes: 0,
@@ -123,6 +124,7 @@ app.post('/add-post', (req, res) => {
         });
     });
 });
+
 
 // 모든 포스트 가져오기 API
 app.get('/get-posts', (req, res) => {
@@ -171,6 +173,32 @@ app.get('/get-post/:id', (req, res) => {
         }
     });
 });
+// 사용자가 작성한 포스트 가져오기 API
+app.get('/get-posts-by-user/:userId', (req, res) => {
+    const userId = req.params.userId;  // URL 파라미터에서 userId 가져오기
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading file:', err);
+            return handleError(res, '파일을 읽는 중 오류가 발생했습니다.');
+        }
+
+        try {
+            const posts = JSON.parse(data);  // JSON 데이터 파싱
+            const userPosts = posts.filter(post => post.userId === userId);  // userId로 필터링
+
+            if (userPosts.length > 0) {
+                res.status(200).json(userPosts);  // 작성한 포스트 반환
+            } else {
+                res.status(404).json({ message: '작성한 게시물이 없습니다.' });
+            }
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError);
+            return handleError(res, 'JSON 파싱 중 오류가 발생했습니다.');
+        }
+    });
+});
+
 //좋아요
 app.post('/get-post/:id/like', (req, res) => {
     const postId = req.params.id;
@@ -223,7 +251,6 @@ app.post('/get-post/:id/like', (req, res) => {
         });
     });
 });
-// 내가 좋아요를 누른 게시물 가져오기
 app.get('/liked-posts/:userId', (req, res) => {
     const { userId } = req.params;  // URL 파라미터에서 userId 가져오기
 
@@ -236,8 +263,14 @@ app.get('/liked-posts/:userId', (req, res) => {
 
         try {
             const posts = JSON.parse(data);  // JSON 데이터 파싱
-            // userId가 likedBy 배열에 포함된 게시물 필터링
-            const likedPosts = posts.filter(post => post.likedBy.includes(userId));  
+
+            // userId를 숫자로 변환
+            const numericUserId = Number(userId);
+
+            // likedBy 배열의 값들도 숫자로 변환하여 비교
+            const likedPosts = posts.filter(post => 
+                post.likedBy.some(like => Number(like) === numericUserId)
+            );
 
             if (likedPosts.length > 0) {
                 res.status(200).json(likedPosts);  // 좋아요를 누른 게시물 반환
@@ -250,6 +283,7 @@ app.get('/liked-posts/:userId', (req, res) => {
         }
     });
 });
+
 // 포스트를 날짜 순으로 정렬하는 함수
 function sortPostsByDate(posts) {
     return posts.sort((a, b) => new Date(b.date) - new Date(a.date)); // 내림차순으로 정렬

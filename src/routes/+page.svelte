@@ -6,9 +6,8 @@
     let posts = []; // 트래블로그 데이터 저장
     let isLoggedIn = false;
     let userName = "";
-    let username = localStorage.getItem('username') || ""; // 로그인된 사용자 이름 가져오기
+    let userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
 
-    // 로컬 스토리지에서 포스팅 데이터 불러오기
     onMount(() => {
         const script = document.createElement("script");
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
@@ -40,9 +39,10 @@
             posts = data; // 서버에서 받은 데이터를 posts에 저장
         })
         .catch(error => {
-            console.error('Error fetching posts:', error);  // 오류 처리
+            console.error('Error fetching posts:', error);
         });
     });
+
     function kakaoLogin() {
         Kakao.Auth.login({
             success: function(authObj) {
@@ -53,13 +53,14 @@
             }
         });
     }
+
     function getUserInfo() {
         Kakao.API.request({
             url: '/v2/user/me',
             success: function(response) {
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
-                const userId = response.id; // 사용자 고유 ID
+                userId = response.id; // 사용자 고유 ID
                 localStorage.setItem("userId", userId); // 사용자 ID 저장
                 localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
             },
@@ -70,18 +71,19 @@
     }
 
     function toggleLike(postId) {
-        if (!isLoggedIn || !userName) {
+        if (!isLoggedIn || !userId) {
             return kakaoLogin(); // 로그인 창을 표시
         }
-    const accessToken = localStorage.getItem("accessToken");
+        
+        const accessToken = localStorage.getItem("accessToken");
 
-    fetch(`http://localhost:3000/get-post/${postId}/like`, {
+        fetch(`http://localhost:3000/get-post/${postId}/like`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ userName })
+            body: JSON.stringify({ userId })
         })
         .then(response => {
             if (!response.ok) {
@@ -101,9 +103,7 @@
             console.error('Error toggling like:', error);
         });
     }
-
 </script>
-
 <header>
     <div></div>
 </header>
@@ -142,7 +142,7 @@
                     <div class="like">
                         <span>작성자: {post.username}</span>
                         <span>
-                            <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                            <img src={post.likedBy && post.likedBy.includes(userId) ? Like : noLike} 
                                 alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
                         </span>
                         <span>{post.likes || 0}</span> <!-- 좋아요 수 추가 -->
