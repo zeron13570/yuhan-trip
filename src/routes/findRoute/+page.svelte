@@ -798,7 +798,7 @@ let previousFilter = filter;
 
   const scrollToTopOfList = () => {
     if (!listElement) {
-      console.error("listElement가 정의되지 않았습니다.");
+      console.error("listElement가 정의되지 않았습니다.1");
       return;
     }
     listElement.scrollTop = 0;
@@ -849,6 +849,14 @@ let previousFilter = filter;
   };
 
   onMount(async () => {
+    if (!sessionStorage.getItem("reloaded")) {
+    // 첫 진입 시 자동으로 새로고침
+    sessionStorage.setItem("reloaded", "true");
+    window.location.reload();
+  } else {
+    // 새로고침 후 세션 스토리지를 초기화
+    sessionStorage.removeItem("reloaded");
+  }
     isClient = true;
     fetchPlaces();
 

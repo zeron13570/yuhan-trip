@@ -28,9 +28,8 @@
 declare module '$env/static/private' {
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
-	export const CATALINA_HOME: string;
 	export const CHROME_CRASHPAD_PIPE_NAME: string;
-	export const CLASSPATH: string;
+	export const CLSID: string;
 	export const COLOR: string;
 	export const COLORTERM: string;
 	export const CommonProgramFiles: string;
@@ -39,18 +38,22 @@ declare module '$env/static/private' {
 	export const ComSpec: string;
 	export const DriverData: string;
 	export const EDITOR: string;
-	export const EFC_27316: string;
 	export const FPS_BROWSER_APP_PROFILE_STRING: string;
 	export const FPS_BROWSER_USER_PROFILE_STRING: string;
+	export const FP_NO_HOST_CHECK: string;
+	export const GameBinPath: string;
 	export const GIT_ASKPASS: string;
+	export const GTK_BASEPATH: string;
 	export const HOME: string;
 	export const HOMEDRIVE: string;
 	export const HOMEPATH: string;
 	export const INIT_CWD: string;
+	export const INTEL_DEV_REDIST: string;
 	export const JAVA_HOME: string;
 	export const LANG: string;
 	export const LOCALAPPDATA: string;
 	export const LOGONSERVER: string;
+	export const MIC_LD_LIBRARY_PATH: string;
 	export const NODE: string;
 	export const NODE_ENV: string;
 	export const NODE_EXE: string;
@@ -75,9 +78,11 @@ declare module '$env/static/private' {
 	export const npm_package_json: string;
 	export const npm_package_name: string;
 	export const npm_package_version: string;
+	export const NPM_PREFIX_JS: string;
 	export const NPM_PREFIX_NPM_CLI_JS: string;
 	export const NUMBER_OF_PROCESSORS: string;
 	export const OneDrive: string;
+	export const OneDriveConsumer: string;
 	export const ORIGINAL_XDG_CURRENT_DESKTOP: string;
 	export const OS: string;
 	export const Path: string;
@@ -92,6 +97,7 @@ declare module '$env/static/private' {
 	export const PROMPT: string;
 	export const PSModulePath: string;
 	export const PUBLIC: string;
+	export const PyCharm: string;
 	export const SESSIONNAME: string;
 	export const SystemDrive: string;
 	export const SystemRoot: string;
@@ -107,11 +113,9 @@ declare module '$env/static/private' {
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
 	export const VSCODE_GIT_IPC_HANDLE: string;
-	export const VSCODE_INJECTION: string;
-	export const VSCODE_NONCE: string;
-	export const VSCODE_STABLE: string;
 	export const windir: string;
-	export const ZES_ENABLE_SYSMAN: string;
+	export const windows_tracing_flags: string;
+	export const windows_tracing_logfile: string;
 }
 
 /**
@@ -145,9 +149,8 @@ declare module '$env/dynamic/private' {
 	export const env: {
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
-		CATALINA_HOME: string;
 		CHROME_CRASHPAD_PIPE_NAME: string;
-		CLASSPATH: string;
+		CLSID: string;
 		COLOR: string;
 		COLORTERM: string;
 		CommonProgramFiles: string;
@@ -156,18 +159,22 @@ declare module '$env/dynamic/private' {
 		ComSpec: string;
 		DriverData: string;
 		EDITOR: string;
-		EFC_27316: string;
 		FPS_BROWSER_APP_PROFILE_STRING: string;
 		FPS_BROWSER_USER_PROFILE_STRING: string;
+		FP_NO_HOST_CHECK: string;
+		GameBinPath: string;
 		GIT_ASKPASS: string;
+		GTK_BASEPATH: string;
 		HOME: string;
 		HOMEDRIVE: string;
 		HOMEPATH: string;
 		INIT_CWD: string;
+		INTEL_DEV_REDIST: string;
 		JAVA_HOME: string;
 		LANG: string;
 		LOCALAPPDATA: string;
 		LOGONSERVER: string;
+		MIC_LD_LIBRARY_PATH: string;
 		NODE: string;
 		NODE_ENV: string;
 		NODE_EXE: string;
@@ -192,9 +199,11 @@ declare module '$env/dynamic/private' {
 		npm_package_json: string;
 		npm_package_name: string;
 		npm_package_version: string;
+		NPM_PREFIX_JS: string;
 		NPM_PREFIX_NPM_CLI_JS: string;
 		NUMBER_OF_PROCESSORS: string;
 		OneDrive: string;
+		OneDriveConsumer: string;
 		ORIGINAL_XDG_CURRENT_DESKTOP: string;
 		OS: string;
 		Path: string;
@@ -209,6 +218,7 @@ declare module '$env/dynamic/private' {
 		PROMPT: string;
 		PSModulePath: string;
 		PUBLIC: string;
+		PyCharm: string;
 		SESSIONNAME: string;
 		SystemDrive: string;
 		SystemRoot: string;
@@ -224,11 +234,9 @@ declare module '$env/dynamic/private' {
 		VSCODE_GIT_ASKPASS_MAIN: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
 		VSCODE_GIT_IPC_HANDLE: string;
-		VSCODE_INJECTION: string;
-		VSCODE_NONCE: string;
-		VSCODE_STABLE: string;
 		windir: string;
-		ZES_ENABLE_SYSMAN: string;
+		windows_tracing_flags: string;
+		windows_tracing_logfile: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}
