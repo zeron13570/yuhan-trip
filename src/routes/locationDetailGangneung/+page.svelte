@@ -4,7 +4,9 @@
     import noLike from "../../img/notLike.png";
 
     let posts = []; // 트래블로그 데이터 저장
-    let username = localStorage.getItem('username') || ""; // 로그인된 사용자 이름 가져오기
+    let isLoggedIn = false;
+    let username = ""; // 로그인된 사용자 이름
+    let userId = ""; // 로그인된 사용자 ID
     let recommendedDestinations = []; 
     let weatherInfo = ""; // 날씨 정보 저장
     let weatherIcon = ""; // 날씨 아이콘 URL
@@ -31,12 +33,11 @@
 
     async function fetchWeather() {
         const apiKey = "013b6110a9dbb3bc5899f78a4b364602"; // API 키
-        const city = "Gangneung";
+        const city = "Busan";
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=kr&units=metric`);
         
         if (response.ok) {
             const data = await response.json();
-            // 소수점 없이 온도만 표시
             weatherInfo = `현재 온도: ${Math.round(data.main.temp)}°C`; 
             weatherIcon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
         } else {
@@ -44,72 +45,117 @@
         }
     }
 
-    // 트래블로그 데이터 가져오기
     onMount(() => {
-        const accessToken = localStorage.getItem("accessToken");
+        // 클라이언트에서만 localStorage를 사용하도록 처리
+        if (typeof window !== 'undefined') {
+            username = localStorage.getItem('username') || ""; // 로그인된 사용자 이름 가져오기
+            userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
+        }
 
-        fetch('http://localhost:3000/get-posts', {
+        recommendedDestinations = getRandomDestinations(4);
+        fetchWeather(); // 날씨 정보 가져오기
+
+        if (!window.Kakao) {
+            const script = document.createElement("script");
+            script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+            script.onload = () => {
+                Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+                if (Kakao.Auth.getAccessToken()) {
+                    getUserInfo();
+                }
+            };
+            document.head.appendChild(script);
+        } else if (Kakao.isInitialized()) {
+            if (Kakao.Auth.getAccessToken()) {
+                getUserInfo();
+            }
+        }
+
+        fetchPosts();
+    });
+
+    function kakaoLogin() {
+        if (!Kakao.isInitialized()) {
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+        }
+
+        Kakao.Auth.login({
+            success: function(authObj) {
+                console.log("Kakao login successful:", authObj);
+                isLoggedIn = true;
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("accessToken", authObj.access_token);
+                }
+                getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
+            },
+            fail: function(error) {
+                console.error("Kakao login failed:", error);
+            }
+        });
+    }
+
+    function getUserInfo() {
+        Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(response) {
+                isLoggedIn = true;
+                userId = Number(response.id);  // userId를 숫자형으로 변환
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem("userId", userId);  // userId를 localStorage에 저장
+                    localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
+                }
+            },
+            fail: function(error) {
+                console.error('Error fetching user info:', error);
+            }
+        });
+    }
+    
+    function fetchPosts() {
+        const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : "";
+        const userId = typeof window !== 'undefined' ? localStorage.getItem("userId") : "";
+
+        fetch(`http://localhost:3000/get-posts?userId=${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             },
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(errMsg => {
-                    throw new Error(`HTTP error! status: ${response.status}, message: ${errMsg}`);
-                });
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            posts = data; // 서버에서 받은 데이터를 posts에 저장
+            posts = data;
         })
-        .catch(error => {
-            console.error('Error fetching posts:', error);
-        });
-
-        recommendedDestinations = getRandomDestinations(4);
-        fetchWeather(); // 날씨 정보 가져오기
-    });
+        .catch(error => console.error('Error fetching posts:', error));
+    }
 
     function toggleLike(postId) {
-        const postIndex = posts.findIndex(post => post.id === postId);
-        const post = posts[postIndex];
-
-        if (!post.likedBy) post.likedBy = []; // likedBy 배열 초기화
-
-        const userIndex = post.likedBy.indexOf(username);
-        if (userIndex === -1) {
-            post.likes++;
-            post.likedBy.push(username); // 좋아요 추가
-        } else {
-            post.likes--;
-            post.likedBy.splice(userIndex, 1); // 좋아요 취소
+        if (!isLoggedIn || !userId) {
+            return kakaoLogin(); // 로그인 창을 표시
         }
 
-        // Svelte가 반응하도록 posts 배열 다시 할당
-        posts = [...posts]; 
+        const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : "";
 
-        // 서버에 업데이트된 포스트 데이터 전송
-        fetch(`http://localhost:3000/update-post/${postId}`, {
+        fetch(`http://localhost:3000/get-post/${postId}/like`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
             },
-            body: JSON.stringify(post), // 업데이트된 포스트 데이터
+            body: JSON.stringify({ userId })  // 서버로 userId 전송
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update post');
+        .then(response => response.json())
+        .then(data => {
+            // 서버에서 반환된 data에서 likedBy와 likes 업데이트
+            const postIndex = posts.findIndex(post => post.id === postId);
+            if (postIndex !== -1) {
+                posts[postIndex].likes = data.likes;
+                posts[postIndex].likedBy = data.likedBy;  // likedBy 배열 업데이트
             }
-            console.log('Post updated successfully');
         })
-        .catch(error => {
-            console.error('Error updating post:', error);
-        });
+        .catch(error => console.error('좋아요 토글 오류:', error));
     }
 </script>
+
 <body>
     <div class="locationDetail">
         <nav class="selectList">
@@ -156,7 +202,7 @@
                         <div class="like">
                             <span>작성자: {post.username}</span>
                             <span>
-                                <img src={post.likedBy && post.likedBy.includes(username) ? Like : noLike} 
+                                <img src={post.likedBy && post.likedBy.includes(userId) ? Like : noLike} 
                                     alt="좋아요" class="like-icon" on:click={() => toggleLike(post.id)}>
                             </span>
                             <span>{post.likes || 0}</span>

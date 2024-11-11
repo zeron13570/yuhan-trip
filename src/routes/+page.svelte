@@ -6,76 +6,85 @@
     let posts = []; // 트래블로그 데이터 저장
     let isLoggedIn = false;
     let userName = "";
-    let userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
+    let userId = ""; // 사용자 ID 초기화
 
     onMount(() => {
-        const script = document.createElement("script");
-        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-        script.onload = () => {
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-            if (Kakao.Auth.getAccessToken()) {
-                getUserInfo();
-            }
-        };
-        document.head.appendChild(script);
+        if (typeof window !== 'undefined') {
+            // 클라이언트 사이드에서만 localStorage 사용
+            userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
 
-        const accessToken = localStorage.getItem("accessToken");
+            const accessToken = localStorage.getItem("accessToken");
 
-        fetch('http://localhost:3000/get-posts', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(errMsg => {
-                    throw new Error(`HTTP error! status: ${response.status}, message: ${errMsg}`);
-                });
+            if (!accessToken) {
+                console.error("Access token not found. Please log in.");
+                return; // 로그인이 되어 있지 않으면 종료
             }
-            return response.json();
-        })
-        .then(data => {
-            posts = data; // 서버에서 받은 데이터를 posts에 저장
-        })
-        .catch(error => {
-            console.error('Error fetching posts:', error);
-        });
+
+            fetch('http://localhost:3000/get-posts', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errMsg => {
+                        throw new Error(`HTTP error! status: ${response.status}, message: ${errMsg}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                posts = data; // 서버에서 받은 데이터를 posts에 저장
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+        }
     });
 
     function kakaoLogin() {
-        Kakao.Auth.login({
-            success: function(authObj) {
-                getUserInfo();
-            },
-            fail: function(err) {
-                console.error('로그인 실패', err);
-            }
-        });
+        if (typeof window !== 'undefined') {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    getUserInfo();
+                },
+                fail: function(err) {
+                    console.error('로그인 실패', err);
+                }
+            });
+        }
     }
 
     function getUserInfo() {
-        Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(response) {
-                isLoggedIn = true;
-                userName = response.kakao_account.profile.nickname;
-                userId = response.id; // 사용자 고유 ID
-                localStorage.setItem("userId", userId); // 사용자 ID 저장
-                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
-            },
-            fail: function(error) {
-                console.error('Error fetching user info:', error);
-            }
-        });
+        if (typeof window !== 'undefined') {
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(response) {
+                    isLoggedIn = true;
+                    userName = response.kakao_account.profile.nickname;
+                    userId = response.id; // 사용자 고유 ID
+                    localStorage.setItem("userId", userId); // 사용자 ID 저장
+                    localStorage.setItem("accessToken", Kakao.Auth.getAccessToken());
+                },
+                fail: function(error) {
+                    console.error('Error fetching user info:', error);
+                }
+            });
+        }
     }
 
     function toggleLike(postId) {
         if (!isLoggedIn || !userId) {
             return kakaoLogin(); // 로그인 창을 표시
         }
-        
+
         const accessToken = localStorage.getItem("accessToken");
+
+        if (!accessToken) {
+            console.error("Access token not found. Please log in.");
+            return; // 토큰이 없으면 아무 것도 하지 않음
+        }
 
         fetch(`http://localhost:3000/get-post/${postId}/like`, {
             method: 'POST',
@@ -95,8 +104,8 @@
             // 좋아요 상태 업데이트
             const postIndex = posts.findIndex(post => post.id === postId);
             if (postIndex !== -1) {
-                posts[postIndex].likes = data.likes; // 응답에서 업데이트된 좋아요 수
-                posts[postIndex].likedBy = data.likedBy; // 응답에서 업데이트된 좋아요를 누른 사용자 목록
+                posts[postIndex] = {...posts[postIndex], likes: data.likes, likedBy: data.likedBy};
+                posts = [...posts]; // 배열을 새로 할당하여 UI를 강제로 갱신
             }
         })
         .catch(error => {
@@ -104,6 +113,7 @@
         });
     }
 </script>
+
 <header>
     <div></div>
 </header>

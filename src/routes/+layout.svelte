@@ -10,21 +10,31 @@
 
     // 초기화 및 로그인 여부 확인
     onMount(() => {
-        const script = document.createElement("script");
-        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-        script.onload = () => {
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-            console.log(Kakao.isInitialized());
+    const script = document.createElement("script");
+    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    script.onload = () => {
+        Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
+        console.log(Kakao.isInitialized());
 
-            // 로그인 여부 체크 및 사용자 정보 불러오기
-            const accessToken = localStorage.getItem("accessToken");
-            if (accessToken) {
-                isLoggedIn = true;
-                userName = localStorage.getItem("userName");
-            }
-        };
-        document.head.appendChild(script);
-    });
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            // 토큰 유효성 확인
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function() {
+                    isLoggedIn = true;
+                    userName = localStorage.getItem("userName");
+                },
+                fail: function(error) {
+                    console.error('Token expired or invalid:', error);
+                    kakaoLogout(); // 로그아웃 처리
+                }
+            });
+        }
+    };
+    document.head.appendChild(script);
+});
+
 
     // 카카오 로그인 함수
     function kakaoLogin() {

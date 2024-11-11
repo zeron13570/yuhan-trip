@@ -33,8 +33,9 @@
     "html2pdf.js": "^0.10.2",
     "leaflet": "^1.9.4",
     "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
     "svelte-spa-router": "^4.0.1",
-    "uuid": "^11.0.2"
+    "uuid": "^11.0.3"
   },
   "description": "Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).",
   "main": "server.js",

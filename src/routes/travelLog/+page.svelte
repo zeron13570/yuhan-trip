@@ -9,7 +9,7 @@
     let filteredPosts = [];
     let isLoggedIn = false;
     let userName = "";
-    let userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
+    let userId = "";
     let popularPosts = [];
     
     let currentPage = 1;
@@ -19,6 +19,11 @@
     $: totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
     onMount(() => {
+        // 클라이언트 사이드에서만 localStorage 사용
+        if (typeof window !== "undefined") {
+            userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
+        }
+
         if (!window.Kakao) {
             const script = document.createElement("script");
             script.src = "https://developers.kakao.com/sdk/js/kakao.js";
@@ -39,23 +44,22 @@
     });
 
     function kakaoLogin() {
-    if (!Kakao.isInitialized()) {
-        Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-    }
-
-    Kakao.Auth.login({
-        success: function(authObj) {
-            console.log("Kakao login successful:", authObj);
-            isLoggedIn = true;
-            localStorage.setItem("accessToken", authObj.access_token);
-            getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
-        },
-        fail: function(error) {
-            console.error("Kakao login failed:", error);
+        if (!Kakao.isInitialized()) {
+            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
         }
-    });
-}
 
+        Kakao.Auth.login({
+            success: function(authObj) {
+                console.log("Kakao login successful:", authObj);
+                isLoggedIn = true;
+                localStorage.setItem("accessToken", authObj.access_token);
+                getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
+            },
+            fail: function(error) {
+                console.error("Kakao login failed:", error);
+            }
+        });
+    }
 
     function getUserInfo() {
         Kakao.API.request({
@@ -64,8 +68,10 @@
                 isLoggedIn = true;
                 userName = response.kakao_account.profile.nickname;
                 userId = response.id;  // userId 추가
-                localStorage.setItem("userId", userId);  // userId를 localStorage에 저장
-                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
+                if (typeof window !== "undefined") {
+                    localStorage.setItem("userId", userId);  // userId를 localStorage에 저장
+                    localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
+                }
             },
             fail: function(error) {
                 console.error('Error fetching user info:', error);
@@ -120,7 +126,7 @@
 
     function handlePostButtonClick() {
         if (!isLoggedIn || !userId) {
-        kakaoLogin();  // 로그인 처리 함수
+            kakaoLogin();  // 로그인 처리 함수
         } else {
             goto('/travelLogPosting');
         }
@@ -131,33 +137,33 @@
             return kakaoLogin(); // 로그인 창을 표시
         }
 
-    const accessToken = localStorage.getItem("accessToken");
+        const accessToken = localStorage.getItem("accessToken");
 
-    fetch(`http://localhost:3000/get-post/${postId}/like`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({ userId })  // 서버로 userId 전송
-    })
-    .then(response => response.json())
-    .then(data => {
-        // 서버에서 반환된 data에서 likedBy와 likes 업데이트
-        const postIndex = posts.findIndex(post => post.id === postId);
-        if (postIndex !== -1) {
-            posts[postIndex].likes = data.likes;
-            posts[postIndex].likedBy = data.likedBy;  // likedBy 배열 업데이트
-        }
+        fetch(`http://localhost:3000/get-post/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ userId })  // 서버로 userId 전송
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 서버에서 반환된 data에서 likedBy와 likes 업데이트
+            const postIndex = posts.findIndex(post => post.id === postId);
+            if (postIndex !== -1) {
+                posts[postIndex].likes = data.likes;
+                posts[postIndex].likedBy = data.likedBy;  // likedBy 배열 업데이트
+            }
 
-        // 최신 블로그 (filteredPosts) 업데이트
-        filterPosts();
+            // 최신 블로그 (filteredPosts) 업데이트
+            filterPosts();
 
-        // 추천 블로그 (popularPosts)도 업데이트
-        sortPostsByLikesAndDate();  // 좋아요 순으로 정렬 후, 인기 포스트 재설정
-    })
-    .catch(error => console.error('좋아요 토글 오류:', error));
-}
+            // 추천 블로그 (popularPosts)도 업데이트
+            sortPostsByLikesAndDate();  // 좋아요 순으로 정렬 후, 인기 포스트 재설정
+        })
+        .catch(error => console.error('좋아요 토글 오류:', error));
+    }
 
     // 페이지 이동 함수
     function changePage(page) {

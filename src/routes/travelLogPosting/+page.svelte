@@ -5,53 +5,84 @@
     let title = '';
     let content = '';
     let region = '';
-    let username = localStorage.getItem('username') || '';
-    let userId = localStorage.getItem('userId') || '';  // localStorage에서 userId 가져오기
+    let username = '';
+    let userId = '';
     let post = { image: '' };
     let imageUrls = [];
     let selectedRegion = "지역 선택";
+    let isLoggedIn = false;
 
-    onMount(() => {
-        if (!Kakao.isInitialized()) {
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-        }
-
-        const storedUsername = localStorage.getItem("username");
-        if (storedUsername) {
-            username = storedUsername;
-        }
-        userId = localStorage.getItem('userId'); // userId를 가져오기
-    });
-
-    function kakaoLogin() {
-        if (!Kakao.isInitialized()) {
-            Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
-        }
-        Kakao.Auth.login({
-            success: function(authObj) {
-                console.log("Kakao login successful:", authObj);
-                isLoggedIn = true;
-                localStorage.setItem("accessToken", authObj.access_token);
-                getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
-            },
-            fail: function(error) {
-                console.error("Kakao login failed:", error);
+    // 카카오 SDK를 동적으로 로드하는 함수
+    function loadKakaoSdk() {
+        return new Promise((resolve, reject) => {
+            if (window.Kakao) {
+                resolve(window.Kakao);  // 이미 로드된 경우 바로 반환
+            } else {
+                const script = document.createElement("script");
+                script.src = "https://developers.kakao.com/sdk/js/kakao.js";  // 카카오 SDK URL
+                script.onload = () => resolve(window.Kakao);  // 로드가 완료되면 Kakao 객체 반환
+                script.onerror = (error) => reject("Kakao SDK 로드 실패: " + error);
+                document.head.appendChild(script);  // DOM에 스크립트 추가
             }
         });
     }
-    function getUserInfo() {
-        Kakao.API.request({
-            url: '/v2/user/me',
-            success: function(response) {
-                isLoggedIn = true;
-                userName = response.kakao_account.profile.nickname;
-                userId = response.id;  // userId 추가
-                localStorage.setItem("userId", userId);  // userId를 localStorage에 저장
-                localStorage.setItem("accessToken", Kakao.Auth.getAccessToken()); 
-            },
-            fail: function(error) {
-                console.error('Error fetching user info:', error);
+
+    onMount(async () => {
+        try {
+            const Kakao = await loadKakaoSdk();  // 카카오 SDK 로드 대기
+
+            // 카카오 SDK 초기화
+            if (!Kakao.isInitialized()) {
+                Kakao.init('1d28a43f8e4e4915d4c2010b36c8a8c7');
             }
+
+            // 로그인된 사용자의 정보를 로드
+            username = localStorage.getItem('username');
+            userId = localStorage.getItem('userId');
+
+            if (username && userId) {
+                isLoggedIn = true;
+            } else {
+                isLoggedIn = false;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    // 카카오 로그인 처리 함수
+    function kakaoLogin() {
+        loadKakaoSdk().then((Kakao) => {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    console.log("Kakao login successful:", authObj);
+                    localStorage.setItem("accessToken", authObj.access_token);
+                    getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
+                },
+                fail: function(error) {
+                    console.error("Kakao login failed:", error);
+                }
+            });
+        });
+    }
+
+    // 사용자 정보 가져오기
+    function getUserInfo() {
+        loadKakaoSdk().then((Kakao) => {
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(response) {
+                    username = response.kakao_account.profile.nickname;
+                    userId = response.id;
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("userId", userId);
+                    localStorage.setItem("accessToken", Kakao.Auth.getAccessToken());
+                    isLoggedIn = true;
+                },
+                fail: function(error) {
+                    console.error('Error fetching user info:', error);
+                }
+            });
         });
     }
 
@@ -102,56 +133,56 @@
     }
 
     function submitPost() {
-    const editor = document.querySelector(".editor");
-    content = editor.innerHTML.trim(); // 공백 제거
+        const editor = document.querySelector(".editor");
+        content = editor.innerHTML.trim(); // 공백 제거
 
-    // 모든 필드 확인
-    if (!title.trim() || !content || selectedRegion === "지역 선택") {
-        let errorMessage = "모든 필드를 입력해주세요.";
-        if (!title.trim()) errorMessage += "\n- 제목을 입력하세요.";
-        if (!content) errorMessage += "\n- 내용을 입력하세요.";
-        if (selectedRegion === "지역 선택") errorMessage += "\n- 지역을 선택하세요.";
+        // 모든 필드 확인
+        if (!title.trim() || !content || selectedRegion === "지역 선택") {
+            let errorMessage = "모든 필드를 입력해주세요.";
+            if (!title.trim()) errorMessage += "\n- 제목을 입력하세요.";
+            if (!content) errorMessage += "\n- 내용을 입력하세요.";
+            if (selectedRegion === "지역 선택") errorMessage += "\n- 지역을 선택하세요.";
 
-        alert(errorMessage);
-        return; // 경고 메시지 후 종료
-    }
-
-    const firstImageUrl = imageUrls.length > 0 ? imageUrls[0] : null;
-
-    const newPost = {
-        title,
-        content,
-        region: selectedRegion,
-        username: localStorage.getItem("username"),
-        userId: userId,  // 작성자 userId 추가
-        likes: 0,
-        likedBy: [],
-        image: firstImageUrl
-    };
-
-    fetch('http://localhost:3000/add-post', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newPost),
-    })
-    .then(response => {
-        console.log('Response status:', response.status);
-        return response.json();
-    })
-    .then(data => {
-        console.log('Response data:', data);
-        if (data.message) {
-            alert(data.message);
+            alert(errorMessage);
+            return; // 경고 메시지 후 종료
         }
-        window.location.href = "/travelLog";
-    })
-    .catch(error => {
-        console.error('Fetch error:', error);
-        alert("포스팅 중 오류가 발생했습니다.");
-    });
-}
+
+        const firstImageUrl = imageUrls.length > 0 ? imageUrls[0] : null;
+
+        const newPost = {
+            title,
+            content,
+            region: selectedRegion,
+            username: username,  // 로그인된 사용자 이름
+            userId: userId,  // 작성자 userId 추가
+            likes: 0,
+            likedBy: [],
+            image: firstImageUrl
+        };
+
+        fetch('http://localhost:3000/add-post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newPost),
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data);
+            if (data.message) {
+                alert(data.message);
+            }
+            window.location.href = "/travelLog";
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert("포스팅 중 오류가 발생했습니다.");
+        });
+    }
 
 </script>
 

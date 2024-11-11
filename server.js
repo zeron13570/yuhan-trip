@@ -74,8 +74,10 @@ app.listen(port, () => {
 
 // 에러 처리 함수
 const handleError = (res, message, status = 500) => {
+    console.error(`Error: ${message}`); // 에러 메시지 콘솔에 출력
     res.status(status).json({ message });
 };
+
 
 // 포스트 작성 API
 app.post('/add-post', (req, res) => {
