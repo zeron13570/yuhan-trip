@@ -35,16 +35,16 @@
                     companionNumber = 2;
                     break;
                 case "친구와":
-                    companionNumber = 2;
-                    break;
-                case "부모님과":
                     companionNumber = 3;
                     break;
-                case "아이와":
+                case "부모님과":
                     companionNumber = 4;
                     break;
-                case "기타":
+                case "아이와":
                     companionNumber = 5;
+                    break;
+                case "기타":
+                    companionNumber = 6;
                     break;
             }
 
