@@ -1,6 +1,11 @@
 <div align = "center"><img src="https://capsule-render.vercel.app/api?type=venom&height=300&color=gradient&text=YUHAN%20%20TRIP&reversal=false&textBg=false&fontColor=000&fontAlign=50&descAlign=50"/><div>
 <div align = "center">
   <h1>🛫 프로젝트 소개</h1>
+  여행을 갈 때 여러 사이트를 확인하며<br> 
+  일정을 계획하지 않고 하나의 사이트에서 <br>
+  항공권이나 숙박, 날씨, 맛집 및 카페 등을 <br>
+  확인 할 수 있어 간편하게 여행 계획을 <br> 
+  세울 수 있는 사이트를 만들었습니다.
 </div>
 <div align = "center">
   <img src="https://img.shields.io/badge/svelte-FF3E00?style=flat&logo=svelte&logoColor=white"/>
