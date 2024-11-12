@@ -321,5 +321,17 @@
     "likedBy": [
       3752327234
     ]
+  },
+  {
+    "id": "63d4021a-845c-47cb-96b7-5975af65b30c",
+    "title": "test",
+    "content": "adsfadf<div><br></div><img src=\"http://localhost:3000/uploads/image-1731370894991-679795717.png\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\">",
+    "region": "제주",
+    "username": "아름",
+    "userId": "3752327234",
+    "image": "/uploads/image-1731370894991-679795717.png",
+    "date": "2024-11-12T00:21:37.134Z",
+    "likes": 0,
+    "likedBy": []
   }
 ]
