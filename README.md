@@ -1,5 +1,7 @@
 <div align = "center"><img src="https://capsule-render.vercel.app/api?type=venom&height=300&color=gradient&text=YUHAN%20%20TRIP&reversal=false&textBg=false&fontColor=000&fontAlign=50&descAlign=50"/><div>
-<div align = "center"><b>🎈안뇨옹</b></div>
+<div align = "center">
+  #🛫 프로젝트 소개
+</div>
 <div align = "center">
   <img src="https://img.shields.io/badge/svelte-FF3E00?style=flat&logo=svelte&logoColor=white"/>
   <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=html5&logoColor=white"/>
