@@ -7,7 +7,9 @@
   확인 할 수 있어 간편하게 여행 계획을 <br> 
   세울 수 있는 사이트를 만들었습니다.
 </div> 
-  <p></p>
+<div align = "center">
+  <h1>🛠 개발 환경</h1>
+</div> 
 <div align = "center">
   <img src="https://img.shields.io/badge/svelte-FF3E00?style=flat&logo=svelte&logoColor=white"/>
   <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=html5&logoColor=white"/>
