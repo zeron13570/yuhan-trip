@@ -24,7 +24,7 @@
 <div align = "center">
   <h1>👩‍🎓 참여자</h1>
   <ul>
-    <li><a href="https://github.com/snuny2">김선호</a></li>
+    <li style="list-style:none;"><a href="https://github.com/snuny2">김선호</a></li>
     <li><a href="https://github.com/Rumyyyyy">김아름</a></li>
     <li></li>
     <li></li>
