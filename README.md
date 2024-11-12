@@ -26,6 +26,6 @@
   <a href="https://github.com/snuny2">김선호</a>
   <a href="https://github.com/Rumyyyyy">김아름</a>
   <a href="https://github.com/reasonj11">이유진</a>
-  <a href="https://github.com/cutejo">고은별</a>
+  <a href="https://github.com/Go_b">고은별</a>
 </div>
 
