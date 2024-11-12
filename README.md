@@ -28,6 +28,6 @@
   <a href="https://github.com/reasonj11">이유진</a>
   <a href="https://github.com/ooenbbu">고은별</a>
 
-  [김아름]<"https://github.com/Rumyyyyy>
+  [김아름](https://github.com/Rumyyyyy)
 </div>
 
