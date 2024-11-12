@@ -23,11 +23,9 @@
 </div>
 <div align = "center">
   <h1>👩‍🎓 참여자</h1>
-  <a href="https://github.com/snuny2">김선호</a>
-  <a href="https://github.com/Rumyyyyy">김아름</a>
-  <a href="https://github.com/reasonj11">이유진</a>
-  <a href="https://github.com/ooenbbu">고은별</a>
-
+  [김선호](https://github.com/snuny2)
   [김아름](https://github.com/Rumyyyyy)
+  [이유진](https://github.com/reasonj11)
+  [고은별](https://github.com/ooenbbu)
 </div>
 
