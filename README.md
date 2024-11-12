@@ -13,8 +13,8 @@
 <div align = "center">
   <img src="https://img.shields.io/badge/svelte-FF3E00?style=flat&logo=svelte&logoColor=white"/>
   <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=html5&logoColor=white"/>
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
   <img src="https://img.shields.io/badge/css3-1572B6?style=flat&logo=css3&logoColor=white"/>
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=javascript&logoColor=white"/>
  </div>
 <div align="center"> 
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white"/>
@@ -23,7 +23,7 @@
 </div>
 <div align = "center">
   <h1>👩‍🎓 참여자</h1>
-  <a href="https://github.com/snuny2">김선호</a>
+  <a style = "text-decoration:none;" href="https://github.com/snuny2">김선호</a>
   <a href="https://github.com/Rumyyyyy">김아름</a>
   <a href="https://github.com/reasonj11">이유진</a>
   <a href="https://github.com/cutejo">고은별</a>
