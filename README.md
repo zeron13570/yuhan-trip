@@ -23,7 +23,6 @@
 </div>
 <div align = "center">
   <h1>👩‍🎓 참여자</h1>
-  <a href="https://github.com/Rumyyyyy" style=text-decoration: none;
- >김아름</a>
+  <a href="https://github.com/Rumyyyyy"><b>김아름</b></a>
 </div>
 
