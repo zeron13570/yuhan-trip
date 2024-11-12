@@ -6,9 +6,8 @@
   항공권이나 숙박, 날씨, 맛집 및 카페 등을 <br>
   확인 할 수 있어 간편하게 여행 계획을 <br> 
   세울 수 있는 사이트를 만들었습니다.
-</div>
-
-  
+</div> 
+  <p></p>
 <div align = "center">
   <img src="https://img.shields.io/badge/svelte-FF3E00?style=flat&logo=svelte&logoColor=white"/>
   <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=html5&logoColor=white"/>
