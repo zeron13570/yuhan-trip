@@ -22,9 +22,7 @@
   <img src="https://img.shields.io/badge/json-000000?style=flat&logo=json&logoColor=white"/>
 </div>
 <div align = "center">
-  <h1>👩‍🎓 참여쟈</h1>
-  [보여지는 텍스트](#이동할-위치)
-  [보여지는 텍스트](#이동할-위치)
-  [보여지는 텍스트](#이동할-위치)
+  <h1>👩‍🎓 참여자</h1>
+  <a href="https://github.com/Rumyyyyy">김아름</a>
 </div>
 
