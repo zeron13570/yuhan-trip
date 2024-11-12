@@ -24,8 +24,14 @@
 <div align = "center">
   <h1>👩‍🎓 참여자</h1>
   [김선호](https://github.com/snuny2)
+
+  
   [김아름](https://github.com/Rumyyyyy)
+
+  
   [이유진](https://github.com/reasonj11)
+
+
   [고은별](https://github.com/ooenbbu)
 </div>
 
