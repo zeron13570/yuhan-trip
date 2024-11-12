@@ -45,13 +45,14 @@
             fetch(`http://localhost:3000/get-posts-by-user/${userId}`)
                 .then(response => response.json())
                 .then(data => {
-                    myPosts = data.filter(post => Number(post.userId) === userId);
+                    myPosts = data
+                        .filter(post => Number(post.userId) === userId)
+                        .sort((a, b) => new Date(b.date) - new Date(a.date)); // 작성 날짜 기준 내림차순 정렬
                     paginateMyPosts();  // 내가 작성한 글에 대해 페이지네이션 수행
                 })
                 .catch(err => console.error('Error loading my posts:', err));
         }
     }
-
     // 내가 좋아요를 누른 글 로드
     function loadLikedPosts() {
         if (userId) {

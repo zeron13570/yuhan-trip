@@ -10,21 +10,10 @@
 
     onMount(() => {
         if (typeof window !== 'undefined') {
-            // 클라이언트 사이드에서만 localStorage 사용
             userId = localStorage.getItem('userId') || ""; // 로그인된 사용자 ID 가져오기
-
-            const accessToken = localStorage.getItem("accessToken");
-
-            if (!accessToken) {
-                console.error("Access token not found. Please log in.");
-                return; // 로그인이 되어 있지 않으면 종료
-            }
 
             fetch('http://localhost:3000/get-posts', {
                 method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
             })
             .then(response => {
                 if (!response.ok) {
