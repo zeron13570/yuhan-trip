@@ -38,5 +38,5 @@
 
 <div align = "center">
   <h1> 🗓️ 개발기간</h1>
-  <b style="font-weight:700;">24.03.06 ~ 24.11.11</b>
+  <b style="font-size:20px;">24.03.06 ~ 24.11.11</b>
 </div>
