@@ -179,6 +179,7 @@
     "content": "처음 써보는<div>트래블로그</div><div>아주 두근두근 하고요</div><div>젭알 잘 되길 기도...🙏</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730871760101-852918906.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>귀여운 고양이가 세상을 구한다 !!!!!!!</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730871785964-483818537.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>응애응ㅇ애 귀용ㅇ오우엉</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730871794510-932664074.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>저는 이만 바이바이</div>",
     "region": "인천",
     "username": "아름",
+    "userId": "3752327234",
     "image": "/uploads/image-1730871760101-852918906.jpg",
     "date": "2024-11-06T05:43:28.475Z",
     "likes": 1,
@@ -190,6 +191,7 @@
     "content": "오늘은 24년 11월 6일 수요일 입니다.<div>저는 배가 고파요</div><div>시간이 3시가 다 되가는데도</div><div>전 공복입니다!!</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730872235957-447655070.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>그러니 귀여운 강아지 사진을 올릴겁미다</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730872252116-964543035.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>진짜 발바닥 꼬순내 엄청 날 듯 킁킁..😆</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730872280342-127579051.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>다들 밥 잘 챙겨 드시고 전 가보겟습미다 총총..💕</div>",
     "region": "부산",
     "username": "아름",
+    "userId": "3752327234",
     "image": "/uploads/image-1730872235957-447655070.jpg",
     "date": "2024-11-06T05:51:42.340Z",
     "likes": 3,
@@ -203,6 +205,7 @@
     "content": "지역마다 최소 하나는 트래블로그를 작성하기 위해<div>이번에는 경주에 등장햇슴미다.</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730872475709-893221998.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>지금 제가 배가 매우 고픈 관계로&nbsp;</div><div>음식 사진밖에 눈에 들어오는게 없습니당.</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730872492813-715923840.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>제 입에 음식을 넣어주십쇼.</div><div>🤤</div>",
     "region": "경주",
     "username": "아름",
+    "userId": "3752327234",
     "image": "/uploads/image-1730872475709-893221998.jpg",
     "date": "2024-11-06T05:55:17.586Z",
     "likes": 1,
@@ -214,6 +217,7 @@
     "content": "이번에는 포항을 쓸 거다요<div><br></div><img src=\"http://localhost:3000/uploads/image-1730873266916-987256489.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>포항은 아무래도 요것...</div><div>신년에 해 뜨는 거 보러가기 좋다던데</div><div>귀찮아서 안 감.</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730873293267-727224820.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>글고 이거는 진심 어케 가라고 만든 건지..</div><div>가본 사람 잇나유... 일단 전 안 가봄</div>",
     "region": "포항",
     "username": "아름",
+    "userId": "3752327234",
     "image": "/uploads/image-1730873266916-987256489.jpg",
     "date": "2024-11-06T06:08:43.906Z",
     "likes": 1,
@@ -225,6 +229,7 @@
     "content": "울산 채우려 했는데 그냥 포항 채워버림<div>나름 \"트래블\"로그 이니.. 여행 다녀오는 느낌으로</div><div>지역마다 이것저것 검색해서</div><div>사진 넣어서 작성하는 중인데</div><div>울산은 잘 모르겠고</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730873434998-75299303.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>이거 뭔지.., 걍 개맛도리 같다 냠냠😋</div>",
     "region": "울산",
     "username": "아름",
+    "userId": "3752327234",
     "image": "/uploads/image-1730873434998-75299303.jpg",
     "date": "2024-11-06T06:10:50.617Z",
     "likes": 1,
@@ -238,12 +243,14 @@
     "content": "그것은 바로 저의 집.<div>이곳이 필수 코스로 선정된 이유는...</div><img src=\"http://localhost:3000/uploads/image-1730873822990-437089536.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>미치게 귀여운 나의 반려견이 있기 때문..</div><div><br></div><img src=\"http://localhost:3000/uploads/image-1730873853736-275195507.jpg\" alt=\"업로드된 이미지\" style=\"max-width: 100%; margin: 10px 0px;\"><div>토마토 환장 귀신이 들은 우리 멈무....&nbsp;</div><div>귀엽죠오....😝🎈</div>",
     "region": "인천",
     "username": "아름",
+    "userId": "3752327234",
     "image": "/uploads/image-1730873822990-437089536.jpg",
     "date": "2024-11-06T06:18:09.577Z",
-    "likes": 5,
+    "likes": 6,
     "likedBy": [
       3778644272,
-      3745401693
+      3745401693,
+      3752327234
     ]
   },
   {
@@ -310,7 +317,9 @@
     "userId": "3745401693",
     "image": "/uploads/image-1731340299780-880765556.jpeg",
     "date": "2024-11-11T15:51:40.661Z",
-    "likes": 0,
-    "likedBy": []
+    "likes": 1,
+    "likedBy": [
+      3752327234
+    ]
   }
 ]
